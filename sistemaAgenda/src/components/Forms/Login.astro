@@ -1,12 +1,12 @@
 ---
 import fetch from 'node-fetch';
 
-async function iniciarSesion(event:Event) {
+async function iniciarSesion(event) {
   event.preventDefault();
 
   const tipo= "usuario"
-  const matricula = (document.getElementById('matricula') as HTMLInputElement).value;
-  const contrasena = (document.getElementById('password') as HTMLInputElement).value;
+  const matricula = event.target.elements.matricula.value;
+  const contrasena = event.target.elements.password.value;
 
   try {
     const respuesta = await fetch('http://127.0.0.1:8000/autentificacion', {
@@ -22,8 +22,6 @@ async function iniciarSesion(event:Event) {
     }
 
     const infoUsuario = await respuesta.json();
-
-    // Haz algo con la información del usuario (por ejemplo, almacenarla en el estado de la aplicación)
     console.log(infoUsuario);
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
@@ -48,7 +46,7 @@ async function iniciarSesion(event:Event) {
       </h2>
       <!-- hacer un espacio entre el h2 y el form -->
       <div class="h-8"></div>
-      <form onsubmit="iniciarSesion()">
+      <form onsubmit={iniciarSesion}>
         <div class="space-y-6">
           <div>
             <label>Matricula</label>
