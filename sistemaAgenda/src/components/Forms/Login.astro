@@ -4,16 +4,17 @@ import fetch from 'node-fetch';
 async function iniciarSesion(event: Event) {
   event.preventDefault();
 
+  const tipo= "usuario"
   const matricula = (document.getElementById('matricula') as HTMLInputElement).value;
   const contrasena = (document.getElementById('password') as HTMLInputElement).value;
 
   try {
-    const respuesta = await fetch('http//127.0.0.1:8000/autentificaciom', {
+    const respuesta = await fetch('http//127.0.0.1:8000/autentificacion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ matricula, contrasena }),
+      body: JSON.stringify({tipo, matricula, contrasena }),
     });
 
     if (!respuesta.ok) {
