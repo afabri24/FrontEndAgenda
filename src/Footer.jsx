@@ -74,6 +74,11 @@ function Footer(){
                         </li>
                     </ul>
                     </div>
+
+                    <div className="mt-12 md:mt-0">
+                    <p className="text-2xl font-bold text-purple-500">8 de marzo</p>
+                    <img className="w-1/6"  src="../public/corazon.png" alt="corazon" />
+                    </div>
                 </div>
                 </div>
             </div>

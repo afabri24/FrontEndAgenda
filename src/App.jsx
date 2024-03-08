@@ -1,11 +1,17 @@
+import Card from "./Card";
 
 function App() {
-
   return (
-      <h1 class="text-3xl font-bold underline bg-slate-300">
-        Hello world!
-      </h1>
-  )
+    <div>
+      
+      <Card
+        title="Titulo de la tarjeta"
+        description="Esta es la descripción de la tarjeta."
+        date="01/01/2022"
+      />
+        
+    </div>
+  );
 }
 
-export default App
+export default App;
