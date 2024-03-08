@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal.jsx";
+import API_URL from "./utils/constantes.js";
 
 function Signup() {
 
@@ -37,7 +38,7 @@ function Signup() {
     event.preventDefault();
 
     const response = await fetch(
-      "http://127.0.0.1:8000/api/usuarios/registrar/",
+      API_URL+"api/usuarios/registrar/",
       {
         method: "POST",
         headers: {

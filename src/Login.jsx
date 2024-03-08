@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
+import API_URL from "./utils/constantes";
 
 function Login() {
   const [credencial, setCredencial] = useState("");
@@ -30,7 +31,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Aquí puedes llamar a tu API con los valores de matricula y password
-    const response = await fetch("http://127.0.0.1:8000/api/autenticacion/", {
+    const response = await fetch(API_URL+"api/autenticacion/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tipo, credencial, password }),
