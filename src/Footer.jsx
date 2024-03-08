@@ -1,4 +1,4 @@
-import logo from './assets/logoUV.svg';
+import logo from './assets/logoUV.png';
 
 function Footer(){
     return (

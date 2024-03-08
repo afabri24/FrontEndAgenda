@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from './assets/logoUV.svg';
+import logo from './assets/logoUV.png';
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
