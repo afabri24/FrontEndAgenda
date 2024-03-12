@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "./Modal";
 import API_URL from "./utils/constantes";
+import AuthContext from "./AuthContext.jsx";
+import { useHistory } from 'react-router-dom'; // Importa useHistory de react-router-dom
 
 function Login() {
   const [credencial, setCredencial] = useState("");
@@ -12,9 +14,13 @@ function Login() {
   const [modalMessage, setModalMessage] = useState("");
   const [modalVariant, setModalVariant] = useState("success");
 
+  const { setIsAuthenticated } = useContext(AuthContext);
+
+  const history = useHistory();
+
   const handlePopup = (message, error) => {
     setModalMessage(message);
-    setModalVariant(error ? "danger" : "success");
+    setModalVariant(error ? "Error" : "Sesion iniciada con éxito");
     setShowModal(true);
   };
   const handleClose = () => setShowModal(false);
@@ -31,7 +37,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Aquí puedes llamar a tu API con los valores de matricula y password
-    const response = await fetch(API_URL+"api/autenticacion/", {
+    const response = await fetch(API_URL + "api/autenticacion/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tipo, credencial, password }),
@@ -45,12 +51,13 @@ function Login() {
     const data = await response.json();
 
     if (data.error) {
-      // Server returned error
-      handlePopup(data.mensaje || data.message, true); // Use either 'mensaje' or 'message' based on your response
+      // El api regresa un error
+      handlePopup(data.mensaje || data.message, true);
     } else {
-      // Successful response
-      handlePopup(data.mensaje || data.message, false); // Use either 'mensaje' or 'message' based on your response
-      window.location.href = "/";
+      // El api regresa un mensaje de éxito
+      setIsAuthenticated(true); // Cambia la autenticación a true
+      handlePopup(data.mensaje || data.message, false);
+      history.push("/"); // manda a la pagina principal
     }
   };
 
