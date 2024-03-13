@@ -11,7 +11,7 @@ function Asesorias() {
   useEffect(() => {
     const fetchAsesorias = async () => {
       try {
-        const userId = cookies.get("userId"); // Asume que 'userId' es el nombre de tu cookie
+        const userId = cookies.get("id_usuario"); // Asume que 'userId' es el nombre de tu cookie
         const response = await axios.post("/api/asesorias", { userId }); // Asume que '/api/asesorias' es la URL de tu API
         setAsesorias(response.data);
       } catch (error) {
