@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import Modal from "./Modal";
 import API_URL from "./utils/constantes";
-import AuthContext from "./AuthContext.jsx";
-import { useHistory } from 'react-router-dom'; // Importa useHistory de react-router-dom
+
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 function Login() {
   const [credencial, setCredencial] = useState("");
@@ -14,9 +15,10 @@ function Login() {
   const [modalMessage, setModalMessage] = useState("");
   const [modalVariant, setModalVariant] = useState("success");
 
-  const { setIsAuthenticated } = useContext(AuthContext);
 
-  const history = useHistory();
+
+  const cookies = new Cookies();
+  const navigate = useNavigate();
 
   const handlePopup = (message, error) => {
     setModalMessage(message);
@@ -54,10 +56,25 @@ function Login() {
       // El api regresa un error
       handlePopup(data.mensaje || data.message, true);
     } else {
+
+      console.log(data);
       // El api regresa un mensaje de éxito
-      setIsAuthenticated(true); // Cambia la autenticación a true
       handlePopup(data.mensaje || data.message, false);
-      history.push("/"); // manda a la pagina principal
+
+      window.localStorage.setItem("token", data.token);
+      if(data.tipo === "usuario"){
+        cookies.set('tipo', "usuario", { path: '/' });
+        cookies.set('id', data.usuario.id_usuario, { path: '/' });
+        cookies.set('nombre', data.usuario.nombre, { path: '/' });
+      }else{
+        cookies.set('tipo', "asesor", { path: '/' });
+        cookies.set('id', data.usuario.id_asesor, { path: '/' });
+        cookies.set('nombre', data.usuario.nombre, { path: '/' });
+      }
+      navigate("/");
+      window.location.reload();
+      
+      
     }
   };
 

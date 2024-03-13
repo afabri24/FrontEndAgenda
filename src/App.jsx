@@ -1,4 +1,4 @@
-import Card from "./Card";
+
 
 function App() {
   return (
@@ -95,11 +95,6 @@ function App() {
           </div>
         </div>
       </div>
-      {/* {<Card
-        title="Aseroria ingles Basico 1"
-        description="Tema: Presente Simple"
-        date="11/03/2024"
-      />} */}
     </div>
   );
 }
