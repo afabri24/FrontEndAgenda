@@ -9,6 +9,7 @@ import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Asesorias from "./Asesorias.jsx";
 import LoginNav from "./LoginNav.jsx";
+import Perfil from "./Perfil.jsx";
 
 function Main() {
   const [login, setLogin] = useState(true);
@@ -36,6 +37,7 @@ function Main() {
           <LoginNav/>
           <Routes>
             <Route path="/" element={<Asesorias />} />
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
         </>
       )}
