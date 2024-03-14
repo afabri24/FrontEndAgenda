@@ -1,5 +1,10 @@
 import React from "react";
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Time from "./TimerPickerComponent.jsx";
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+
 
 
 function Perfil() {
@@ -44,6 +49,7 @@ function Perfil() {
   }).filter(Boolean);
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="container mx-auto grid grid-cols-2 gap-4">
       <div className="p-4 mt-4">
         <a
@@ -97,9 +103,13 @@ function Perfil() {
           ))}
 
           <Time />
+          
         </div>
       </div>
+
+      <MobileTimePicker defaultValue={dayjs('2024-03-14T15:30')} />
     </div>
+    </LocalizationProvider>
   );
 }
 

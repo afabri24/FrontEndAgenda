@@ -3,6 +3,9 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./Card";
 import API_URL from "./utils/constantes";
+import Button from '@mui/material/Button';
+
+
 
 function Asesorias() {
   const [asesorias, setAsesorias] = useState([]);
@@ -27,7 +30,7 @@ function Asesorias() {
 
   return (
     <div>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-4 s:grid-cols-1">
       {asesorias.length > 0 ? (
         asesorias.map((asesoria) => (
           <Card
@@ -67,7 +70,7 @@ function Asesorias() {
         
         </div>
 
-      <button className="fixed bottom-10 right-4 bg-blue-500 text-white text-sm rounded-full py-4 px-4 shadow-lg">
+      <button className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
         Agregar Asesoría +
       </button>
     </div>

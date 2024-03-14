@@ -10,9 +10,13 @@ import Signup from "./Signup.jsx";
 import Asesorias from "./Asesorias.jsx";
 import LoginNav from "./LoginNav.jsx";
 import Perfil from "./Perfil.jsx";
+import Usuario from "./Usuario.jsx";
+import Cookies from "universal-cookie";
 
 function Main() {
+  const cookies = new Cookies();
   const [login, setLogin] = useState(true);
+  const [tipo, setTipo] = useState('');
 
   useEffect(() => {
     if (window.localStorage.getItem("token")) {
@@ -20,27 +24,41 @@ function Main() {
     }
   }, []);
 
+  useEffect(() => {
+    setTipo(cookies.get("tipo"));
+  }, []);
+
   return (
     <Router>
       {login ? (
         <>
           <Navigation />
+            <Routes>
+              <Route path="/" element={<App />} />
+            </Routes>
+        </>) : 
+        
+        (<>
+        <LoginNav/>
+          {(tipo == 'asesor') ? (
+          <>
+            <Routes>
+                <Route path="/" element={<Asesorias />} />
+                </Routes>
+                </>):(
+          <> 
+            <Routes>
+              <Route path="/" element={<Usuario />} />
+            </Routes></>)
+            }
+        </>)
+      }
           <Routes>
-            <Route path="/" element={<App />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-          </Routes>
-          <Footer />
-        </>
-      ) : (
-        <>
-          <LoginNav/>
-          <Routes>
-            <Route path="/" element={<Asesorias />} />
             <Route path="/perfil" element={<Perfil />} />
           </Routes>
-        </>
-      )}
+        <Footer />
     </Router>
   );
 }
