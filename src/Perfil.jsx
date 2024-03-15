@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Time from "./TimerPickerComponent.jsx";
 import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import ModalHorario from "./ModalHorario.jsx"
+import { Button } from "@mui/material";
 
 
 
 function Perfil() {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalVariant, setModalVariant] = useState("success");
+
+  const handlePopup = (message, error) => {
+    setModalMessage(message);
+    setModalVariant(error ? "Error" : "Sesion iniciada con éxito");
+    setShowModal(true);
+  };
+  const handleClose = () => setShowModal(false);
+
+
   const daysOfWeek = [
     "Domingo",
     "Lunes",
@@ -93,13 +107,14 @@ function Perfil() {
         <h2 className="text-xl font-bold">Horario</h2>
         <div className="flex-col">
           {weekDates.map((date, index) => (
-            <a
+            <button
+              onClick={handlePopup}
               key={index}
-              href={`/${date.replace(/\s/g, "_")}`}
+
               className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
             >
               {date}
-            </a>
+            </button>
           ))}
 
           <Time />
@@ -108,8 +123,15 @@ function Perfil() {
       </div>
 
       <MobileTimePicker defaultValue={dayjs('2024-03-14T15:30')} />
+      <ModalHorario
+          showModal={showModal}
+          handleClose={handleClose}
+          modalVariant={modalVariant}
+          modalMessage={modalMessage}
+        />
     </div>
     </LocalizationProvider>
+    
   );
 }
 
