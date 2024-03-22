@@ -64,12 +64,12 @@ function Login() {
       window.localStorage.setItem("token", data.token);
       if(data.tipo === "usuario"){
         cookies.set('tipo', "usuario", { path: '/' });
-        cookies.set('id', data.usuario.id_usuario, { path: '/' });
         cookies.set('nombre', data.usuario.nombre, { path: '/' });
+        cookies.set('token', data.token, { path: '/' })
       }else{
         cookies.set('tipo', "asesor", { path: '/' });
-        cookies.set('id', data.usuario.id_asesor, { path: '/' });
         cookies.set('nombre', data.usuario.nombre, { path: '/' });
+        cookies.set('token', data.token, { path: '/' })
       }
       navigate("/");
       window.location.reload();

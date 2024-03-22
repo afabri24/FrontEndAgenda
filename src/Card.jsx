@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ModalDetails from './ModalDetails';
 
-function Card({ title, description, date }) {
+
+function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia, modalidad,link }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleClick = () => {
+    setIsFlipped(!isFlipped);
+  };
+
   return (
-    <div className="mx-4 bg-white rounded-xl shadow-md overflow-hidden md:w-64 m-3 border-blue-500">
+    <div 
+      className={`mx-4 bg-white rounded-xl shadow-md overflow-hidden md:w-64 m-3 border-blue-500`}
+      onClick={handleClick}
+    >
       <div className="md:flex">
         <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{title}</div>
-          <p className="mt-2 text-gray-500">{description}</p>
-          <p className="mt-2 text-gray-500">{date}</p>
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{tipo}</div>
+          <p className="mt-2 text-gray-500">{tema}</p>
+          <p className="mt-2 text-gray-500">{asesor}</p>
+          <p className='mt-2 text-gray-500'>{alumno}</p>
+          <p className="mt-2 text-gray-500">{fecha}</p>
+          {isFlipped ? (
+            <>
+              <ModalDetails
+                tipo={tipo}
+                tema={tema}
+                asesor={asesor}
+                alumno={alumno}
+                fecha={fecha}
+                horaInicio={horaInicio}
+                horaFin={horaFin}
+                dia={dia}
+                modalidad={modalidad}
+                link={link}
+              />
+            </>
+          ) : null}
         </div>
       </div>
     </div>

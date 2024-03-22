@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from "react";
-import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Time from "./TimerPickerComponent.jsx";
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
-import ModalHorario from "./ModalHorario.jsx"
+import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
+import ModalHorario from "./ModalDay.jsx";
 import { Button } from "@mui/material";
-
-
+import ModalDay from "./ModalDay";
 
 function Perfil() {
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalVariant, setModalVariant] = useState("success");
-
-  const handlePopup = (message, error) => {
-    setModalMessage(message);
-    setModalVariant(error ? "Error" : "Sesion iniciada con éxito");
-    setShowModal(true);
-  };
-  const handleClose = () => setShowModal(false);
-
-
   const daysOfWeek = [
     "Domingo",
     "Lunes",
@@ -62,8 +49,16 @@ function Perfil() {
       : `${day} ${date.getDate()} de ${month}`;
   }).filter(Boolean);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDayClick = (date) => {
+    setSelectedDate(date);
+    setIsModalOpen(true);
+  };
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="container mx-auto grid grid-cols-2 gap-4">
       <div className="p-4 mt-4">
         <a
@@ -108,30 +103,19 @@ function Perfil() {
         <div className="flex-col">
           {weekDates.map((date, index) => (
             <button
-              onClick={handlePopup}
+              onClick={() => handleDayClick(date)}
               key={index}
-
               className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
             >
               {date}
             </button>
           ))}
-
-          <Time />
-          
         </div>
       </div>
-
-      <MobileTimePicker defaultValue={dayjs('2024-03-14T15:30')} />
-      <ModalHorario
-          showModal={showModal}
-          handleClose={handleClose}
-          modalVariant={modalVariant}
-          modalMessage={modalMessage}
-        />
+      {isModalOpen && (
+        <ModalDay onRequestClose={() => setIsModalOpen(false)} fecha={selectedDate} />
+      )}
     </div>
-    </LocalizationProvider>
-    
   );
 }
 
