@@ -1,21 +1,20 @@
 import React, { useState, useContext } from "react";
 import Modal from "./Modal";
-import API_URL from "./utils/constantes";
-
+import API_URL from "./utils/Constantes";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import TextField from '@mui/material/TextField';
+import { es_valido_email, es_valido_matricula, es_valido_password } from "./utils/Validadores.js";
 
 function Login() {
   const [credencial, setCredencial] = useState("");
   const [password, setPassword] = useState("");
-  const [tipo, setTipo] = useState("usuario");
+  const [tipo, setTipo] = useState("");
   const [error, setError] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [modalVariant, setModalVariant] = useState("success");
-
-
+  const [modalVariant, setModalVariant] = useState("Error");
 
   const cookies = new Cookies();
   const navigate = useNavigate();
@@ -27,18 +26,76 @@ function Login() {
   };
   const handleClose = () => setShowModal(false);
 
-  const handleCredencialChange = (e) => {
-    setCredencial(e.target.value);
-    // Verifica si el valor ingresado es un correo electrónico
-    const isEmail = e.target.value.includes("@");
-    // Si es un correo electrónico, cambia el tipo a 'asesor'
-    // De lo contrario, el tipo debería ser 'usuario'
-    setTipo(isEmail ? "asesor" : "usuario");
-  };
+  //variables para los errores del formulario
+  const [errores, setErrores] = useState({
+    credencial: '',
+    password: ''
+  });
+
+
+  const actualizarTipo = (tipo) => {
+    if (es_valido_matricula(tipo)){
+      setTipo('usuario')
+    } else {
+      setTipo('asesor')
+    } 
+  }
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
-    // Aquí puedes llamar a tu API con los valores de matricula y password
+    
+    limpiarErrores();
+
+    if(validarCampos()){
+      enviarDatosAlAPI();
+    }
+  };
+
+  const validarCampos = () => {
+    let valido = true;
+    let credencialError = '';
+    let passwordError = '';
+
+
+    if (!es_valido_matricula(credencial)){
+      credencialError = 'La matricula que ingreso no es valida, favor de cambiarla.';
+      valido = false;
+      if(es_valido_email(credencial)){
+        credencialError = ''
+        valido = true;
+      }
+    }
+
+    if (!es_valido_password(password)){
+      passwordError = 'La contraseña que ingreso no es valida, favor de cambiarla.';
+      valido = false;
+    }
+
+    if (password.length === 0) {
+      passwordError = 'La contraseña es requerida';
+      valido = false;
+    }
+
+    if (credencial.length === 0) {
+      credencialError = 'La matricula es requerida.';
+      valido = false;
+    }
+ 
+    setErrores({
+      credencial: credencialError,
+      password: passwordError
+    });
+
+    return valido;
+  }
+
+  const limpiarErrores = () => {
+    setErrores({});
+  }
+
+  const enviarDatosAlAPI = async () => {
+    console.log(tipo+credencial+password)
     const response = await fetch(API_URL + "api/autenticacion/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,7 +104,7 @@ function Login() {
 
     if (!response.ok) {
       // Si el servidor devuelve un estado de error, muestra un mensaje de error
-      setError("Error en la base de datos, intente de nuevo.");
+      setError("Error al conectarse al servidor, intente de nuevo.");
       return;
     }
     const data = await response.json();
@@ -73,10 +130,8 @@ function Login() {
       }
       navigate("/");
       window.location.reload();
-      
-      
     }
-  };
+  }
 
   return (
     <div className="flex relative justify-center lg:px-0 items-center lg:py-20 md:px-12 overflow-hidden">
@@ -90,25 +145,32 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className="space-y-6">
             <div>
-              <label>Matricula</label>
-              <input
-                id="matricula"
-                name="matricula"
-                className="w-full focus:outline-none border py-3 appearance-none h-12 bg-gray-50 block border-gray-200 focus:bg-white focus:border-accent-500 focus:ring-accent-500 placeholder-gray-400 px-3 rounded-xl sm:text-sm text-accent-500"
-                placeholder="Matricula"
-                onChange={handleCredencialChange}
-              />
+              <TextField id="matricula" 
+                  className="w-full py-10 h-12 block"
+                  label="Matricula" 
+                  name="matricula"
+                  variant="outlined" 
+                  placeholder="Ingresa tu matricula (ejem: S200XXXXX)"
+                  onChange={(e) => {setCredencial(e.target.value); actualizarTipo(e.target.value) }}
+                  />
+                {errores.credencial && <span
+                className="text-red-500 text-xs py-1">
+                  {errores.credencial}</span>}
             </div>
             <div className="col-span-full">
-              <label>Contraseña</label>
-              <input
-                id="password"
-                name="password"
-                className="w-full focus:outline-none border py-3 appearance-none h-12 bg-gray-50 block border-gray-200 focus:bg-white focus:border-accent-500 focus:ring-accent-500 placeholder-gray-400 px-3 rounded-xl sm:text-sm text-accent-500"
-                placeholder="Contraseña"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+
+              <TextField id="password" 
+                  className="w-full py-10 h-12 block"
+                  label="Contraseña" 
+                  name="password"
+                  variant="outlined" 
+                  placeholder="Ingresa tu contraseña"
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  />
+                {errores.password && <span
+                className="text-red-500 text-xs py-1">
+                  {errores.password}</span>}
             </div>
             <div className="flex items-center justify-between">
               <div className="text-sm">

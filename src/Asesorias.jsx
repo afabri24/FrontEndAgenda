@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./Card";
-import API_URL from "./utils/constantes";
+import API_URL from "./utils/Constantes";
 import Button from "@mui/material/Button";
 
 function Asesorias() {
@@ -86,10 +86,6 @@ function Asesorias() {
 
         
       </div>
-
-      <button className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
-        Agregar Asesoría +
-      </button>
     </div>
   );
 }
