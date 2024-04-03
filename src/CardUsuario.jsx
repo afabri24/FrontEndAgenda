@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ModalDetails from './ModalDetails';
+import { Button } from '@mui/material';
 
 
-function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia, modalidad,link }) {
+function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia, modalidad, password, url, reunion_id}) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleClick = () => {
@@ -11,7 +12,7 @@ function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia
 
   return (
     <div 
-      className={`mx-4 bg-white rounded-xl shadow-md overflow-hidden md:w-64 m-3 border-blue-500`}
+      className={`mx-4 bg-slate-100 rounded-xl shadow-md overflow-hidden md:w-64 m-3 border-blue-500`}
       onClick={handleClick}
     >
       <div className="md:flex">
@@ -20,6 +21,7 @@ function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia
           <p className="mt-2 text-gray-500">Tema: {tema}</p>
           <p className="mt-2 text-gray-500">Asesor: {asesor}</p>
           <p className="mt-2 text-gray-500">Fecha: {fecha}</p>
+          
           {isFlipped ? (
             <>
               <ModalDetails
@@ -32,7 +34,9 @@ function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia
                 horaFin={horaFin}
                 dia={dia}
                 modalidad={modalidad}
-                link={link}
+                password={password}
+                url={url}
+                reunion_id={reunion_id}
                 onRequestClose={handleClick}
               />
             </>

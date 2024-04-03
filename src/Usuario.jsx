@@ -36,17 +36,19 @@ function Usuario() {
         {asesorias.length > 0 ? (
           asesorias.map((asesoria) => (
             <Card
-            qdwwedwedwe
-              key={asesoria.id} // Asume que cada asesoría tiene un ID único
-              tipo={asesoria.tipo} // Asume que cada asesoría tiene un título
-              tema={asesoria.tema} // Asume que cada asesoría tiene una descripción
-              asesor={asesoria.nombre_asesor} // Asume que cada asesoría tiene un asesor
-              alumno={asesoria.alumno} // Asume que cada asesoría tiene un alumno
-              fecha={asesoria.fecha} // Asume que cada asesoría tiene una fecha
-              horaInicio={asesoria.horaInicio} // Asume que cada asesoría tiene una hora de inicio
-              horaFin={asesoria.horaFin} // Asume que cada asesoría tiene una hora de fin
-              dia={asesoria.dia} // Asume que cada asesoría tiene un día
-              modalidad={asesoria.modalidad} // Asume que cada asesoría tiene una modalidad
+              key={asesoria.id} 
+              tipo={asesoria.tipo} 
+              tema={asesoria.tema} 
+              asesor={asesoria.nombre_asesor} 
+              alumno={asesoria.alumno} 
+              fecha={asesoria.fecha} 
+              horaInicio={asesoria.hora_inicio} 
+              horaFin={asesoria.hora_termino} 
+              dia={asesoria.dia} 
+              modalidad={asesoria.modalidad}
+              password={asesoria.password_reunion}
+              url={asesoria.url_reunion}
+              reunion_id={asesoria.id_reunion}
             />
           ))
         ) : (
