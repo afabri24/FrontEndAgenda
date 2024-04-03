@@ -16,11 +16,11 @@ function Card({ key, tipo, tema, fecha, asesor, alumno, horaInicio, horaFin, dia
     >
       <div className="md:flex">
         <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{tipo}</div>
-          <p className="mt-2 text-gray-500">{tema}</p>
-          <p className="mt-2 text-gray-500">{asesor}</p>
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Modalidad: {tipo}</div>
+          <p className="mt-2 text-gray-500">Tema: {tema}</p>
+          <p className="mt-2 text-gray-500">Asesor: {asesor}</p>
           <p className='mt-2 text-gray-500'>{alumno}</p>
-          <p className="mt-2 text-gray-500">{fecha}</p>
+          <p className="mt-2 text-gray-500">Fecha: {fecha}</p>
           {isFlipped ? (
             <>
               <ModalDetails

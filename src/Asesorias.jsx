@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Card from "./Card";
+import Card from "./CardAsesor";
 import API_URL from "./utils/Constantes";
 import Button from "@mui/material/Button";
 
