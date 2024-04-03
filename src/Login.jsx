@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Modal from "./Modal";
-import API_URL from "./utils/Constantes";
+import API_URL from "./utils/Constantes.js";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import TextField from '@mui/material/TextField';

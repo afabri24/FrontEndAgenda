@@ -9,6 +9,8 @@ import { Button } from "@mui/material";
 import ModalDay from "./ModalDay";
 
 function Perfil() {
+
+  const days = [];
   const daysOfWeek = [
     "Domingo",
     "Lunes",
@@ -44,6 +46,9 @@ function Perfil() {
     );
     const day = daysOfWeek[date.getDay()];
     const month = monthsOfYear[date.getMonth()];
+
+    days.push(day);
+
     return date.getDay() === 0 || date.getDay() === 6
       ? null
       : `${day} ${date.getDate()} de ${month}`;
@@ -51,10 +56,12 @@ function Perfil() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDay, setSelectedDay] = useState();
 
-  const handleDayClick = (date) => {
+  const handleDayClick = (date,day) => {
     setSelectedDate(date);
+    setSelectedDay(day);
     setIsModalOpen(true);
   };
 
@@ -103,17 +110,21 @@ function Perfil() {
         <div className="flex-col">
           {weekDates.map((date, index) => (
             <button
-              onClick={() => handleDayClick(date)}
-              key={index}
-              className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
-            >
-              {date}
-            </button>
+            onClick={() => handleDayClick(date, days[index+1])}
+            key={index}
+            className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
+          >
+            {date}
+          </button>
           ))}
         </div>
       </div>
       {isModalOpen && (
-        <ModalDay onRequestClose={() => setIsModalOpen(false)} fecha={selectedDate} />
+        <ModalDay
+          onRequestClose={() => setIsModalOpen(false)}
+          fecha={selectedDate}
+          dia={selectedDay}
+        />
       )}
     </div>
   );
