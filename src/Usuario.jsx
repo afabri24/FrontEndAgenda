@@ -75,9 +75,9 @@ function Usuario() {
         />
       </div>
 
-        <button className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
+        <a href="/registroAsesoria" className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
         Agregar Asesoría +
-      </button>
+      </a>
     </div>
     )
 
