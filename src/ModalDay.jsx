@@ -34,24 +34,24 @@ function ModalDay({
 
   const [horarios, setHorarios] = useState([]);
 
+  const fetchHorarios = async () => {
+    try {
+      const response = await axios.post(
+        API_URL + "api/asesorias/obtenerHorariosByAsesor/",
+        {
+          dia: dia.toString().toLowerCase(),
+          token: localStorage.getItem("token"),
+        }
+      );
+      setHorarios(response.data.mensaje);
+    } catch (error) {
+      console.error("Error al recuperar los horarios", error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchHorarios = async () => {
-      try {
-        const response = await axios.post(
-          API_URL + "api/asesorias/obtenerHorariosByAsesor/",
-          {
-            dia: dia.toString().toLowerCase(),
-            token: localStorage.getItem("token"),
-          }
-        );
-        setHorarios(response.data.mensaje);
-      } catch (error) {
-        console.error("Error al recuperar los horarios", error);
-      }
-    };
-
     fetchHorarios();
-  }, [dia]);
+  }, [dia, fetchHorarios]);
 
   const [selectedDateStart, setSelectedDateStart] = useState(null);
   const [selectedDateEnd, setSelectedDateEnd] = useState(null);
@@ -82,7 +82,14 @@ function ModalDay({
         }
       );
 
-      console.log(response.data);
+
+      if(!response.data.error){
+        alert("Se agrego el nuevo horario");
+        fetchHorarios();
+      }else{
+        alert("error al agregar el horario")
+        console.error(error);
+      }
     } catch (error) {
       console.error(error);
     }
