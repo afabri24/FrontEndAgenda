@@ -14,6 +14,7 @@ import Usuario from "./Usuario.jsx";
 import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import VerificarToken from "./utils/VerificarToken.jsx";
+import Contexto from "./RegistroAsesoria/Contexto.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -52,7 +53,7 @@ function Main() {
           <> 
             <Routes>
               <Route path="/" element={<Usuario />} />
-              <Route path="/RegistroAsesoria" element={<RegistroAsesoria />} />
+              <Route path="/RegistroAsesoria" element={<Contexto><RegistroAsesoria /></Contexto>} />
             </Routes>
           </>
           )}

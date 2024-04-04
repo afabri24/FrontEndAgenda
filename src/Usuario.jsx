@@ -31,7 +31,7 @@ function Usuario() {
 
     return(
     <div>
-        <div className="grid grid-cols-5 gap-4 s:grid-cols-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {asesorias.length > 0 ? (
           asesorias.map((asesoria) => (
             <Card
@@ -61,7 +61,7 @@ function Usuario() {
         <option value="">Semana pasada</option>
         <option value="">Mes pasado</option>
       </select>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         <Card
           tipo="Ingles 2"
           tema="verbo to be"

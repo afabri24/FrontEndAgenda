@@ -2,9 +2,11 @@ import React, { useState, useEffect, useHistory } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
+import Cookies from 'universal-cookie';
 
 function VerificarToken() {
     const navigate = useNavigate();
+    const coockies = new Cookies()
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -18,6 +20,9 @@ function VerificarToken() {
         if (decodedToken.exp < currentTime) {
             setShowModal(true);
             localStorage.clear()
+            coockies.remove("nombre")
+            coockies.remove("token")
+            coockies.remove("tipo")
         }
         } else {
             console.log("Error ya no hay token")

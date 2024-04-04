@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { multiStepContext } from './Contexto'
+import { Button } from '@mui/material';
 
 function Paso1() {
+  const { setPaso, asesoriaDatos, setAsesoriaDatos } = useContext(multiStepContext);
   return (
     <div>
           <div className="mx-auto max-w-7xl pt-12">
@@ -12,11 +15,13 @@ function Paso1() {
                     <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
                       <img src="/1.jpg" alt="Imagen maestra Gabriela" />
                     </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
+                    <p  className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
                       Mtra. Gabriela Jimenez Aguilar
                     </p>
+                    
                   </div>
                   <div className="mt-4 text-gray-500 text-sm">Ingles</div>
+                  <Button onClick={() => {setPaso(2); setAsesoriaDatos({...asesoriaDatos, "idAsesor": 1})} } >Seleccionar</Button>
                 </div>
                 <div>
                   <div>
