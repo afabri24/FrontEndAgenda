@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -8,14 +7,13 @@ import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { Switch } from "@mui/material";
 import { Select, MenuItem } from '@mui/material';
 
-function Hours({ horaInicio, horaFin,modalidad, selectedDate, handleDateChange }) {
+function Hours({idDiaHora, horaInicio, horaFin,modalidad, selectedDate, handleDateChange }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleSwitchChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  const [mode, setMode] = useState("presencial");
 
   const handleModeChange = (event) => {
     setMode(event.target.value);
@@ -25,13 +23,13 @@ function Hours({ horaInicio, horaFin,modalidad, selectedDate, handleDateChange }
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MobileTimePicker
         value={selectedDate}
-        defaultValue={dayjs(horaInicio)}
+        defaultValue={dayjs(horaInicio, "HH:mm")}
         onChange={handleDateChange}
         renderInput={(params) => <Time {...params} />}
       />
       <MobileTimePicker
         value={selectedDate}
-        defaultValue={dayjs(horaFin)}
+        defaultValue={dayjs(horaFin, "HH:mm")}
         onChange={handleDateChange}
         renderInput={(params) => <Time {...params} />}
       />
@@ -41,7 +39,7 @@ function Hours({ horaInicio, horaFin,modalidad, selectedDate, handleDateChange }
 
       {/* cambiar a virtal o presencial */}
 
-      <Select value={mode} onChange={handleModeChange}>
+      <Select value={modalidad} onChange={handleModeChange}>
         <MenuItem value={"presencial"}>Presencial</MenuItem>
         <MenuItem value={"virtual"}>Virtual</MenuItem>
       </Select>

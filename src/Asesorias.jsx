@@ -21,7 +21,6 @@ function Asesorias() {
           }
         );
         setAsesorias(response.data);
-        console.log(response.data.Asesorias);
       } catch (error) {
         console.error("Hubo un error al recuperar las asesorias:", error);
       }

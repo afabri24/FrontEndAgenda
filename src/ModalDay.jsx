@@ -10,21 +10,23 @@ import { Select, MenuItem } from "@mui/material";
 import axios from "axios";
 import { useEffect } from "react";
 import API_URL from "./utils/Constantes.js";
+import Cookies from "universal-cookie";
 
 function ModalDay({
   fecha,
   dia,
   onRequestClose,
   selectedDate,
-  handleDateChange
+  handleDateChange,
 }) {
+  const cookies = new Cookies();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleSwitchChange = (event) => {
     setIsChecked(event.target.checked);
   };
 
-  const [mode, setMode] = useState("presencial");
+  const [mode, setMode] = useState("nulo");
 
   const handleModeChange = (event) => {
     setMode(event.target.value);
@@ -37,10 +39,11 @@ function ModalDay({
       try {
         const response = await axios.post(
           API_URL + "api/asesorias/obtenerHorariosByAsesor/",
-          { dia: dia.toString().toLowerCase(), token: localStorage.getItem("token") }
+          {
+            dia: dia.toString().toLowerCase(),
+            token: localStorage.getItem("token"),
+          }
         );
-        console.log(response.data);
-
         setHorarios(response.data.mensaje);
       } catch (error) {
         console.error("Error al recuperar los horarios", error);
@@ -49,6 +52,41 @@ function ModalDay({
 
     fetchHorarios();
   }, [dia]);
+
+  const [selectedDateStart, setSelectedDateStart] = useState(null);
+  const [selectedDateEnd, setSelectedDateEnd] = useState(null);
+
+  const handleClick = async () => {
+    const token = cookies.get("token");
+
+    if (mode == "nulo") {
+      alert("Por favor selecciona una modalidad: virtual o presencial");
+      return;
+    }
+    const formattedDateStart = selectedDateStart
+      ? selectedDateStart.format("HH:mm:ss")
+      : null;
+    const formattedDateEnd = selectedDateEnd
+      ? selectedDateEnd.format("HH:mm:ss")
+      : null;
+
+    try {
+      const response = await axios.post(
+        API_URL + "api/asesores/registrarDiaHora/",
+        {
+          hora_inicio: formattedDateStart,
+          hora_termino: formattedDateEnd,
+          modalidad: mode,
+          dia: dia.toString().toLowerCase(),
+          token: token,
+        }
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -64,45 +102,51 @@ function ModalDay({
               className=" py-10 overflow-y-auto"
               style={{ maxHeight: "300px", overflowY: "auto" }}
             >
-              {horarios && horarios.map((horario, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between bg-slate-300 p-4 rounded-lg my-2"
-                >
-                  <Hours
-                    HoraInicio={horario.horaInicio}
-                    HoraFin={horario.horaFin}
-                  />
-                </div>
-              ))}
+              {horarios &&
+                horarios.map((horario, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between bg-slate-300 p-4 rounded-lg my-2"
+                  >
+                    <Hours
+                      idDiaHora={horario.id_diahora}
+                      horaInicio={horario.hora_inicio}
+                      horaFin={horario.hora_termino}
+                      selectedDate={selectedDate || horario.horaInicio}
+                      handleDateChange={handleDateChange}
+                      modalidad={horario.modalidad}
+                    />
+                  </div>
+                ))}
             </div>
             <p>Seleccionar nueva hora</p>
             <div className="flex justify-between bg-slate-300 p-4 rounded-lg">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <MobileTimePicker
-                  value={selectedDate}
-                  onChange={handleDateChange}
+                  value={selectedDateStart}
+                  onChange={setSelectedDateStart}
                   renderInput={(params) => <Time {...params} />}
                 />
                 <MobileTimePicker
-                  value={selectedDate}
-                  onChange={handleDateChange}
+                  value={selectedDateEnd}
+                  onChange={setSelectedDateEnd}
                   renderInput={(params) => <Time {...params} />}
                 />
-
-                {/* switch desactivacion hora */}
-                <Switch checked={isChecked} onChange={handleSwitchChange} />
 
                 {/* cambiar a virtal o presencial */}
 
                 <Select value={mode} onChange={handleModeChange}>
+                  <MenuItem value={"nulo"}>Modalidad</MenuItem>
                   <MenuItem value={"presencial"}>Presencial</MenuItem>
                   <MenuItem value={"virtual"}>Virtual</MenuItem>
                 </Select>
 
                 {/* agregar horario de ese dia */}
 
-                <button className="mt-3 text-white font-bold py-2 px-4 rounded bg-green-400 hover:bg-green-700">
+                <button
+                  className="mt-3 text-white font-bold py-2 px-4 rounded bg-green-400 hover:bg-green-700"
+                  onClick={handleClick}
+                >
                   Agregar
                 </button>
               </LocalizationProvider>
