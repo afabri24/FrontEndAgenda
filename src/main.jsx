@@ -12,6 +12,8 @@ import LoginNav from "./LoginNav.jsx";
 import Perfil from "./Perfil.jsx";
 import Usuario from "./Usuario.jsx";
 import Cookies from "universal-cookie";
+import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
+import VerificarToken from "./utils/VerificarToken.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -30,6 +32,7 @@ function Main() {
 
   return (
     <Router>
+      <VerificarToken />
       {login ? (
         <>
           <Navigation />
@@ -41,16 +44,18 @@ function Main() {
         (<>
         <LoginNav/>
           {(tipo == 'asesor') ? (
-          <>
-            <Routes>
+            <>
+              <Routes>
                 <Route path="/" element={<Asesorias />} />
-                </Routes>
-                </>):(
+              </Routes>
+            </>):(
           <> 
             <Routes>
               <Route path="/" element={<Usuario />} />
-            </Routes></>)
-            }
+              <Route path="/RegistroAsesoria" element={<RegistroAsesoria />} />
+            </Routes>
+          </>
+          )}
         </>)
       }
           <Routes>
