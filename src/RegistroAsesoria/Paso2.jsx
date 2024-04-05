@@ -59,7 +59,7 @@ function Paso2() {
       - Reservar con 24 horas de 
         anticipacion
         <FormGroup>
-          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Lei todos los terminos y condiciones" />
         </FormGroup>
       </div>
       <Button onClick={() => setPaso(1)} >Regresar</Button>

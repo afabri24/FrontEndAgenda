@@ -11,6 +11,7 @@ import Asesorias from "./Asesorias.jsx";
 import LoginNav from "./LoginNav.jsx";
 import Perfil from "./Perfil.jsx";
 import Usuario from "./Usuario.jsx";
+import PerfilUsuario from "./PefilUsuario.jsx"
 import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import VerificarToken from "./utils/VerificarToken.jsx";
@@ -48,11 +49,13 @@ function Main() {
             <>
               <Routes>
                 <Route path="/" element={<Asesorias />} />
+                <Route path="/perfil" element={<Perfil />} />
               </Routes>
             </>):(
           <> 
             <Routes>
               <Route path="/" element={<Usuario />} />
+              <Route path="/perfil" element={<PerfilUsuario />} />
               <Route path="/RegistroAsesoria" element={<Contexto><RegistroAsesoria /></Contexto>} />
             </Routes>
           </>
@@ -62,7 +65,6 @@ function Main() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/perfil" element={<Perfil />} />
           </Routes>
         <Footer />
     </Router>
