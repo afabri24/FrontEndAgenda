@@ -51,7 +51,7 @@ function Asesorias() {
           <p>No hay asesorias disponibles o hubo un error al cargarlas.</p>
         )}
       </div>
-      <h1 className="text-2xl font-bold mt-4">Hitorial de asesorias</h1>
+      <h1 className="text-2xl font-bold mt-4">Historial de asesorias</h1>
       <select className="text-gray-500 block w-full p-2 border border-gray-300 rounded mt-2 size-1/6">
         <option value="">Ascedente</option>
         <option value="">Decediente</option>
