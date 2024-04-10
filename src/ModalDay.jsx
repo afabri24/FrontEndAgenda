@@ -21,6 +21,7 @@ function ModalDay({
 }) {
   const cookies = new Cookies();
   const [isChecked, setIsChecked] = useState(false);
+  const [reload, setReload] = useState(true);
 
   const handleSwitchChange = (event) => {
     setIsChecked(event.target.checked);
@@ -44,14 +45,24 @@ function ModalDay({
         }
       );
       setHorarios(response.data.mensaje);
+      setReload(!reload);
     } catch (error) {
       console.error("Error al recuperar los horarios", error);
     }
   };
   
   useEffect(() => {
-    fetchHorarios();
-  }, [dia, fetchHorarios]);
+    if (reload) {
+      fetchHorarios();
+      setReload(false); // reset the reload state after fetching
+    }
+  }, [reload]);
+
+  const handleReload = () => {
+    setReload(true);
+  };
+
+  
 
   const [selectedDateStart, setSelectedDateStart] = useState(null);
   const [selectedDateEnd, setSelectedDateEnd] = useState(null);
@@ -122,6 +133,10 @@ function ModalDay({
                       selectedDate={selectedDate || horario.horaInicio}
                       handleDateChange={handleDateChange}
                       modalidad={horario.modalidad}
+                      handleReload={handleReload}
+                      esLibre={horario.eslibre}
+                      estado={horario.estado}
+                      dia={dia}
                     />
                   </div>
                 ))}
