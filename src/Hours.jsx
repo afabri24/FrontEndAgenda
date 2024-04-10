@@ -28,18 +28,19 @@ function Hours({
   const [isChecked, setIsChecked] = useState(true)
   const [mode, setMode] = useState(modalidad)
   const [status, setStatus] = useState(estado)
-  let bloqueado = status;
-  let modo = bloqueado;
 
   const isFirstRender = useRef(true);
 
   
   const handleSwitchChange = (event) => {
     setStatus(event.target.checked ? "activo" : "inactivo");
+    setIsChecked(event.target.checked)
+    updateData()
   };
   
   const handleModeChange = (event) => {
     setMode(event.target.value);
+    updateData()
   };
 
   const handleDelete = async () => {
@@ -103,16 +104,6 @@ function Hours({
     }
   };
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // Modifica la ref después de la primera renderización
-      return;
-    }
-    
-    console.log(bloqueado);
-    console.log(modo);
-    updateData(); // Asume que esta función realiza la petición de edición
-  }, [bloqueado, modo]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -132,11 +123,11 @@ function Hours({
       />
 
       {/* switch desactivacion hora */}
-      <Switch checked={status===estado} onChange={handleSwitchChange} />
+      <Switch checked={status} onChange={handleSwitchChange} />
 
       {/* cambiar a virtal o presencial */}
 
-      <Select value={mode===modalidad} onChange={handleModeChange}>
+      <Select value={mode} onChange={handleModeChange}>
         <MenuItem value={"presencial"}>Presencial</MenuItem>
         <MenuItem value={"virtual"}>Virtual</MenuItem>
       </Select>
