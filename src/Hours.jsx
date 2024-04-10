@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -9,6 +9,7 @@ import { Select, MenuItem } from "@mui/material";
 import axios from "axios";
 import API_URL from "./utils/Constantes";
 import Cookies from "universal-cookie";
+
 
 function Hours({
   idDiaHora,
@@ -23,38 +24,22 @@ function Hours({
   handleReload,
 }) {
   const cookies = new Cookies();
-  const [mode, setMode] = useState(modalidad);
+  
   const [isChecked, setIsChecked] = useState(true)
-  const [status, setStatus] = useState(estado);
-  const [bloqueado, setBloqueado] = useState(status);
-  const [modo,setModo]=useState(mode);
+  const [mode, setMode] = useState(modalidad)
+  const [status, setStatus] = useState(estado)
+  let bloqueado = status;
+  let modo = bloqueado;
+
+  const isFirstRender = useRef(true);
 
   
   const handleSwitchChange = (event) => {
-    if(event.target.checked){
-      setStatus("activo");
-      setBloqueado("inactivo");
-    }else{
-      setStatus("inactivo");
-      setBloqueado("activo");
-    } 
-    console.log(status);
-    console.log(bloqueado);
-    setIsChecked(event.target.checked);
-    updateData();
+    setStatus(event.target.checked ? "activo" : "inactivo");
   };
-
+  
   const handleModeChange = (event) => {
-    if(event.target.value==="virtual"){
-      setModo("presencial");
-    }else{
-      setModo("virtual");
-    }
-    console.log(mode);
-    console.log(modo);
     setMode(event.target.value);
-    updateData();
-    
   };
 
   const handleDelete = async () => {
@@ -82,12 +67,13 @@ function Hours({
   };
 
   const updateData = async () => {
-    console.log(idDiaHora);
-    console.log(dia);
-    console.log(horaInicio);
-    console.log(horaFin);
-    console.log(modo);
-    console.log(bloqueado);
+    console.log("idDiaHora", idDiaHora);
+    console.log("dia", dia);
+    console.log("horaInicio", horaInicio);
+    console.log("horaFin", horaFin);
+    console.log("modo", modo);
+    console.log("esLibre", esLibre);
+    console.log("estado", bloqueado);
     const token = localStorage.getItem("token");
     try {
       const response = await axios({
@@ -117,6 +103,17 @@ function Hours({
     }
   };
 
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Modifica la ref después de la primera renderización
+      return;
+    }
+    
+    console.log(bloqueado);
+    console.log(modo);
+    updateData(); // Asume que esta función realiza la petición de edición
+  }, [bloqueado, modo]);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MobileTimePicker
@@ -135,11 +132,11 @@ function Hours({
       />
 
       {/* switch desactivacion hora */}
-      <Switch checked={status==="activo"} onChange={handleSwitchChange} />
+      <Switch checked={status===estado} onChange={handleSwitchChange} />
 
       {/* cambiar a virtal o presencial */}
 
-      <Select value={mode} onChange={handleModeChange}>
+      <Select value={mode===modalidad} onChange={handleModeChange}>
         <MenuItem value={"presencial"}>Presencial</MenuItem>
         <MenuItem value={"virtual"}>Virtual</MenuItem>
       </Select>
