@@ -5,6 +5,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Paso1 from './Paso1'
 import Paso2 from './Paso2'
 import Paso3 from './Paso3'
+import Paso4 from './Paso4.jsx'
 import { multiStepContext } from './Contexto.jsx';
 
 function RegistroAsesoria() {
@@ -20,11 +21,16 @@ function RegistroAsesoria() {
         return <Paso2 />
       case 3:
         return <Paso3 />
+      case 4:
+        return <Paso4 />
     }
   }
   return (
     <>
         <Stepper activeStep={pasoActual - 1} className='w-2/3'>
+          <Step>
+            <StepLabel></StepLabel>
+          </Step>
           <Step>
             <StepLabel></StepLabel>
           </Step>

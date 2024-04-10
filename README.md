@@ -16,5 +16,5 @@ TODO fabri:
 -hacer cards
 
 TODO diego:
--hacer pantalla perfil
+-traer los grupos, obtener fecha con el dia
 

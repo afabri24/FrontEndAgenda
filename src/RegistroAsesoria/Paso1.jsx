@@ -3,6 +3,11 @@ import { multiStepContext } from './Contexto'
 import { Button } from '@mui/material';
 
 function Paso1() {
+  function handleClic(id) {
+    setAsesoriaDatos({...asesoriaDatos, "modalidad": "presencial", "idAsesor": id})
+    setPaso(2)
+  }
+    
   const { setPaso, asesoriaDatos, setAsesoriaDatos } = useContext(multiStepContext);
   return (
     <div>
@@ -21,7 +26,7 @@ function Paso1() {
                     
                   </div>
                   <div className="mt-4 text-gray-500 text-sm">Ingles</div>
-                  <Button onClick={() => {setPaso(2); setAsesoriaDatos({...asesoriaDatos, "idAsesor": 1})} } >Seleccionar</Button>
+                  <Button onClick={() => { handleClic(2) }} >Seleccionar</Button>
                 </div>
                 <div>
                   <div>

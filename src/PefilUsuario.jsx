@@ -22,8 +22,6 @@ function PefilUsuario() {
 
 
       if(validarDatos()){
-        
-        console.log("Enviando datos: "+ datosUsuario.token )
 
         axios.put(API_URL+`api/usuarios/actualizar/`, {
           "nombre": datosUsuario.nombre,
@@ -34,6 +32,11 @@ function PefilUsuario() {
         })
           .then(response => {
             console.log(response.data)
+            if(response.data.error){
+              console.log("error")
+            }else{
+              console.log("mostrar modal")
+            }
             
           })
           .catch(error => {

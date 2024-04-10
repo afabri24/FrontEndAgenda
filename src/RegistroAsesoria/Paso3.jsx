@@ -1,57 +1,122 @@
-import React, { useContext } from 'react'
-import { multiStepContext } from './Contexto'
+import React, { useContext, useEffect, useState } from 'react'
+import { multiStepContext } from './Contexto.jsx'
 import { Button, TextField } from '@mui/material';
+import axios from 'axios'
+import API_URL from "../utils/Constantes.js";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import Select from '@mui/material/Select';
+import { dias_entre_semana } from "../utils/Funciones.js"
+import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
+
+
 
 function Paso3() {
+
+  const token = localStorage.getItem('token');
+  const [horas, setHoras] = useState([])
+  const [diasEntreSemana, setDiasEntreSemana] = useState([]);
+
+  
+  useEffect(() => {
+    setDiasEntreSemana(dias_entre_semana());
+    if (asesoriaDatos["dia"]) {
+      axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
+        "token": token,
+        "idAsesor": asesoriaDatos["idAsesor"],
+        "dia": asesoriaDatos["dia"],
+        "modalidad": asesoriaDatos["modalidad"]
+      })
+        .then(response => {
+          console.log(response.data)
+          setHoras(response.data.mensaje)
+        })
+        .catch(error => {
+          console.error("Error al obtener el producto:", error);
+        });
+      }else{
+        console.log("bug")
+      }
+  },  []);
+
+  function obtenerHorasByDia(dia) {
+    axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
+      "token": token,
+      "idAsesor": asesoriaDatos["idAsesor"],
+      "dia": dia,
+      "modalidad": asesoriaDatos["modalidad"]
+    })
+      .then(response => {
+        console.log(response.data)
+        setHoras(response.data.mensaje)
+      })
+      .catch(error => {
+        console.error("Error al obtener el producto:", error);
+      });
+  }
+
+  function validarDatos() {
+      let valido = true;
+
+      if(!asesoriaDatos["idDiaHora"]){
+          console.log("invalido")
+      }else {
+        console.log("valido")
+      }
+
+  }
+
+
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } = useContext(multiStepContext);
   return (
-    <div className='p-10'>
-      <div className='border-2 rounded-xl'>
-        <div className='p-5'>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Tipo de asesoria</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
+    <div className='p-4'>
+      <a className='text-blue-700 text-xl'>Dia y hora</a>
+      <div className="space-y-6">
+        <div>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl className='w-1/3'>
+              <InputLabel>Dia</InputLabel>
+              <Select
+              id="outlined-multiline-static"
+                onChange={
+                  (e)=> { setAsesoriaDatos({...asesoriaDatos, "dia": e.target.value, "idDiaHora": 0, "fecha": obtenerFechaDiaSemanaActual(e.target.value)})
+                  obtenerHorasByDia(e.target.value)
+                }}
+                value={asesoriaDatos["dia"]}
               >
-                <FormControlLabel value="female" control={<Radio />} label="Asesoria" />
-                <FormControlLabel value="male" control={<Radio />} label="Practica oral" />
-              </RadioGroup>
-            </FormControl>
-          </div>
-          <div className='p-5'>
-          <FormControl>
-            <FormLabel id="demo-radio-buttons-group-label">Modalidad</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="presencial"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel value="presencial" onChange={(e)=>setAsesoriaDatos({...asesoriaDatos, "modalidad": "presencial"})} control={<Radio />} label="Presencial" />
-                <FormControlLabel value="virtual" onChange={(e)=>setAsesoriaDatos({...asesoriaDatos, "modalidad": "virtual"})} control={<Radio />} label="Virtual" />
-              </RadioGroup>
-            </FormControl>
-          </div>
-          <div className='p-5'>
-            <TextField
-                id="outlined-multiline-static"
-                label="Tema"
-                multiline
-                placeholder="Ingresa el tema a tratar en la asesoria"
-                rows={4}
-                onChange={(e)=>setAsesoriaDatos({...asesoriaDatos, "tema": e.target.value})}
-                value={asesoriaDatos["tema"]}
-              />
-          </div>
-      </div>
+                {diasEntreSemana.map(dia =>
+                    <MenuItem value={dia.valor}>{dia.dia}</MenuItem>
+                )}
+            </Select>
+          </FormControl>
+        <FormControl className='w-1/3 p-4'>
+          <InputLabel id="demo-simple-select-label">Hora</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            onChange={
+              (e)=> { setAsesoriaDatos({...asesoriaDatos, "idDiaHora": e.target.value})
+            }}
+            value={asesoriaDatos["idDiaHora"]}>
+
+            {horas && horas.length > 0 ? ( horas.map( hora =>
+            (
+              <MenuItem value={hora.idDiaHora}>{hora.hora}</MenuItem>
+            ))) :
+              (<MenuItem value="" disabled>
+                No hay horas disponibles
+              </MenuItem>
+            )}
+            
+          </Select>
+        </FormControl>
+      </Box>     
+    </div>
+  </div>
+     
       <Button onClick={() => setPaso(2)} >Regresar</Button>
-      <Button onClick={() => enviarDatos()} >Registrar asesoria</Button>
+      <Button onClick={() => {setPaso(4), validarDatos(), enviarDatos()}} >Siguiente</Button>
     </div>
   )
 }

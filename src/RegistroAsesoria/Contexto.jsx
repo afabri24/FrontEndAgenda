@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import RegistroAsesoria from "./RegistroAsesoria"
+import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 export const multiStepContext = React.createContext();
 
 function Contexto() {
@@ -8,6 +9,7 @@ function Contexto() {
     const [datosFinales, setDatosFinales] = useState([]);
 
     function enviarDatos(){
+      console.log("Fecha: " + obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]))
       console.log(asesoriaDatos)
     }
   return (
