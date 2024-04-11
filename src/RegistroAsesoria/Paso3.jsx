@@ -71,7 +71,8 @@ function Paso3() {
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } = useContext(multiStepContext);
   return (
-    <div className='p-4'>
+    <div className='p-4 items-center justify-center flex flex-col'>
+        <div className='bg-white shadow-lg rounded-lg p-6 w-full sm:w-1/2'>
       <a className='text-blue-700 text-xl'>Dia y hora</a>
       <div className="space-y-6">
         <div>
@@ -117,6 +118,7 @@ function Paso3() {
      
       <Button onClick={() => setPaso(2)} >Regresar</Button>
       <Button onClick={() => {setPaso(4), validarDatos(), enviarDatos()}} >Siguiente</Button>
+      </div>
     </div>
   )
 }
