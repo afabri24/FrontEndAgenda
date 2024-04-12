@@ -6,10 +6,38 @@ import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import axios from 'axios';
+import API_URL from "../utils/Constantes";
+import { Navigate } from "react-router-dom";
+import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 
 function Paso4() {
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } =
     useContext(multiStepContext);
+
+    async function enviarDatosConToken() {
+      const token = localStorage.getItem('token');
+    
+      try {
+        const response = await axios.post(API_URL+"api/asesorias/registrar/", { 
+          ...asesoriaDatos,
+          Fecha: obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]),
+          token: token 
+        });
+    
+        console.log(response.data);
+        if (!response.data.error) {
+          alert("Asesoria registrada");
+          navigate("/");
+        } else {
+          alert("Hubo un error al registrar la asesoria");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+
   return (
     <div className="flex flex-col items-center justify-center p-10">
       <div className="border-2 rounded-xl w-full sm:w-1/2 flex flex-col">
@@ -60,7 +88,7 @@ function Paso4() {
         </div>
         <div className="flex justify-between px-10">
           <Button onClick={() => setPaso(3)}>Regresar</Button>
-          <Button onClick={() => enviarDatos()}>Registrar asesoria</Button>
+          <Button onClick={() => enviarDatosConToken()}>Registrar asesoria</Button>
         </div>
       </div>
     </div>
