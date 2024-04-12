@@ -77,10 +77,11 @@ function Paso3() {
       <div className="space-y-6">
         <div>
           <Box sx={{ minWidth: 120 }}>
-            <FormControl className='w-1/3'>
+            <FormControl className='w-2/6 p-4 ' sx={{m:1}}>
               <InputLabel>Dia</InputLabel>
               <Select
               id="outlined-multiline-static"
+              margin='normal'
                 onChange={
                   (e)=> { setAsesoriaDatos({...asesoriaDatos, "dia": e.target.value, "idDiaHora": 0, "fecha": obtenerFechaDiaSemanaActual(e.target.value)})
                   obtenerHorasByDia(e.target.value)
@@ -92,10 +93,11 @@ function Paso3() {
                 )}
             </Select>
           </FormControl>
-        <FormControl className='w-1/3 p-4'>
+        <FormControl className='w-2/6 p-4 mx-5' sx={{m:1}}>
           <InputLabel id="demo-simple-select-label">Hora</InputLabel>
           <Select
             labelId="demo-simple-select-label"
+            margin='normal'
             onChange={
               (e)=> { setAsesoriaDatos({...asesoriaDatos, "idDiaHora": e.target.value})
             }}

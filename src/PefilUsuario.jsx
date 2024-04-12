@@ -125,24 +125,14 @@ function PefilUsuario() {
                 {datosUsuario && 
                 (
                 <>
-                    <TextField id="matricula" 
-                    className="w-full py-10 h-12 block m-10"
-                    label="Matricula" 
-                    name="matricula"
-                    variant="outlined" 
-                    value={datosUsuario.matricula}
-                    placeholder="Ingresa tu matricula (ejem: S200XXXXX)"
-                    onChange={(e)=>setDatosUsuario({...datosUsuario, "matricula": e.target.value})}
-                    />
-                    {errores.matricula && <span
-                      className="text-red-500 text-xs py-1">
-                      {errores.matricula}</span>}
+                  
                     <TextField id="nombre" 
                     className="w-full py-10 h-12 block"
                     label="Nombre completo" 
                     name="nombre"
                     variant="outlined" 
                     placeholder="Ingresa tu nombre completo"
+                    margin='normal'
                     value={datosUsuario.nombre}
                     onChange={(e)=>setDatosUsuario({...datosUsuario, "nombre": e.target.value})}
                     />
@@ -155,6 +145,7 @@ function PefilUsuario() {
                     name="matricula"
                     variant="outlined" 
                     placeholder="Ingresa tu correo electronico"
+                    margin='normal'
                     value={datosUsuario.email}
                     onChange={(e)=>setDatosUsuario({...datosUsuario, "email": e.target.value})}
                     />
@@ -167,6 +158,7 @@ function PefilUsuario() {
                     name="password"
                     variant="outlined" 
                     placeholder="Ingresa tu contraseña"
+                    margin='normal'
                     value={datosUsuario.password}
                     onChange={(e)=>setDatosUsuario({...datosUsuario, "password": e.target.value})}
                     />

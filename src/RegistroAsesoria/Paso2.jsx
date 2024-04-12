@@ -21,6 +21,7 @@ function Paso2() {
   const token = localStorage.getItem("token");
   const [cursos, setCursos] = useState([]);
   const [showModal, setShowModal] = React.useState(false);
+  const [showModalCurso, setShowModalCurso] = React.useState(false);
 
   useEffect(() => {
     axios
@@ -29,20 +30,24 @@ function Paso2() {
         idAsesor: asesoriaDatos["idAsesor"],
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.mensaje);
         setCursos(response.data.mensaje);
       })
       .catch((error) => {
-        console.error("Error al obtener el producto:", error);
+        console.error("Error al obtener los cursos:", error);
       });
   }, []);
 
+
   function validarDatos() {
-    if (check) {
-      console.log("valido");
+    if (asesoriaDatos.idCurso) {
+      console.log("Curso seleccionado:", asesoriaDatos.idCurso);
     } else {
-      console.log("invalido");
+      setShowModalCurso(true);
+      console.log("Curso no seleccionado");
+      return false;
     }
+    return true;
   }
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } =
@@ -54,10 +59,15 @@ function Paso2() {
   const handleClose = () => {
     setShowModal(false);
   };
+
+  const handleCloseCurso = () => {
+    setShowModalCurso(false);
+  }
+
   return (
     <div className="p-4 flex flex-col lg:flex-row justify-center items-center px-60">
       <div className="flex-1 mx-auto bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
-        <h2>Selecciona tu curso:</h2>
+        <h2 className="text-blue-700">Selecciona tu curso:</h2>
         <FormControl className="">
           <InputLabel id="demo-simple-select-label">Cursos</InputLabel>
           <Select
@@ -66,7 +76,6 @@ function Paso2() {
               setAsesoriaDatos({ ...asesoriaDatos, idCurso: e.target.value });
             }}
             value={asesoriaDatos["idCurso"]}
-            margin="normal"
           >
             {cursos && cursos.length > 0 ? (
               cursos.map((curso) => (
@@ -119,9 +128,13 @@ function Paso2() {
               if (!asesoriaDatos["check"]) {
                 handleOpen();
               } else {
-                setPaso(3);
                 validarDatos();
-                enviarDatos();
+                if(validarDatos()){
+                  setPaso(3);
+                  enviarDatos();
+                }else {
+                  console.log("Datos no validos");
+                }
               }
             }}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -134,6 +147,12 @@ function Paso2() {
             handleClose={handleClose}
             modalVariant="danger"
             modalMessage="Por favor, acepta los términos y condiciones para continuar."
+          />
+          <Modal
+            showModal={showModalCurso}
+            handleClose={handleCloseCurso}
+            modalVariant="danger"
+            modalMessage="Por favor, selecciona un curso para continuar."
           />
         </div>
       </div>
