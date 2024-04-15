@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { dias_entre_semana } from "../utils/Funciones.js"
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
+import Modal from '../Modal.jsx';
 
 
 
@@ -18,6 +19,7 @@ function Paso3() {
   const token = localStorage.getItem('token');
   const [horas, setHoras] = useState([])
   const [diasEntreSemana, setDiasEntreSemana] = useState([]);
+  const [showModal, setShowModal] = React.useState(false);
 
   
   useEffect(() => {
@@ -58,15 +60,19 @@ function Paso3() {
   }
 
   function validarDatos() {
-      let valido = true;
-
-      if(!asesoriaDatos["idDiaHora"]){
-          console.log("invalido")
-      }else {
-        console.log("valido")
-      }
-
+    if (!asesoriaDatos.dia || !asesoriaDatos.idDiaHora) {
+      setShowModal(true);
+    } else {
+      // Continuar al siguiente paso
+      setPaso(4);
+      setAsesoriaDatos({...asesoriaDatos, "tipo": "asesoria"});
+      enviarDatos();
+    }
   }
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
 
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } = useContext(multiStepContext);
@@ -119,7 +125,13 @@ function Paso3() {
   </div>
      
       <Button onClick={() => setPaso(2)} >Regresar</Button>
-      <Button onClick={() => {setPaso(4), validarDatos(), enviarDatos()}} >Siguiente</Button>
+      <Button onClick={() => {validarDatos()}} >Siguiente</Button>
+      <Modal
+            showModal={showModal}
+            handleClose={handleClose}
+            modalVariant="danger"
+            modalMessage="Por favor, selecciona la hora y dia."
+          />
       </div>
     </div>
   )

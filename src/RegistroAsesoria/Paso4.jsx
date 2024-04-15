@@ -8,33 +8,48 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import axios from 'axios';
 import API_URL from "../utils/Constantes";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
+import Modal from '../Modal.jsx';
 
 function Paso4() {
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } =
     useContext(multiStepContext);
 
+    const navigate = useNavigate();
+
+    const [showModal, setShowModal] = React.useState(false);
+
     async function enviarDatosConToken() {
       const token = localStorage.getItem('token');
-    
+      if (!asesoriaDatos.tema || asesoriaDatos.tema.trim() === '') {
+        setShowModal(true);
+        return;
+      }
+      
+      console.log(asesoriaDatos);
       try {
         const response = await axios.post(API_URL+"api/asesorias/registrar/", { 
           ...asesoriaDatos,
           Fecha: obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]),
-          token: token 
+          token: token,
+
         });
     
-        console.log(response.data);
         if (!response.data.error) {
-          alert("Asesoria registrada");
           navigate("/");
+          window.location.reload();
         } else {
           alert("Hubo un error al registrar la asesoria");
         }
       } catch (error) {
         console.error(error);
       }
+    }
+
+    const handleClose = () => {
+      setShowModal(false);
     }
 
 
@@ -89,6 +104,13 @@ function Paso4() {
         <div className="flex justify-between px-10">
           <Button onClick={() => setPaso(3)}>Regresar</Button>
           <Button onClick={() => enviarDatosConToken()}>Registrar asesoria</Button>
+
+          <Modal
+            showModal={showModal}
+            handleClose={handleClose}
+            modalVariant="danger"
+            modalMessage="Por favor, agrega un tema a la asesoria."
+          />
         </div>
       </div>
     </div>

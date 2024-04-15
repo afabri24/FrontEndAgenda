@@ -26,7 +26,7 @@ function Footer(){
                         <a href="/" className="hover:text-black">Pagina principal</a>
                         </li>
                         <li>
-                        <a href="/faq" className="hover:text-black">Freguntas frecuentes</a>
+                        <a href="/faq" className="hover:text-black">Preguntas frecuentes</a>
                         </li>
                         <li>
                         <a href="/terms" className="hover:text-black">Acerca de nosostros</a>

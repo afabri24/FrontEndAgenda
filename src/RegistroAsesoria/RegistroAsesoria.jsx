@@ -12,7 +12,6 @@ function RegistroAsesoria() {
   const { pasoActual, datosFinales } = useContext(multiStepContext);
 
   function mostrarPasos(paso) {
-    console.log(paso);
     switch (paso) {
       case 1:
         return <Paso1 />;

@@ -1,6 +1,6 @@
 export function dias_entre_semana() {
   const diasSemana = [{"dia":'Lunes', "valor":'lunes'},{"dia":'Martes', "valor":'martes'},
-  {"dia":'Miércoles', "valor":'miercoles'},{"dia":'Jueves', "valor":'jueves'},
+  {"dia":'Miercoles', "valor":'miercoles'},{"dia":'Jueves', "valor":'jueves'},
   {"dia":'Viernes', "valor":'viernes'}];
   const hoy = new Date();
   const diaSemana = hoy.getDay() ; 
@@ -23,7 +23,7 @@ export function dias_entre_semana() {
 }
 
 export function obtenerFechaDiaSemanaActual(nombreDiaSemana) {
-  const diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  const diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
   const hoy = new Date();
   const diaSemana = hoy.getDay(); // 0 para domingo, 1 para lunes, ..., 6 para sábado
 
@@ -32,7 +32,11 @@ export function obtenerFechaDiaSemanaActual(nombreDiaSemana) {
     throw new Error('El nombre del día de la semana no es válido.');
   }
 
-  const diferenciaDias = indiceDia - diaSemana;
+  let diferenciaDias = indiceDia - diaSemana + 1; // +1 porque los días de la semana comienzan en lunes en lugar de domingo
+  if (diferenciaDias <= 0) {
+    diferenciaDias += 7; // Si la diferencia de días es negativa, agrega 7 para obtener la fecha del mismo día de la semana en la próxima semana
+  }
+
   const fechaDiaSemanaActual = new Date(hoy);
   fechaDiaSemanaActual.setDate(hoy.getDate() + diferenciaDias);
 
