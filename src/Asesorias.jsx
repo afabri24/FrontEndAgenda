@@ -35,16 +35,16 @@ function Asesorias() {
         {asesorias.length > 0 ? (
           asesorias.map((asesoria) => (
             <Card
-              key={asesoria.id} // Asume que cada asesoría tiene un ID único
-              tipo={asesoria.tipo} // Asume que cada asesoría tiene un título
-              tema={asesoria.tema} // Asume que cada asesoría tiene una descripción
-              asesor={asesoria.asesor} // Asume que cada asesoría tiene un asesor
-              alumno={asesoria.alumno} // Asume que cada asesoría tiene un alumno
-              fecha={asesoria.fecha} // Asume que cada asesoría tiene una fecha
-              horaInicio={asesoria.horaInicio} // Asume que cada asesoría tiene una hora de inicio
-              horaFin={asesoria.horaFin} // Asume que cada asesoría tiene una hora de fin
-              dia={asesoria.dia} // Asume que cada asesoría tiene un día
-              modalidad={asesoria.modalidad} // Asume que cada asesoría tiene una modalidad
+              key={asesoria.id_asesoria} 
+              tipo={asesoria.tipo} 
+              tema={asesoria.tema} 
+              asesor={asesoria.asesor} 
+              alumno={asesoria.nombre_usuario} 
+              fecha={asesoria.fecha}
+              horaInicio={asesoria.hora_inicio}
+              horaFin={asesoria.hora_termino} 
+              dia={asesoria.dia} 
+              modalidad={asesoria.modalidad} 
             />
           ))
         ) : (

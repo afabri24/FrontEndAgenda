@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import Modal from "./Modal";
+import ModalNuevo from "./ModalNuevo";
 import API_URL from "./utils/Constantes.js";
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -12,16 +12,17 @@ function Login() {
   const [tipo, setTipo] = useState("");
   const [error, setError] = useState(null);
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalVariant, setModalVariant] = useState("Error");
-
   const cookies = new Cookies();
   const navigate = useNavigate();
 
-  const handlePopup = (message, error) => {
+  //Modal para errores, alertas
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTittle, setModalTittle] = useState("");
+
+  const handlePopup = (tittle, message) => {
     setModalMessage(message);
-    setModalVariant(error ? "Error" : "Sesion iniciada con éxito");
+    setModalTittle(tittle);
     setShowModal(true);
   };
   const handleClose = () => setShowModal(false);
@@ -59,7 +60,7 @@ function Login() {
 
 
     if (!es_valido_matricula(credencial)){
-      credencialError = 'La matricula que ingreso no es valida, favor de cambiarla.';
+      credencialError = 'La matricula que ingreso no es valida, favor de cambiarla. (ejem: S200XXXXX)';
       valido = false;
       if(es_valido_email(credencial)){
         credencialError = ''
@@ -68,7 +69,7 @@ function Login() {
     }
 
     if (!es_valido_password(password)){
-      passwordError = 'La contraseña que ingreso no es valida, favor de cambiarla.';
+      passwordError = 'La contraseña que ingreso no es valida, favor de cambiarla. (debe tener min 8, max 16 caracteres)';
       valido = false;
     }
 
@@ -111,12 +112,12 @@ function Login() {
 
     if (data.error) {
       // El api regresa un error
-      handlePopup(data.mensaje || data.message, true);
+      handlePopup("Error",data.mensaje, true);
     } else {
 
       console.log(data);
       // El api regresa un mensaje de éxito
-      handlePopup(data.mensaje || data.message, false);
+      //handlePopup("", data.mensaje, false);
 
       window.localStorage.setItem("token", data.token);
       if(data.tipo === "usuario"){
@@ -208,10 +209,10 @@ function Login() {
             </div>
           </div>
         </form>
-        <Modal
+        <ModalNuevo
           showModal={showModal}
           handleClose={handleClose}
-          modalVariant={modalVariant}
+          modalTittle={modalTittle}
           modalMessage={modalMessage}
         />
       </div>

@@ -34,7 +34,6 @@ function Main() {
 
   return (
     <Router>
-      <VerificarToken />
       {login ? (
         <>
           <Navigation />
@@ -47,12 +46,14 @@ function Main() {
         <LoginNav/>
           {(tipo == 'asesor') ? (
             <>
+              <VerificarToken />
               <Routes>
                 <Route path="/" element={<Asesorias />} />
                 <Route path="/perfil" element={<Perfil />} />
               </Routes>
             </>):(
-          <> 
+          <>
+            <VerificarToken />
             <Routes>
               <Route path="/" element={<Usuario />} />
               <Route path="/perfil" element={<PerfilUsuario />} />

@@ -40,8 +40,7 @@ function Card({
             Modalidad: {tipo}
           </div>
           <p className="mt-2 text-gray-500">Tema: {tema}</p>
-          <p className="mt-2 text-gray-500">Asesor: {asesor}</p>
-          <p className="mt-2 text-gray-500">{alumno}</p>
+          <p className="mt-2 text-gray-500">Alumno: {alumno}</p>
           <p className="mt-2 text-gray-500">Fecha: {fecha}</p>
           {isFlipped ? (
             <>

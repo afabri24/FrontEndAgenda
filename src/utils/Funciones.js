@@ -23,7 +23,7 @@ export function dias_entre_semana() {
 }
 
 export function obtenerFechaDiaSemanaActual(nombreDiaSemana) {
-  const diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+  const diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   const hoy = new Date();
   const diaSemana = hoy.getDay(); // 0 para domingo, 1 para lunes, ..., 6 para sábado
 

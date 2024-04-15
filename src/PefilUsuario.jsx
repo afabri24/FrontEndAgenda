@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios'
 import API_URL from "./utils/Constantes.js";
+import ModalNuevo from "./ModalNuevo";
 import { es_valido_email, es_valido_matricula, es_valido_password } from "./utils/Validadores.js";
 
 function PefilUsuario() {
@@ -16,6 +17,18 @@ function PefilUsuario() {
       matricula: '',
       password: ''
     });
+
+    //Modal para errores, alertas
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTittle, setModalTittle] = useState("");
+
+  const handlePopup = (tittle, message) => {
+    setModalMessage(message);
+    setModalTittle(tittle);
+    setShowModal(true);
+  };
+  const handleClose = () => setShowModal(false);
 
     function enviarDatos() {
 
@@ -33,14 +46,16 @@ function PefilUsuario() {
           .then(response => {
             console.log(response.data)
             if(response.data.error){
+              handlePopup("Se actualizo correctamente", response.data.error)
               console.log("error")
             }else{
+              handlePopup("Se actualizo correctamente", response.data.mensaje)
               console.log("mostrar modal")
             }
             
           })
           .catch(error => {
-            console.error("Error al obtener el producto:", error);
+            console.error("Error al realizar la peticion:", error);
           });
       }
        
@@ -176,7 +191,12 @@ function PefilUsuario() {
               </form>
             </div>
           </div>
-    
+          <ModalNuevo
+          showModal={showModal}
+          handleClose={handleClose}
+          modalTittle={modalTittle}
+          modalMessage={modalMessage}
+        />
 
           
         </div>

@@ -9,23 +9,22 @@ function Usuario() {
     const [asesorias, setAsesorias] = useState([]);
 
   const cookies = new Cookies();
+  const fetchAsesorias = async () => {
+    try {
+      const token = cookies.get("token");
+      const response = await axios.post(
+        API_URL + `api/asesorias/obtenerUsuario/`,
+        {
+          token: token,
+        }
+      );
+      setAsesorias(response.data);
+    } catch (error) {
+      console.error("Hubo un error al recuperar las asesorias:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchAsesorias = async () => {
-      try {
-        const token = cookies.get("token");
-        const response = await axios.post(
-          API_URL + `api/asesorias/obtenerUsuario/`,
-          {
-            token: token,
-          }
-        );
-        setAsesorias(response.data);
-      } catch (error) {
-        console.error("Hubo un error al recuperar las asesorias:", error);
-      }
-    };
-
     fetchAsesorias();
   }, []);
 
@@ -35,7 +34,8 @@ function Usuario() {
         {asesorias.length > 0 ? (
           asesorias.map((asesoria) => (
             <Card
-              key={asesoria.id} 
+              key={asesoria.id_asesoria}
+              idAsesoria={asesoria.id_asesoria}
               tipo={asesoria.tipo} 
               tema={asesoria.tema} 
               asesor={asesoria.nombre_asesor} 
@@ -48,10 +48,11 @@ function Usuario() {
               password={asesoria.password_reunion}
               url={asesoria.url_reunion}
               reunion_id={asesoria.id_reunion}
+              funcion={fetchAsesorias}
             />
           ))
         ) : (
-          <p>No hay asesorias disponibles o hubo un error al cargarlas.</p>
+          <p className="text-2xl">No hay asesorias disponibles o hubo un error al cargarlas.</p>
         )}
       </div>
       <h1 className="text-2xl font-bold mt-4">Hitorial de asesorias</h1>
