@@ -19,12 +19,12 @@ function Signup() {
   //las variables que se usan en el modal
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [modalVariant, setModalVariant] = useState("success");
+  const [modalTitle, setModalTitle] = useState("Exito");
 
   //funcion que se encarga de mostrar el modal
   const handlePopup = (message, error) => {
     setModalMessage(message);
-    setModalVariant(error ? "danger" : "success");
+    setModalTitle(error ? "error" : "Exito");
     setShowModal(true);
   };
   const handleClose = () => setShowModal(false);
@@ -153,7 +153,7 @@ function Signup() {
         <div className="w-full lg:h-full max-w-md md:max-w-sm md:px-0 md:w-96 mx-auto sm:px-4">
           <div className="flex flex-col">
             <div>
-              <h2 className="py-3 font-medium leading-tight text-black text-xl font-display text-center">
+              <h2 className="py-3 leading-tight font-display text-center text-3xl font-extrabold text-black md:text-4xl lg:text-5xl xl:text-6xl">
                 Registro
               </h2>
             </div>
@@ -274,7 +274,7 @@ function Signup() {
           <Modal
             showModal={showModal}
             handleClose={handleClose}
-            modalVariant={modalVariant}
+            modalTitle={modalTitle}
             modalMessage={modalMessage}
           />
         </div>

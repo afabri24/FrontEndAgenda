@@ -1,4 +1,4 @@
-function Modal({ showModal, handleClose, modalVariant, modalMessage }) {
+function Modal({ showModal, handleClose, modalTitle, modalMessage }) {
   return (
     showModal && (
       <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center">
@@ -13,7 +13,7 @@ function Modal({ showModal, handleClose, modalVariant, modalMessage }) {
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-title"
                 >
-                  {modalVariant === "danger" ? "Error" : "Success"}
+                  {modalTitle}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">{modalMessage}</p>

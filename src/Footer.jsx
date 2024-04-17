@@ -12,7 +12,7 @@ function Footer(){
                     className="xl:col-span-1 text-black inline-flex items-center gap-3"
                 >
                 <img src={logo} alt="UV Logo" className="w-10 h-13" />
-                    <span className="font-bold font-display">Agenda acesorias</span>
+                    <span className="font-bold font-display">Agenda asesorias</span>
                 </a>
                 <div
                     className="md:grid md:grid-cols-2 xl:grid-cols-4 md:gap-8 text-sm text-gray-400 lg:col-span-3"
@@ -29,12 +29,6 @@ function Footer(){
                         <a href="/faq" className="hover:text-black">Preguntas frecuentes</a>
                         </li>
                         <li>
-                        <a href="/terms" className="hover:text-black">Acerca de nosostros</a>
-                        </li>
-                        <li>
-                        <a href="/privacy" className="hover:text-black">Creditos</a>
-                        </li>
-                        <li>
                         <a href="/signup" className="hover:text-black">Registro</a>
                         </li>
                         <li>
@@ -42,21 +36,7 @@ function Footer(){
                         </li>
                     </ul>
                     </div>
-                    <div className="mt-12 md:mt-0">
-                    <h3 className="text-lg text-black font-medium tracking-tight">
-                        Recursos
-                    </h3>
-                    <ul role="list" className="mt-4 space-y-1">
-                        <li>
-                        <a
-                            href="https://github.com/michael-andreuzza/astrosaas"
-                            className="hover:text-black"
-                        >
-                            GitHub repo
-                        </a>
-                        </li>
-                    </ul>
-                    </div>
+                
 
                     
                     <div className="mt-12 md:mt-0">
