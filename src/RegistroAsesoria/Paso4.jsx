@@ -39,7 +39,7 @@ function Paso4() {
         });
     
         if (!response.data.error) {
-          navigate("/");
+          navigate("/asesorias");
           window.location.reload();
         } else {
           alert("Hubo un error al registrar la asesoria");

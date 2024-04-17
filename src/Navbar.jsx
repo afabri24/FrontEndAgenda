@@ -24,7 +24,7 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full mx-auto md:px-12 px-8 max-w-7xl lg:px-16">
+    <div className="w-full mx-auto md:px-12 px-8 max-w-7xl lg:px-16 sticky top-0 z-10">
       <div className="relative flex flex-col w-full py-5 mx-auto bg-white md:items-center md:justify-between md:flex-row md:px-6">
         <div className="flex flex-row items-center justify-between lg:justify-start">
           {token ? 

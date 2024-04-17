@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios'
 import API_URL from "./utils/Constantes.js";
 import ModalNuevo from "./ModalNuevo";
+import { Link } from 'react-router-dom';
 import { es_valido_email, es_valido_matricula, es_valido_password } from "./utils/Validadores.js";
 
 function PefilUsuario() {
@@ -128,12 +129,12 @@ function PefilUsuario() {
     return (
         <div className="container mx-auto grid grid-cols-2 gap-4">
           <div className="p-4 mt-4">
-            <a
+            <Link
               className="px-4 py-2 mt-4 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-blue-300 rounded-lg"
-              href="/"
+              to="/asesorias"
             >
               Regresar
-            </a>
+            </Link>
             <div className="bg-white p-4">
               <h2 className="text-xl font-bold">Usuario</h2>
               <form className="flex flex-col h-full">
