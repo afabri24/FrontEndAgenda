@@ -12,9 +12,8 @@ import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import VerificarToken from "./utils/VerificarToken.jsx";
 import Contexto from "./RegistroAsesoria/Contexto.jsx";
-import ContextNavbar from "./utils/ContextNavbar.jsx";
 import PaginaPrincipal from "./PaginaPrincipal.jsx";
-import Navbar2 from './Navbar2';
+import Navbar from './Navbar';
 
 function Main() {
   const cookies = new Cookies();
@@ -24,7 +23,7 @@ function Main() {
   return (
     <>
         <Router>
-          <Navbar2/>
+          <Navbar/>
               <Routes>
                 <Route path="/asesorias" element={(tipo == 'asesor') ? <Asesorias /> : <Usuario />} />
                 <Route path="/perfil" element={(tipo == 'asesor') ? <Perfil /> : <PerfilUsuario />} />

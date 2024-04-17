@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./CardUsuario";
 import API_URL from "./utils/Constantes";
+import { Link } from "react-router-dom";
 
 
 function Usuario() {
@@ -76,9 +77,9 @@ function Usuario() {
         />
       </div>
 
-        <a href="/registroAsesoria" className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
+        <Link to="/registroAsesoria" className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
         Agregar Asesoría +
-      </a>
+      </Link>
     </div>
     )
 
