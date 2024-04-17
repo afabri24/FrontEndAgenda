@@ -139,7 +139,7 @@ function Login() {
       <div className="w-full lg:h-full max-w-md md:max-w-sm md:px-0 md:w-96 mx-auto sm:px-4">
         <h2 className="text-3xl font-extrabold text-black md:text-4xl lg:text-5xl xl:text-6xl">
           <span className="block">Hola!</span>
-          <span className="block">inicia sesion</span>
+          <span className="block">Inicia sesion</span>
         </h2>
 
         <div className="h-8"></div>

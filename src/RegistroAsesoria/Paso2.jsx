@@ -25,7 +25,7 @@ function Paso2() {
 
   useEffect(() => {
     axios
-      .post(API_URL + `api/asesores/obtenerCursos/`, {
+      .post(API_URL + `api/usuarios/obtenerCursos/`, {
         token: token,
         idAsesor: asesoriaDatos["idAsesor"],
       })
