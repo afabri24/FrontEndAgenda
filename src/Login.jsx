@@ -129,7 +129,7 @@ function Login() {
         cookies.set('nombre', data.usuario.nombre, { path: '/' });
         cookies.set('token', data.token, { path: '/' })
       }
-      navigate("/");
+      navigate("/asesorias");
       window.location.reload();
     }
   }

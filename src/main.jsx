@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import Navigation from "./Navigation.jsx";
 import Footer from "./Footer.jsx";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import Asesorias from "./Asesorias.jsx";
-import LoginNav from "./LoginNav.jsx";
 import Perfil from "./Perfil.jsx";
 import Usuario from "./Usuario.jsx";
 import PerfilUsuario from "./PefilUsuario.jsx"
@@ -16,60 +12,31 @@ import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import VerificarToken from "./utils/VerificarToken.jsx";
 import Contexto from "./RegistroAsesoria/Contexto.jsx";
+import ContextNavbar from "./utils/ContextNavbar.jsx";
+import PaginaPrincipal from "./PaginaPrincipal.jsx";
+import Navbar2 from './Navbar2';
 
 function Main() {
   const cookies = new Cookies();
-  const [login, setLogin] = useState(true);
-  const [tipo, setTipo] = useState('');
+  const [tipo, setTipo] = useState(cookies.get("tipo"));
 
-  useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-      setLogin(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    setTipo(cookies.get("tipo"));
-  }, []);
 
   return (
-    <Router>
-      {login ? (
-        <>
-          <Navigation />
-            <Routes>
-              <Route path="/" element={<App />} />
-            </Routes>
-        </>) : 
-        
-        (<>
-        <LoginNav/>
-          {(tipo == 'asesor') ? (
-            <>
-              <VerificarToken />
+    <>
+        <Router>
+          <Navbar2/>
               <Routes>
-                <Route path="/" element={<Asesorias />} />
-                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/asesorias" element={(tipo == 'asesor') ? <Asesorias /> : <Usuario />} />
+                <Route path="/perfil" element={(tipo == 'asesor') ? <Perfil /> : <PerfilUsuario />} />
+                <Route path="/RegistroAsesoria" element={<Contexto><RegistroAsesoria /></Contexto>} />
+                <Route path="/" element={<PaginaPrincipal />} />
+                <Route path="/login" element={<Login />} />
+               <Route path="/signup" element={<Signup />} />
               </Routes>
-            </>):(
-          <>
-            <VerificarToken />
-            <Routes>
-              <Route path="/" element={<Usuario />} />
-              <Route path="/perfil" element={<PerfilUsuario />} />
-              <Route path="/RegistroAsesoria" element={<Contexto><RegistroAsesoria /></Contexto>} />
-            </Routes>
-          </>
-          )}
-        </>)
-      }
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
         <Footer />
-    </Router>
+    </Router></>
+    
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<Main />);
+export default Main;
