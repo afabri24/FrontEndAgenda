@@ -7,34 +7,48 @@ import Signup from "./Signup.jsx";
 import Asesorias from "./Asesorias.jsx";
 import Perfil from "./Perfil.jsx";
 import Usuario from "./Usuario.jsx";
-import PerfilUsuario from "./PefilUsuario.jsx"
+import PerfilUsuario from "./PefilUsuario.jsx";
 import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import VerificarToken from "./utils/VerificarToken.jsx";
 import Contexto from "./RegistroAsesoria/Contexto.jsx";
 import PaginaPrincipal from "./PaginaPrincipal.jsx";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
+import Faq from "./Faq";
 
 function Main() {
   const cookies = new Cookies();
   const [tipo, setTipo] = useState(cookies.get("tipo"));
 
-
   return (
     <>
-        <Router>
-          <Navbar/>
-              <Routes>
-                <Route path="/asesorias" element={(tipo == 'asesor') ? <Asesorias /> : <Usuario />} />
-                <Route path="/perfil" element={(tipo == 'asesor') ? <Perfil /> : <PerfilUsuario />} />
-                <Route path="/RegistroAsesoria" element={<Contexto><RegistroAsesoria /></Contexto>} />
-                <Route path="/" element={<PaginaPrincipal />} />
-                <Route path="/login" element={<Login />} />
-               <Route path="/signup" element={<Signup />} />
-              </Routes>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/asesorias"
+            element={tipo == "asesor" ? <Asesorias /> : <Usuario />}
+          />
+          <Route
+            path="/perfil"
+            element={tipo == "asesor" ? <Perfil /> : <PerfilUsuario />}
+          />
+          <Route
+            path="/RegistroAsesoria"
+            element={
+              <Contexto>
+                <RegistroAsesoria />
+              </Contexto>
+            }
+          />
+          <Route path="/" element={<PaginaPrincipal />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/faq" element={<Faq />} />
+        </Routes>
         <Footer />
-    </Router></>
-    
+      </Router>
+    </>
   );
 }
 

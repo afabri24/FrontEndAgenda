@@ -24,7 +24,7 @@ function Signup() {
   //funcion que se encarga de mostrar el modal
   const handlePopup = (message, error) => {
     setModalMessage(message);
-    setModalTitle(error ? "error" : "Exito");
+    setModalTitle(error ? "Error" : "Exito");
     setShowModal(true);
   };
   const handleClose = () => setShowModal(false);
@@ -203,6 +203,7 @@ function Signup() {
                   className="w-full py-10 h-12 block"
                   label="Contraseña" 
                   variant="outlined" 
+                  type="password"
                   placeholder="Ingresa una contraseña nueva"
                   onChange={(e) => setPassword(e.target.value)}
                   />
