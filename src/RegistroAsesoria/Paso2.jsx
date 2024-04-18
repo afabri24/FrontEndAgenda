@@ -15,6 +15,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import Modal from "../Modal.jsx";
+import { ModalSessionContext } from '../SessionContext';
 
 function Paso2() {
   const [check, setCheck] = useState(true);
@@ -22,6 +23,7 @@ function Paso2() {
   const [cursos, setCursos] = useState([]);
   const [showModal, setShowModal] = React.useState(false);
   const [showModalCurso, setShowModalCurso] = React.useState(false);
+  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   useEffect(() => {
     axios
@@ -33,9 +35,11 @@ function Paso2() {
         console.log(response.data.mensaje);
         setCursos(response.data.mensaje);
       })
-      .catch((error) => {
-        console.error("Error al obtener los cursos:", error);
-      });
+      .catch(error => {
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
+    });
   }, []);
 
 

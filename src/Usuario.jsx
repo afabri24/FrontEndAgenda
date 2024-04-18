@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext  } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./CardUsuario";
 import API_URL from "./utils/Constantes";
 import { Link } from "react-router-dom";
-
+import { ModalSessionContext } from './SessionContext';
 
 function Usuario() {
     const [asesorias, setAsesorias] = useState([]);
+    const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   const cookies = new Cookies();
   const fetchAsesorias = async () => {
@@ -21,7 +22,9 @@ function Usuario() {
       );
       setAsesorias(response.data);
     } catch (error) {
-      console.error("Hubo un error al recuperar las asesorias:", error);
+      if(error.response.status === 401){
+        setShowModalSession(true)
+      }
     }
   };
 

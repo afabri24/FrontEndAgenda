@@ -1,3 +1,5 @@
+import Cookies from 'universal-cookie';
+
 export function es_valido_email(email) {
     const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
     return regexEmail.test(email);
@@ -12,5 +14,3 @@ export function es_valido_matricula(matricula){
     const regexMatricula = /S\d{8,8}/
     return regexMatricula.test(matricula)
 }
-
-

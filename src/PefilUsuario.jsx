@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios'
@@ -6,6 +6,7 @@ import API_URL from "./utils/Constantes.js";
 import ModalNuevo from "./ModalNuevo";
 import { Link } from 'react-router-dom';
 import { es_valido_email, es_valido_matricula, es_valido_password } from "./utils/Validadores.js";
+import { ModalSessionContext } from './SessionContext';
 
 function PefilUsuario() {
 
@@ -23,6 +24,8 @@ function PefilUsuario() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
+
+  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -116,13 +119,13 @@ function PefilUsuario() {
     useEffect(() => {
         axios.post(API_URL+`api/usuarios/obtenerDatosUsuario/`, {"token": token})
           .then(response => {
-
-            console.log(response.data)
             setDatosUsuario(response.data.mensaje);
           })
           .catch(error => {
-            console.error("Error al obtener el producto:", error);
-          });
+            if(error.response.status === 401){
+              setShowModalSession(true)
+            }
+        });
       },  []);
 
 

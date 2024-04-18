@@ -10,11 +10,11 @@ import Usuario from "./Usuario.jsx";
 import PerfilUsuario from "./PefilUsuario.jsx";
 import Cookies from "universal-cookie";
 import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
-import VerificarToken from "./utils/VerificarToken.jsx";
 import Contexto from "./RegistroAsesoria/Contexto.jsx";
 import PaginaPrincipal from "./PaginaPrincipal.jsx";
-import Navbar from "./Navbar";
-import Faq from "./Faq";
+import Navbar from "./Navbar.jsx";
+import Faq from "./Faq.jsx";
+import { SessionProvider } from "./SessionContext.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -23,30 +23,35 @@ function Main() {
   return (
     <>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route
-            path="/asesorias"
-            element={tipo == "asesor" ? <Asesorias /> : <Usuario />}
-          />
-          <Route
-            path="/perfil"
-            element={tipo == "asesor" ? <Perfil /> : <PerfilUsuario />}
-          />
-          <Route
-            path="/RegistroAsesoria"
-            element={
-              <Contexto>
-                <RegistroAsesoria />
-              </Contexto>
-            }
-          />
-          <Route path="/" element={<PaginaPrincipal />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/faq" element={<Faq />} />
-        </Routes>
-        <Footer />
+        
+          <Navbar />
+          <SessionProvider>
+          <Routes>
+          
+            <Route
+              path="/asesorias"
+              element={tipo == "asesor" ? <Asesorias /> : <Usuario />}
+            />
+            <Route
+              path="/perfil"
+              element={tipo == "asesor" ? <Perfil /> : <PerfilUsuario />}
+            />
+            <Route
+              path="/RegistroAsesoria"
+              element={
+                <Contexto>
+                  <RegistroAsesoria />
+                </Contexto>
+              }
+            />
+            <Route path="/" element={<PaginaPrincipal />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/faq" element={<Faq />} />
+          </Routes>
+          </SessionProvider>
+          <Footer />
+        
       </Router>
     </>
   );

@@ -11,7 +11,7 @@ import Select from '@mui/material/Select';
 import { dias_entre_semana } from "../utils/Funciones.js"
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 import Modal from '../Modal.jsx';
-
+import { ModalSessionContext } from '../SessionContext';
 
 
 function Paso3() {
@@ -20,7 +20,7 @@ function Paso3() {
   const [horas, setHoras] = useState([])
   const [diasEntreSemana, setDiasEntreSemana] = useState([]);
   const [showModal, setShowModal] = React.useState(false);
-
+  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
   
   useEffect(() => {
     setDiasEntreSemana(dias_entre_semana());
@@ -36,8 +36,10 @@ function Paso3() {
           setHoras(response.data.mensaje)
         })
         .catch(error => {
-          console.error("Error al obtener el producto:", error);
-        });
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
+      });
       }else{
         console.log("bug")
       }
@@ -55,8 +57,10 @@ function Paso3() {
         setHoras(response.data.mensaje)
       })
       .catch(error => {
-        console.error("Error al obtener el producto:", error);
-      });
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
+    });
   }
 
   function validarDatos() {

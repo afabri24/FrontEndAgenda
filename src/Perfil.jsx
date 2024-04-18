@@ -10,6 +10,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
+import { ModalSessionContext } from './SessionContext';
 
 function Perfil() {
   const token = localStorage.getItem("token");
@@ -17,7 +18,8 @@ function Perfil() {
   //Modal para errores, alertas
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [modalTittle, setModalTittle] = useState("");
+
+  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -105,9 +107,13 @@ function Perfil() {
         const nombresCursos = response.data.mensaje.map(
           (curso) => curso.nombrecurso
         );
-        setCursos(nombresCursos);
+          setCursos(nombresCursos);
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
+      });
   }, []);
 
   const handleDayClick = (date, day) => {
@@ -140,7 +146,9 @@ function Perfil() {
           }
         })
         .catch((error) => {
-          console.error("Error al obtener el producto:", error);
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
         });
     }
   }
@@ -195,7 +203,9 @@ function Perfil() {
         setDatosAsesor(response.data.mensaje);
       })
       .catch((error) => {
-        console.error("Error al obtener el producto:", error);
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
       });
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from "react";
+import React, { useState, useEffect , useContext} from "react";
 import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,6 +12,8 @@ import axios from 'axios'
 import FormControl from '@mui/material/FormControl';
 import API_URL from "./utils/Constantes";
 import ModalNuevo from "./ModalNuevo";
+import { ModalSessionContext } from './SessionContext';
+
 
 
 function Hours({
@@ -34,6 +36,8 @@ function Hours({
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
+
+  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -109,10 +113,14 @@ function Hours({
           alert("Horario eliminado");
           handleReload();
         } else {
-          alert("Hubo un error al eliminar el horario");
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
         }
       } catch (error) {
-        console.error("Error al eliminar el horario", error);
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
       }
     }
   };
@@ -138,7 +146,9 @@ function Hours({
         
       })
       .catch(error => {
-        console.error("Error al obtener el producto:", error);
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
       });
     }
 

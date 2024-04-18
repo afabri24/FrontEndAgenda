@@ -9,15 +9,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import axios from 'axios';
 import API_URL from "../utils/Constantes";
 import { useNavigate } from 'react-router-dom';
-import VerificarToken from "../utils/VerificarToken.jsx";
-
+import { ModalSessionContext } from '../SessionContext';
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 import Modal from '../Modal.jsx';
 
 function Paso4() {
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } =
     useContext(multiStepContext);
-
+    const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
     const navigate = useNavigate();
 
     const [showModal, setShowModal] = React.useState(false);
@@ -42,10 +41,14 @@ function Paso4() {
           navigate("/asesorias");
           window.location.reload();
         } else {
-          alert("Hubo un error al registrar la asesoria");
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
         }
       } catch (error) {
-        console.error(error);
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
       }
     }
 

@@ -1,32 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./CardAsesor";
 import API_URL from "./utils/Constantes";
 import Button from "@mui/material/Button";
+import { ModalSessionContext } from './SessionContext';
 
 function Asesorias() {
   const [asesorias, setAsesorias] = useState([]);
+  const { setShowModalSession } = useContext(ModalSessionContext);
 
-  const cookies = new Cookies();
 
   useEffect(() => {
-    const fetchAsesorias = async () => {
-      try {
-        const token = cookies.get("token");
-        const response = await axios.post(
-          API_URL + `api/asesorias/obtenerAsesor/`,
-          {
-            token: token,
-          }
-        );
-        setAsesorias(response.data);
-      } catch (error) {
-        console.error("Hubo un error al recuperar las asesorias:", error);
+    axios.post(`${API_URL}api/asesorias/obtenerAsesor/`, {
+      token: token,
+  })
+    .then(response => {
+      setAsesorias(response.data);
+    })
+    .catch(error => {
+      if (error.response.status === 401) {
+        setShowModalSession(true);
       }
-    };
-
-    fetchAsesorias();
+    });
   }, []);
 
   return (
