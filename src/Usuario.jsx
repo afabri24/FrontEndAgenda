@@ -9,6 +9,7 @@ import { ModalSessionContext } from './SessionContext';
 function Usuario() {
     const [asesorias, setAsesorias] = useState([]);
     const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
+    const [reload, setReload] = useState(true)
 
   const cookies = new Cookies();
   const fetchAsesorias = async () => {
@@ -21,6 +22,7 @@ function Usuario() {
         }
       );
       setAsesorias(response.data);
+      setReload(!reload);
     } catch (error) {
       if(error.response.status === 401){
         setShowModalSession(true)
@@ -29,8 +31,15 @@ function Usuario() {
   };
 
   useEffect(() => {
-    fetchAsesorias();
-  }, []);
+    if (reload) {
+      fetchAsesorias();
+      setReload(false); // reset the reload state after fetching
+    }
+  }, [reload]);
+
+ const handleReload = () => {
+    setReload(true);
+  }
 
     return(
     <div>
@@ -53,6 +62,8 @@ function Usuario() {
               url={asesoria.url_reunion}
               reunion_id={asesoria.id_reunion}
               funcion={fetchAsesorias}
+              curso={asesoria.curso}
+              handleReload={handleReload}
             />
           ))
         ) : (
