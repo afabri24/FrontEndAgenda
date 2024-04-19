@@ -39,7 +39,6 @@ function Paso4() {
     
         if (!response.data.error) {
           navigate("/asesorias");
-          window.location.reload();
         } else {
           if(error.response.status === 401){
             setShowModalSession(true)
