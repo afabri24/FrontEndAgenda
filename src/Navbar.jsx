@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-
+import ModalConBotones from "./ModalConBotones";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { Link } from 'react-router-dom';
@@ -9,11 +9,22 @@ function Navbar() {
   const cookies = new Cookies();
   const navigate = useNavigate();
   const [token, setToken] = useState("")
+  const [modalAbierto, setModalAbierto] = React.useState(false);
+
+  const handleCerrar = () => {
+    setModalAbierto(false);
+  };
+
+
 
   useEffect(() => {
     setToken(window.localStorage.getItem("token"));
     console.log(token)
   },  []);
+
+  const abrirModal = () => {
+    setModalAbierto(true);
+  };
 
   const handleLogout = () => {
     cookies.remove("nombre");
@@ -54,12 +65,19 @@ function Navbar() {
               Perfil
             </Link>
             <button
-              onClick={handleLogout}
+              onClick={abrirModal}
               className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-slate-300 rounded-lg"
             >
               Cerrar sesion
             </button>
           </div>
+          <ModalConBotones
+            showModal={modalAbierto}
+            onClose={handleCerrar}
+            onAccept={handleLogout}
+            title={"Confirmación"}
+            message="¿Estás seguro de cerrar tu sesion?"
+          />
         </nav>
         :
         <nav className="flex items-center justify-between flex-wrap  p-6">

@@ -98,9 +98,13 @@ function Paso3() {
                 }}
                 value={asesoriaDatos["dia"]}
               >
-                {diasEntreSemana.map(dia =>
+                {horas && horas.length > 0 ? diasEntreSemana.map(dia =>
                     <MenuItem value={dia.valor}>{dia.dia}</MenuItem>
-                )}
+                ) :
+                (<MenuItem value="" disabled>
+                  No hay dias disponibles
+                </MenuItem>
+              )}
             </Select>
           </FormControl>
         <FormControl className='w-2/6 p-4 mx-5' sx={{m:1}}>

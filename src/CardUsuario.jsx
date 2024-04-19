@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import ModalDetails from "./ModalDetails";
-import ModalConBotones from "./ModalConBotones"
-import ModalNuevo from "./ModalNuevo";
-import axios from 'axios'
-import API_URL from "./utils/Constantes.js";
 
 function Card({
   key,

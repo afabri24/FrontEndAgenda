@@ -5,9 +5,11 @@ import Card from "./CardUsuario";
 import API_URL from "./utils/Constantes";
 import { Link } from "react-router-dom";
 import { ModalSessionContext } from './SessionContext';
+import imageEmpty from './assets/empty.png'
 
 function Usuario() {
-    const [asesorias, setAsesorias] = useState([]);
+    const [asesoriasActuales, setAsesoriasActuales] = useState([]);
+    const [asesoriasPasadas, setAsesoriasPasadas] = useState([]);
     const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
     const [reload, setReload] = useState(true)
 
@@ -21,7 +23,19 @@ function Usuario() {
           token: token,
         }
       );
-      setAsesorias(response.data);
+
+
+
+      const hoy = new Date();
+      response.data.forEach(asesoria => {
+        if (new Date(asesoria.fecha) < hoy) {
+          setAsesoriasPasadas(asesoriasPasadas => [...asesoriasPasadas, asesoria]);
+        } else {
+          setAsesoriasActuales(asesoriasActuales => [...asesoriasActuales, asesoria]);
+      }});
+
+
+
       setReload(!reload);
     } catch (error) {
       if(error.response.status === 401){
@@ -44,8 +58,8 @@ function Usuario() {
     return(
     <div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        {asesorias.length > 0 ? (
-          asesorias.map((asesoria) => (
+        {asesoriasActuales.length > 0 ? (
+          asesoriasActuales.map((asesoria) => (
             <Card
               key={asesoria.id_asesoria}
               idAsesoria={asesoria.id_asesoria}
@@ -67,29 +81,52 @@ function Usuario() {
             />
           ))
         ) : (
-          <p className="text-2xl">No hay asesorias disponibles o hubo un error al cargarlas.</p>
+          <>
+          <div></div>
+          <div className='flex flex-row w-full items-center' >
+            <img className='py-20 pl-10' src={imageEmpty} alt='' />
+            <p className=' w-full content-center text-5xl font-bold'  >Actualmente no cuentas con asesorias registradas</p>
+          </div>
+          </>
         )}
       </div>
-      <h1 className="text-2xl font-bold mt-4">Hitorial de asesorias</h1>
-      <select className="text-gray-500 block w-full p-2 border border-gray-300 rounded mt-2 size-1/6">
+      <h1 className="text-2xl font-bold mt-4 mx-8">Hitorial de asesorias</h1>
+      <select className="text-gray-500 block  w-1/4 p-2 border mx-8 border-gray-300 rounded mt-2 size-1/6">
         <option value="">Ascedente</option>
         <option value="">Decediente</option>
         <option value="">Semana pasada</option>
         <option value="">Mes pasado</option>
       </select>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <Card
-          tipo="Ingles 2"
-          tema="verbo to be"
-          asesor="Roxana"
-          alumno="Juan"
-          fecha="2021-10-15"
-          horaInicio="10:00"
-          horaFin="11:00"
-          dia="Lunes"
-          modalidad="Presencial"
-        />
-      </div>
+      {asesoriasPasadas.length > 0 ? (
+          asesoriasPasadas.map((asesoria) => (
+            <Card
+              key={asesoria.id_asesoria}
+              idAsesoria={asesoria.id_asesoria}
+              tipo={asesoria.tipo} 
+              tema={asesoria.tema} 
+              asesor={asesoria.nombre_asesor} 
+              alumno={asesoria.alumno} 
+              fecha={asesoria.fecha} 
+              horaInicio={asesoria.hora_inicio} 
+              horaFin={asesoria.hora_termino} 
+              dia={asesoria.dia} 
+              modalidad={asesoria.modalidad}
+              password={asesoria.password_reunion}
+              url={asesoria.url_reunion}
+              reunion_id={asesoria.id_reunion}
+              funcion={fetchAsesorias}
+              curso={asesoria.curso}
+              handleReload={handleReload}
+            />
+          ))
+        ) : (
+          <>
+          <div></div>
+          <div className='flex flex-row w-full items-center justify-center content-center' >
+            <p className='mx-8 w-full content-center justify-center text-xl font-bold'  >Actualmente no cuentas con asesorias pasadas</p>
+          </div>
+          </>
+        )}
 
         <Link to="/registroAsesoria" className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
         Agregar Asesoría +
