@@ -9,8 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import { ModalSessionContext } from './SessionContext';
+import CursosModal from "./CursosModal.jsx";
 
 function Perfil() {
   const token = localStorage.getItem("token");
@@ -79,10 +79,17 @@ function Perfil() {
   const [open, setOpen] = useState(false);
   const [cursoAEliminar, setCursoAEliminar] = useState(null);
 
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleOpen = (index) => {
     setCursoAEliminar(index);
     setOpen(true);
   };
+
+  const handleModalCursos = () => {
+    setIsOpen(false);
+  }
 
   const handleCerrar = () => {
     setOpen(false);
@@ -93,28 +100,7 @@ function Perfil() {
     handleCerrar();
   };
 
-  //Apartado cursos
-  const [nuevoCurso, setNuevoCurso] = useState("");
-  const [cursos, setCursos] = useState([]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    axios
-      .post(API_URL + "api/asesores/obtenerCursos/", { token })
-      .then((response) => {
-        console.log(response.data.mensaje);
-        const nombresCursos = response.data.mensaje.map(
-          (curso) => curso.nombrecurso
-        );
-          setCursos(nombresCursos);
-      })
-      .catch((error) => {
-          if(error.response.status === 401){
-            setShowModalSession(true)
-          }
-      });
-  }, []);
+  
 
   const handleDayClick = (date, day) => {
     setSelectedDate(date);
@@ -303,39 +289,8 @@ function Perfil() {
                   Mis Cursos
                 </InputLabel>
 
-                {cursos.map((curso, index) => (
-                  <Chip
-                    key={index}
-                    label={curso}
-                    onDelete={() => {
-                      const confirmDelete = window.confirm(
-                        "¿Estás seguro de que quieres eliminar este curso?"
-                      );
-                      if (confirmDelete) {
-                        setCursos(cursos.filter((c, i) => i !== index));
-                      }
-                    }}
-                    style={{
-                      margin: "5px",
-                      backgroundColor: "#f5f5f5",
-                      color: "#333",
-                    }}
-                  />
-                ))}
-
-                <TextField
-                  label="Nuevo curso"
-                  value={nuevoCurso}
-                  onChange={(e) => setNuevoCurso(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === "Enter") {
-                      // Agregar el nuevo curso al presionar Enter
-                      setCursos([...cursos, nuevoCurso]);
-                      setNuevoCurso("");
-                      e.preventDefault();
-                    }
-                  }}
-                />
+                <button onClick={() => setIsOpen(true)}>Mis cursos</button>
+                {isOpen && <CursosModal handleModalCursos={handleModalCursos} />}
 
                 <Button onClick={() => enviarDatos()}>Guardar</Button>
               </>
