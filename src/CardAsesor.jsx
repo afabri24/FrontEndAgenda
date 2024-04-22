@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import ModalDetails from "./ModalDetails";
+import ModalDetails from "./ModalDetailsAsesor";
 
 function Card({
   key,
+  idAsesoria,
   tipo,
   tema,
   fecha,
@@ -47,7 +48,6 @@ function Card({
               <ModalDetails
                 tipo={tipo}
                 tema={tema}
-                asesor={asesor}
                 alumno={alumno}
                 fecha={fecha}
                 horaInicio={horaInicio}
@@ -55,6 +55,7 @@ function Card({
                 dia={dia}
                 modalidad={modalidad}
                 link={link}
+                idAsesoria={idAsesoria}
                 onRequestClose={handleClose}
               />
             </>

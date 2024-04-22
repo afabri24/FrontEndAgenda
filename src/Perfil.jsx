@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ModalDay from "./ModalDay";
 import API_URL from "./utils/Constantes.js";
@@ -18,7 +18,7 @@ function Perfil() {
   //Modal para errores, alertas
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-
+  const [modalTittle, setModalTittle] = useState("");
   const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
 
   const handlePopup = (tittle, message) => {

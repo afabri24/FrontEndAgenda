@@ -23,6 +23,7 @@ function Paso3() {
   const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
   
   useEffect(() => {
+    console.log(asesoriaDatos)
     setDiasEntreSemana(dias_entre_semana());
     if (asesoriaDatos["dia"]) {
       axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
@@ -78,6 +79,15 @@ function Paso3() {
     setShowModal(false);
   };
 
+  const handleDia = (e) => {
+    setAsesoriaDatos({
+      ...asesoriaDatos, 
+      "dia": e.target.value, 
+      "idDiaHora": 0, 
+      "fecha": obtenerFechaDiaSemanaActual(e.target.value)})
+    obtenerHorasByDia(e.target.value)
+  }
+
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } = useContext(multiStepContext);
   return (
@@ -92,19 +102,12 @@ function Paso3() {
               <Select
               id="outlined-multiline-static"
               margin='normal'
-                onChange={
-                  (e)=> { setAsesoriaDatos({...asesoriaDatos, "dia": e.target.value, "idDiaHora": 0, "fecha": obtenerFechaDiaSemanaActual(e.target.value)})
-                  obtenerHorasByDia(e.target.value)
-                }}
+                onChange={(e)=> { handleDia(e)}}
                 value={asesoriaDatos["dia"]}
               >
-                {horas && horas.length > 0 ? diasEntreSemana.map(dia =>
+                {diasEntreSemana.map(dia =>
                     <MenuItem value={dia.valor}>{dia.dia}</MenuItem>
-                ) :
-                (<MenuItem value="" disabled>
-                  No hay dias disponibles
-                </MenuItem>
-              )}
+                )}
             </Select>
           </FormControl>
         <FormControl className='w-2/6 p-4 mx-5' sx={{m:1}}>

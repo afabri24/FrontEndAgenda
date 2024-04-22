@@ -57,7 +57,7 @@ function ModalDetails({
     try {
       const response = await axios({
         method: "DELETE",
-        url: API_URL + "api/asesorias/eliminarAsUsuario/",
+        url: API_URL + "api/asesorias/eliminarAsAsesor/",
         data: {
           id_asesoria: idAsesoria,
           token: token,

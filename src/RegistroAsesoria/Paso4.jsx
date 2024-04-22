@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { multiStepContext } from "./Contexto";
 import { Button, TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
@@ -18,13 +18,15 @@ function Paso4() {
     useContext(multiStepContext);
     const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
     const navigate = useNavigate();
+    const [modalMessage, setModalMessage] = useState("")
 
     const [showModal, setShowModal] = React.useState(false);
 
     async function enviarDatosConToken() {
       const token = localStorage.getItem('token');
       if (!asesoriaDatos.tema || asesoriaDatos.tema.trim() === '') {
-        setShowModal(true);
+        setModalMessage("Por favor, agrega un tema a la asesoria.")
+        setShowModal(true)
         return;
       }
       
@@ -40,6 +42,8 @@ function Paso4() {
         if (!response.data.error) {
           navigate("/asesorias");
         } else {
+          setModalMessage("Error al agregar tu asesoria, intentalo mas tarde")
+          setShowModal(true)
           if(error.response.status === 401){
             setShowModalSession(true)
           }
@@ -112,7 +116,7 @@ function Paso4() {
             showModal={showModal}
             handleClose={handleClose}
             modalVariant="danger"
-            modalMessage="Por favor, agrega un tema a la asesoria."
+            modalMessage={modalMessage}
           />
         </div>
       </div>

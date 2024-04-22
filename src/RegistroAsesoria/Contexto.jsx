@@ -9,7 +9,6 @@ function Contexto() {
     const [datosFinales, setDatosFinales] = useState([]);
 
     function enviarDatos(){
-      console.log("Fecha: " + obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]))
       console.log(asesoriaDatos)
     }
   return (

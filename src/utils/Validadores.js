@@ -1,4 +1,4 @@
-import Cookies from 'universal-cookie';
+
 
 export function es_valido_email(email) {
     const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;

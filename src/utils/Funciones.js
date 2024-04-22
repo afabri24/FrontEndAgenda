@@ -27,7 +27,7 @@ export function obtenerFechaDiaSemanaActual(nombreDiaSemana) {
   const hoy = new Date();
   const diaSemana = hoy.getDay(); // 0 para domingo, 1 para lunes, ..., 6 para sábado
 
-  const indiceDia = diasSemana.findIndex(dia => dia === nombreDiaSemana.toLowerCase());
+  const indiceDia = diasSemana.findIndex(dia => dia === nombreDiaSemana);
   if (indiceDia === -1) {
     throw new Error('El nombre del día de la semana no es válido.');
   }
@@ -46,3 +46,11 @@ export function obtenerFechaDiaSemanaActual(nombreDiaSemana) {
 
   return `${year}-${month}-${day}`;
 };
+
+export function obtenerDiaMañana() {
+  const diasSemana = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  const hoy = new Date();
+  const dia = hoy.getDay(); // 0 para domingo, 1 para lunes, etc.
+
+  return diasSemana[dia+1];
+}

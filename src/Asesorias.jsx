@@ -13,7 +13,7 @@ function Asesorias() {
 
   useEffect(() => {
     axios.post(`${API_URL}api/asesorias/obtenerAsesor/`, {
-      token: token,
+      token: localStorage.getItem('token'),
   })
     .then(response => {
       setAsesorias(response.data);
@@ -32,9 +32,9 @@ function Asesorias() {
           asesorias.map((asesoria) => (
             <Card
               key={asesoria.id_asesoria} 
+              idAsesoria={asesoria.id_asesoria}
               tipo={asesoria.tipo} 
               tema={asesoria.tema} 
-              asesor={asesoria.asesor} 
               alumno={asesoria.nombre_usuario} 
               fecha={asesoria.fecha}
               horaInicio={asesoria.hora_inicio}
