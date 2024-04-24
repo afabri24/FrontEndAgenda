@@ -9,7 +9,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
-import { ModalSessionContext } from './SessionContext';
+import { ModalSessionContext } from "./SessionContext";
 import CursosModal from "./CursosModal.jsx";
 
 function Perfil() {
@@ -19,7 +19,8 @@ function Perfil() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
-  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
+  const { showModalSession, setShowModalSession } =
+    useContext(ModalSessionContext);
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -79,7 +80,6 @@ function Perfil() {
   const [open, setOpen] = useState(false);
   const [cursoAEliminar, setCursoAEliminar] = useState(null);
 
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = (index) => {
@@ -89,7 +89,7 @@ function Perfil() {
 
   const handleModalCursos = () => {
     setIsOpen(false);
-  }
+  };
 
   const handleCerrar = () => {
     setOpen(false);
@@ -99,8 +99,6 @@ function Perfil() {
     setCursos(cursos.filter((c, i) => i !== cursoAEliminar));
     handleCerrar();
   };
-
-  
 
   const handleDayClick = (date, day) => {
     setSelectedDate(date);
@@ -132,8 +130,8 @@ function Perfil() {
           }
         })
         .catch((error) => {
-          if(error.response.status === 401){
-            setShowModalSession(true)
+          if (error.response.status === 401) {
+            setShowModalSession(true);
           }
         });
     }
@@ -189,8 +187,8 @@ function Perfil() {
         setDatosAsesor(response.data.mensaje);
       })
       .catch((error) => {
-        if(error.response.status === 401){
-          setShowModalSession(true)
+        if (error.response.status === 401) {
+          setShowModalSession(true);
         }
       });
   }, []);
@@ -285,17 +283,22 @@ function Perfil() {
                   <MenuItem value={"japones"}>Japones</MenuItem>
                 </Select>
 
-                <InputLabel id="demo-simple-select-label">
-                  Mis Cursos
-                </InputLabel>
+                
 
-                <button onClick={() => setIsOpen(true)}>Mis cursos</button>
-                {isOpen && <CursosModal handleModalCursos={handleModalCursos} />}
-
-                <Button onClick={() => enviarDatos()}>Guardar</Button>
+                <Button onClick={() => enviarDatos()}>Guardar mis datos</Button>
               </>
             )}
           </form>
+          <InputLabel id="demo-simple-select-label">
+                  Mis Cursos
+                </InputLabel>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
+          {isOpen && (
+            <CursosModal
+              handleModalCursos={handleModalCursos}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
         </div>
       </div>
 

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal.jsx";
 import API_URL from "./utils/Constantes.js";
-import TextField from '@mui/material/TextField';
-import { es_valido_email, es_valido_matricula, es_valido_password } from "./utils/Validadores.js";
+import TextField from "@mui/material/TextField";
+import {
+  es_valido_email,
+  es_valido_matricula,
+  es_valido_password,
+} from "./utils/Validadores.js";
 
 function Signup() {
-
   //aqui estan las variables que se usan en el formulario
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -15,11 +18,12 @@ function Signup() {
   // El estado del checkbox
   const [isChecked, setIsChecked] = useState(false);
 
-
   //las variables que se usan en el modal
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("Exito");
+
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   //funcion que se encarga de mostrar el modal
   const handlePopup = (message, error) => {
@@ -36,11 +40,11 @@ function Signup() {
 
   //variables para los errores del formulario
   const [errores, setErrores] = useState({
-    nombre: '',
-    email: '',
-    matricula: '',
-    password: '',
-    checkbox: ''
+    nombre: "",
+    email: "",
+    matricula: "",
+    password: "",
+    checkbox: "",
   });
 
   const handleSubmit = async (event) => {
@@ -48,56 +52,56 @@ function Signup() {
 
     limpiarErrores();
 
-    if(validarCampos()){
+    if (validarCampos()) {
       enviarDatosAlAPI();
     }
-
-
   };
 
   const validarCampos = () => {
     let valido = true;
-    let nombreError = '';
-    let matriculaError = '';
-    let emailError = '';
-    let passwordError = '';
-    let checkboxError = '';
+    let nombreError = "";
+    let matriculaError = "";
+    let emailError = "";
+    let passwordError = "";
+    let checkboxError = "";
 
-    if (!es_valido_email(email)){
-      emailError = 'El email que ingreso no es valido, favor de cambiarlo.';
+    if (!es_valido_email(email)) {
+      emailError = "El email que ingreso no es valido, favor de cambiarlo.";
       valido = false;
     }
 
-    if (!es_valido_matricula(matricula)){
-      matriculaError = 'La matricula que ingreso no es valida, favor de cambiarla.';
+    if (!es_valido_matricula(matricula)) {
+      matriculaError =
+        "La matricula que ingreso no es valida, favor de cambiarla.";
       valido = false;
     }
 
-    if (!es_valido_password(password)){
-      passwordError = 'La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)';
+    if (!es_valido_password(password)) {
+      passwordError =
+        "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
       valido = false;
     }
-
 
     if (nombre.length === 0) {
-      nombreError = 'El nombre es requerido'
+      nombreError = "El nombre es requerido";
       valido = false;
     }
     if (email.length === 0) {
-      emailError = 'El email es requerido';
+      emailError = "El email es requerido";
       valido = false;
     }
     if (matricula.length === 0) {
-      matriculaError = 'La matricula es requerida';
+      matriculaError = "La matricula es requerida";
       valido = false;
     }
     if (password.length === 0) {
-      passwordError = 'La contraseña es requerida';
+      passwordError = "La contraseña es requerida";
       valido = false;
     }
 
-    if (isChecked == false){
-      checkboxError = 'Es obligatorio estar de acuerdo con los terminos y condiciones'
+    if (isChecked == false) {
+      checkboxError =
+        "Es obligatorio estar de acuerdo con los terminos y condiciones";
       valido = false;
     }
 
@@ -106,46 +110,55 @@ function Signup() {
       matricula: matriculaError,
       email: emailError,
       password: passwordError,
-      checkbox: checkboxError
+      checkbox: checkboxError,
     });
 
     return valido;
-  }
+  };
 
   const limpiarErrores = () => {
     setErrores({});
-  }
+  };
 
   //funcion que se encarga de enviar los datos del formulario al servidor
   const enviarDatosAlAPI = async () => {
-      const response = await fetch(
-        API_URL+"api/usuarios/registrar/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ nombre, email, matricula, password }),
-        }
-      );
+    if (password !== confirmPassword) {
+      alert('Las contraseñas no coinciden');
+      return;
+    }
+    const salt = bcrypt.genSaltSync(10);
+    const passwordEncriptada = bcrypt.hashSync(password, salt);
 
-      if (!response.ok) {
-        // Si el servidor devuelve un estado de error, muestra un mensaje de error
-        setError("Error en la base de datos, intente de nuevo.");
-        return;
-      }
+    const response = await fetch(API_URL + "api/usuarios/registrar/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre,
+        email,
+        matricula,
+        password: passwordEncriptada,
+      }),
+    });
 
-      const data = await response.json();
+    if (!response.ok) {
+      // Si el servidor devuelve un estado de error, muestra un mensaje de error
+      setError("Error en la base de datos, intente de nuevo.");
+      return;
+    }
 
-      if (data.error) {
-        // Server returned error
-        handlePopup(data.mensaje || data.message, true); // Use either 'mensaje' or 'message' based on your response
-      } else {
-        // Successful response
-        handlePopup(data.mensaje || data.message, false); // Use either 'mensaje' or 'message' based on your response
-        window.location.href = "/Login";
-      }
-    };
+    const data = await response.json();
+
+    if (data.error) {
+      // Server returned error
+      handlePopup(data.mensaje || data.message, true); // Use either 'mensaje' or 'message' based on your response
+    } else {
+      // Successful response
+      handlePopup(data.mensaje || data.message, false); // Use either 'mensaje' or 'message' based on your response
+      window.location.href = "/Login";
+    }
+  };
 
   return (
     <div className="flex relative justify-center lg:px-0 items-center lg:h-screen md:px-12 overflow-hidden">
@@ -161,61 +174,83 @@ function Signup() {
           <form onSubmit={handleSubmit}>
             <div className="space-y-8">
               <div className="col-span-full">
-                
-                <TextField id="nombre" 
+                <TextField
+                  id="nombre"
                   className="w-full py-10 h-12 block"
-                  label="Nombre completo" 
-                  variant="outlined" 
+                  label="Nombre completo"
+                  variant="outlined"
                   placeholder="Ingresa tu nombre completo"
                   onChange={(e) => setNombre(e.target.value)}
-                  />
-                  {errores.nombre && <span
-                  className="text-red-500 text-xs py-1">
-                    {errores.nombre}</span>}
+                />
+                {errores.nombre && (
+                  <span className="text-red-500 text-xs py-1">
+                    {errores.nombre}
+                  </span>
+                )}
               </div>
 
               <div className="col-span-full">
-              <TextField id="matricula" 
+                <TextField
+                  id="matricula"
                   className="w-full py-10 h-12 block"
-                  label="Matricula" 
-                  variant="outlined" 
+                  label="Matricula"
+                  variant="outlined"
                   placeholder="Ingresa tu matricula (ejem: S200XXXXX)"
                   onChange={(e) => setMatricula(e.target.value)}
-                  />
-                {errores.matricula && <span
-                className="text-red-500 text-xs py-1">
-                  {errores.matricula}</span>}
+                />
+                {errores.matricula && (
+                  <span className="text-red-500 text-xs py-1">
+                    {errores.matricula}
+                  </span>
+                )}
               </div>
               <div>
-                <TextField id="email" 
+                <TextField
+                  id="email"
                   className="w-full py-10 h-12 block"
-                  label="Correo electronico" 
-                  variant="outlined" 
+                  label="Correo electronico"
+                  variant="outlined"
                   placeholder="Ingresa tu correo electronico"
                   onChange={(e) => setEmail(e.target.value)}
-                  />
-                {errores.email && <span
-                className="text-red-500 text-xs py-1">
-                  {errores.email}</span>}
+                />
+                {errores.email && (
+                  <span className="text-red-500 text-xs py-1">
+                    {errores.email}
+                  </span>
+                )}
               </div>
               <div className="col-span-full">
-                <TextField id="password" 
+                <TextField
+                  id="password"
                   className="w-full py-10 h-12 block"
-                  label="Contraseña" 
-                  variant="outlined" 
+                  label="Contraseña"
+                  variant="outlined"
                   type="password"
                   placeholder="Ingresa una contraseña nueva"
                   onChange={(e) => setPassword(e.target.value)}
-                  />
-                {errores.password && <span
-                className="text-red-500 text-xs py-1">
-                  {errores.password}</span>}
+                />
+                {errores.password && (
+                  <span className="text-red-500 text-xs py-1">
+                    {errores.password}
+                  </span>
+                )}
+                <TextField
+                  id="confirmPassword"
+                  className="w-full py-10 h-12 block"
+                  label="Confirmar contraseña"
+                  variant="outlined"
+                  type="password"
+                  placeholder="Confirma tu contraseña"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </div>
               <div className="flex">
                 <div className="flex items-start">
-                {errores.checkbox && <span
-                className="text-red-500 text-xs py-1">
-                  {errores.checkbox}</span>}
+                  {errores.checkbox && (
+                    <span className="text-red-500 text-xs py-1">
+                      {errores.checkbox}
+                    </span>
+                  )}
                   <input
                     className="text-accent-500 focus:ring-accent-500 border-accent-500 h-4 rounded w-4"
                     id="remember-me"
@@ -250,7 +285,6 @@ function Signup() {
                 </div>
               </div>
               <div className="col-span-full">
-                
                 <button
                   className="items-center justify-center h-12 rounded-xl focus-visible:outline-black focus:outline-none inline-flex bg-black border-2 border-black duration-200 focus-visible:ring-black hover:bg-transparent hover:border-black hover:text-black px-6 py-3 text-center text-white w-full"
                   type="submit"
