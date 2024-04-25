@@ -8,7 +8,21 @@ import {
   es_valido_password,
 } from "./utils/Validadores.js";
 
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 function Signup() {
+  //aqui estan para mostrar la contraseña
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
+  const handleMouseDownPassword = (event) => event.preventDefault();
+
   //aqui estan las variables que se usan en el formulario
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +37,7 @@ function Signup() {
   const [modalMessage, setModalMessage] = useState("");
   const [modalTitle, setModalTitle] = useState("Exito");
 
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   //funcion que se encarga de mostrar el modal
   const handlePopup = (message, error) => {
@@ -81,6 +95,10 @@ function Signup() {
         "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
       valido = false;
     }
+    if (password !== confirmPassword) {
+      passwordError = "Las contraseñas no coinciden";
+      valido = false;
+    }
 
     if (nombre.length === 0) {
       nombreError = "El nombre es requerido";
@@ -122,13 +140,6 @@ function Signup() {
 
   //funcion que se encarga de enviar los datos del formulario al servidor
   const enviarDatosAlAPI = async () => {
-    if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-    const salt = bcrypt.genSaltSync(10);
-    const passwordEncriptada = bcrypt.hashSync(password, salt);
-
     const response = await fetch(API_URL + "api/usuarios/registrar/", {
       method: "POST",
       headers: {
@@ -138,7 +149,7 @@ function Signup() {
         nombre,
         email,
         matricula,
-        password: passwordEncriptada,
+        password: password,
       }),
     });
 
@@ -204,46 +215,64 @@ function Signup() {
                   </span>
                 )}
               </div>
-              <div>
-                <TextField
-                  id="email"
-                  className="w-full py-10 h-12 block"
-                  label="Correo electronico"
-                  variant="outlined"
-                  placeholder="Ingresa tu correo electronico"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {errores.email && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.email}
-                  </span>
-                )}
-              </div>
-              <div className="col-span-full">
-                <TextField
-                  id="password"
-                  className="w-full py-10 h-12 block"
-                  label="Contraseña"
-                  variant="outlined"
-                  type="password"
-                  placeholder="Ingresa una contraseña nueva"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {errores.password && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.password}
-                  </span>
-                )}
-                <TextField
-                  id="confirmPassword"
-                  className="w-full py-10 h-12 block"
-                  label="Confirmar contraseña"
-                  variant="outlined"
-                  type="password"
-                  placeholder="Confirma tu contraseña"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
+              <TextField
+                id="email"
+                className="w-full py-10 h-12 block"
+                label="Correo electronico"
+                variant="outlined"
+                placeholder="Ingresa tu correo electronico"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errores.email && (
+                <span className="text-red-500 text-xs py-1">
+                  {errores.email}
+                </span>
+              )}
+
+              <TextField
+                id="password"
+                className="w-full py-10 h-12 block"
+                label="Contraseña"
+                variant="outlined"
+                type={showPassword ? "text" : "password"}
+                placeholder="Ingresa una contraseña nueva"
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
+              />
+              {errores.password && (
+                <span className="text-red-500 text-xs py-1">
+                  {errores.password}
+                </span>
+              )}
+              <TextField
+                id="confirmPassword"
+                className="w-full py-10 h-12 block"
+                label="Confirmar contraseña"
+                variant="outlined"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirma tu contraseña"
+                margin="normal"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
+              />
               <div className="flex">
                 <div className="flex items-start">
                   {errores.checkbox && (
