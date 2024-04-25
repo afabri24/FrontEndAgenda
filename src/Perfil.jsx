@@ -15,6 +15,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import ZoomDatosModal from "./ZoomDatosModal.jsx";
 
 
 function Perfil() {
@@ -88,13 +89,15 @@ function Perfil() {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpen = (index) => {
-    setCursoAEliminar(index);
-    setOpen(true);
-  };
+  const [isOpenZoom, setIsOpenZoom] = useState(false);
+
 
   const handleModalCursos = () => {
     setIsOpen(false);
+  };
+
+  const handleModalZoom = () => {
+    setIsOpenZoom(false);
   };
 
   const handleCerrar = () => {
@@ -327,6 +330,17 @@ function Perfil() {
           {isOpen && (
             <CursosModal
               handleModalCursos={handleModalCursos}
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
+          <InputLabel className="mx-4" id="demo-simple-select-label">
+            Datos de reunion zoom
+          </InputLabel>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpenZoom(true)}>Reunion Zoom</button>
+
+          {isOpenZoom && (
+            <ZoomDatosModal
+              handleModalZoom={handleModalZoom}
               onClick={(e) => e.stopPropagation()}
             />
           )}
