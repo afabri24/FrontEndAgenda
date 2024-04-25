@@ -99,7 +99,7 @@ function ModalDetallesUsuario({
         <p className="m-1"></p>
         <a className="mt-2 font-medium text-gray-800">Curso: </a><a className="mt-2 text-gray-600">{curso}</a>
         <div className="border-2 my-1 text-center rounded-xl">
-          <p className="my-2 text-gray-500 p-0">Horario: {horaInicio} a {horaFin}</p>
+        <a className="mt-2 font-medium text-gray-800">Horario: </a><a className="mt-2 text-gray-600">{horaInicio} a {horaFin}</a>
         </div>
         
         {password && (

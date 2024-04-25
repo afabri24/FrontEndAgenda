@@ -223,7 +223,7 @@ function Perfil() {
         </a>
         <div className="bg-white p-4">
           <h2 className="text-xl font-bold">Mis Datos</h2>
-          <form className="flex flex-col h-full">
+          <div className="flex flex-col h-full">
             {datosAsesor && (
               <>
                 <TextField
@@ -319,7 +319,7 @@ function Perfil() {
                   </button>
               </>
             )}
-          </form>
+          </div>
           <InputLabel className="mx-4" id="demo-simple-select-label">
                   Mis Cursos
                 </InputLabel>

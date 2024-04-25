@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ModalDetails from "./ModalDetailsAsesor";
+import ModalDetails from "./ModalDetallesAsesor";
 
 function Card({
   key,
@@ -14,6 +14,8 @@ function Card({
   dia,
   modalidad,
   link,
+  curso,
+  estado
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isClicked, setIsClicked] = useState(false); // Agregar un estado para saber si se hizo clic en la tarjeta
@@ -37,12 +39,13 @@ function Card({
     >
       <div className="md:flex">
         <div className="p-8">
-          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
-            Modalidad: {tipo}
+        <div className="tracking-wide text-lg text-cyan-600 font-semibold">
+            Tipo Asesoria: {tipo}
           </div>
-          <p className="mt-2 text-gray-500">Tema: {tema}</p>
+          <p className="mt-2 text-gray-900 font-semibold">Tema: </p><p>{tema}</p>
           <p className="mt-2 text-gray-500">Alumno: {alumno}</p>
           <p className="mt-2 text-gray-500">Fecha: {fecha}</p>
+          <p className="mt-2 text-gray-500">Modalidad: {modalidad}</p>
           {isFlipped ? (
             <>
               <ModalDetails
@@ -57,6 +60,8 @@ function Card({
                 link={link}
                 idAsesoria={idAsesoria}
                 onRequestClose={handleClose}
+                curso={curso}
+                estado={estado}
               />
             </>
           ) : null}
