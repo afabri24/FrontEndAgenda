@@ -11,6 +11,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import { ModalSessionContext } from "./SessionContext";
 import CursosModal from "./CursosModal.jsx";
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 function Perfil() {
   const token = localStorage.getItem("token");
@@ -76,6 +81,7 @@ function Perfil() {
 
   const [selectedDate, setSelectedDate] = useState();
   const [selectedDay, setSelectedDay] = useState();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [cursoAEliminar, setCursoAEliminar] = useState(null);
@@ -179,6 +185,12 @@ function Perfil() {
     return valido;
   }
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   useEffect(() => {
     axios
       .post(API_URL + `api/asesores/obtenerDatosAsesor/`, { token: token })
@@ -252,6 +264,7 @@ function Perfil() {
                 )}
                 <TextField
                   id="password"
+                  type="password"
                   className="w-full py-10 h-12 block"
                   label="Contraseña"
                   name="password"
@@ -262,12 +275,25 @@ function Perfil() {
                   onChange={(e) =>
                     setDatosAsesor({ ...datosAsesor, password: e.target.value })
                   }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
                 {errores.password && (
                   <span className="text-red-500 text-xs py-1">
                     {errores.password}
                   </span>
                 )}
+                
                 <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -285,11 +311,16 @@ function Perfil() {
 
                 
 
-                <Button onClick={() => enviarDatos()}>Guardar mis datos</Button>
+                <button 
+                className="w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg"
+                variant="contained" 
+                onClick={() => enviarDatos()}>
+                  Guardar mis datos
+                  </button>
               </>
             )}
           </form>
-          <InputLabel id="demo-simple-select-label">
+          <InputLabel className="mx-4" id="demo-simple-select-label">
                   Mis Cursos
                 </InputLabel>
           <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>

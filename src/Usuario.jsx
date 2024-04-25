@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext  } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import Card from "./CardUsuario";
+import Card from "./AsesoriasUsuario/CardUsuario";
 import API_URL from "./utils/Constantes";
 import { Link } from "react-router-dom";
 import { ModalSessionContext } from './SessionContext';
@@ -36,6 +36,7 @@ function Usuario() {
 
 
 
+
       setReload(!reload);
     } catch (error) {
       if(error.response.status === 401){
@@ -48,6 +49,7 @@ function Usuario() {
     if (reload) {
       fetchAsesorias();
       setReload(false); // reset the reload state after fetching
+      
     }
   }, [reload]);
 
@@ -78,6 +80,7 @@ function Usuario() {
               funcion={fetchAsesorias}
               curso={asesoria.curso}
               handleReload={handleReload}
+              estado={"actual"}
             />
           ))
         ) : (
@@ -97,6 +100,7 @@ function Usuario() {
         <option value="">Semana pasada</option>
         <option value="">Mes pasado</option>
       </select>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {asesoriasPasadas.length > 0 ? (
           asesoriasPasadas.map((asesoria) => (
             <Card
@@ -117,6 +121,7 @@ function Usuario() {
               funcion={fetchAsesorias}
               curso={asesoria.curso}
               handleReload={handleReload}
+              estado={"pasada"}
             />
           ))
         ) : (
@@ -127,6 +132,7 @@ function Usuario() {
           </div>
           </>
         )}
+        </div>
 
         <Link to="/registroAsesoria" className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg">
         Agregar Asesoría +
