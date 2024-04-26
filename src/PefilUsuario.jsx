@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import axios from 'axios'
 import API_URL from "./utils/Constantes.js";
 import ModalNuevo from "./ModalNuevo";
@@ -140,7 +139,7 @@ function PefilUsuario() {
             </Link>
             <div className="bg-white p-4">
               <h2 className="text-xl font-bold">Usuario</h2>
-              <form className="flex flex-col h-full">
+              <div className="flex flex-col h-full">
                 {datosUsuario && 
                 (
                 <>
@@ -172,6 +171,7 @@ function PefilUsuario() {
                       className="text-red-500 text-xs py-1">
                       {errores.email}</span>}
                     <TextField id="password" 
+                    type='password'
                     className="w-full py-10 h-12 block"
                     label="Contraseña" 
                     name="password"
@@ -189,10 +189,9 @@ function PefilUsuario() {
             )}
                   
                   <div>
-                    <Button>Regresar</Button>
-                    <Button onClick={()=>enviarDatos()}>Guardar</Button>
+                    <button className='w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg' onClick={()=>enviarDatos()}>Guardar Datos</button>
                   </div>
-              </form>
+              </div>
             </div>
           </div>
           <ModalNuevo

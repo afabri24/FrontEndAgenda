@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { multiStepContext } from "./Contexto";
 import { Button } from "@mui/material";
-import { obtenerDiaMañana, obtenerFechaDiaSemanaActual } from "../utils/Funciones";
+import { obtenerDiaHoy, obtenerDiaMañana, obtenerFechaDiaSemanaActual } from "../utils/Funciones";
 
 function Paso1() {
   function handleClick(id) {
@@ -10,6 +10,7 @@ function Paso1() {
       modalidad: "presencial",
       idAsesor: id,
       dia: obtenerDiaMañana(),
+      dia2: obtenerDiaHoy(),
       fecha: obtenerFechaDiaSemanaActual(obtenerDiaMañana())
     });
     setPaso(2);
