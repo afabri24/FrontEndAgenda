@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { dias_entre_semana } from "../utils/Funciones.js"
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
+import { obtenerMensaje } from '../utils/Funciones';
 import Modal from '../Modal.jsx';
 import { ModalSessionContext } from '../SessionContext';
 
@@ -20,7 +21,8 @@ function Paso3() {
   const [horas, setHoras] = useState([])
   const [diasEntreSemana, setDiasEntreSemana] = useState([]);
   const [showModal, setShowModal] = React.useState(false);
-  const { showModalSession, setShowModalSession } = useContext(ModalSessionContext);
+  const { setShowModalSession } = useContext(ModalSessionContext);
+  const [mensajeDia, setMensajeDia] = useState();
   
   useEffect(() => {
     console.log(asesoriaDatos)
@@ -41,6 +43,7 @@ function Paso3() {
             setShowModalSession(true)
           }
       });
+      setMensajeDia(obtenerMensaje(asesoriaDatos['dia2']));
       }else{
         console.log("bug")
       }
@@ -131,7 +134,9 @@ function Paso3() {
             
           </Select>
         </FormControl>
-      </Box>     
+        
+      </Box>
+      <a>{mensajeDia}</a>   
     </div>
   </div>
      

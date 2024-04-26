@@ -139,7 +139,7 @@ function PefilUsuario() {
         </Link>
         <div className="bg-white p-4">
           <h2 className="text-xl font-bold">Usuario</h2>
-          <form className="flex flex-col h-full">
+          <div className="flex flex-col h-full">
             {datosUsuario && (
               <>
                 <TextField
@@ -205,7 +205,7 @@ function PefilUsuario() {
             <div>
               <Button onClick={() => enviarDatos()}>Guardar</Button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <ModalNuevo
