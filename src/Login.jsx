@@ -109,6 +109,7 @@ function Login() {
   };
 
   const enviarDatosAlAPI = async () => {
+    console.log(tipo, credencial, password);
     const response = await axios({
       method: "post",
       url: API_URL + "api/autenticacion/",
