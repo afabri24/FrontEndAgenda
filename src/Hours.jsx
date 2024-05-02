@@ -63,7 +63,6 @@ function Hours({
       "dia": dia,
       "modalidad": modalidad,
       "esLibre": esLibre,
-      "horaFin": horaFin,
       "estado": estado,
   })
 

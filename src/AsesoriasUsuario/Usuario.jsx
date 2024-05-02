@@ -43,6 +43,7 @@ function Usuario() {
       });
       setReload(!reload);
     } catch (error) {
+      console.log(error);
       if (error.response.status === 401) {
         setShowModalSession(true);
       }

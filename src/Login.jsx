@@ -116,29 +116,25 @@ function Login() {
   };
 
   const enviarDatosAlAPI = async () => {
-    console.log(tipo, credencial, password);
-    const response = await axios({
-      method: "post",
-      url: API_URL + "api/autenticacion/",
-      headers: { "Content-Type": "application/json" },
-      data: {
-        tipo: tipo,
-        credencial: credencial,
-        password: password,
-      },
-    });
-
-    console.log(response.data);
-
-    if (response.data.error) {
-      // El api regresa un error
-      handlePopup("Error", response.data.mensaje, true);
-    } else {
-      console.log(response.data);
-      // El api regresa un mensaje de éxito
-      //handlePopup("", data.mensaje, false);
-
-      window.localStorage.setItem("token", response.data.token);
+    try {
+      const response = await axios({
+        method: "post",
+        url: API_URL + "api/autenticacion/",
+        headers: { "Content-Type": "application/json" },
+        data: {
+          tipo: tipo,
+          credencial: credencial,
+          password: password,
+        },
+      });
+  
+      //console.log(response.data);
+  
+      if (response.data.error) {
+        // El api regresa un error
+        handlePopup("Error", response.data.mensaje, true);
+      } else {
+        window.localStorage.setItem("token", response.data.token);
       if (response.data.tipo === "usuario") {
         cookies.set("tipo", "usuario", { path: "/" });
         cookies.set("nombre", response.data.usuario.nombre, { path: "/" });
@@ -150,6 +146,17 @@ function Login() {
       }
       navigate("/asesorias");
       window.location.reload();
+  
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        console.log(error.response);
+        // El servidor regresó un error de Bad Request
+      handlePopup("Error", "Matricula o Contraseña incorrecta", true);
+      } else {
+        // Otro tipo de error ocurrió
+        console.error(error);
+      }
     }
   };
 
