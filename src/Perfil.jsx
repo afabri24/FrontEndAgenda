@@ -20,6 +20,7 @@ import { FaCloudDownloadAlt } from "react-icons/fa";
 function Perfil() {
   const token = localStorage.getItem("token");
   const [datosAsesor, setDatosAsesor] = useState(null);
+  const [password, setPassword] = useState("");
   //Modal para errores, alertas
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -121,7 +122,7 @@ function Perfil() {
           nombre: datosAsesor.nombre,
           token: localStorage.getItem("token"),
           email: datosAsesor.email,
-          password: datosAsesor.password,
+          password: password,
           idioma: datosAsesor.idioma,
         })
         .then((response) => {
@@ -157,7 +158,7 @@ function Perfil() {
       valido = false;
     }
 
-    if (!es_valido_password(datosAsesor["password"])) {
+    if (!es_valido_password(password)) {
       passwordError =
         "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
       valido = false;
@@ -172,7 +173,7 @@ function Perfil() {
       valido = false;
     }
 
-    if (datosAsesor["password"].length === 0) {
+    if (password.length === 0) {
       passwordError = "La contraseña es requerida";
       valido = false;
     }
@@ -303,14 +304,14 @@ function Perfil() {
                   id="password"
                   type="password"
                   className="w-full py-10 h-12 block"
-                  label="Contraseña"
+                  label="Nueva contraseña"
                   name="password"
                   variant="outlined"
                   margin="normal"
-                  placeholder="Ingresa tu contraseña"
-                  value={datosAsesor.password}
+                  placeholder="Ingresar nueva contraseña"
+                  value={password}
                   onChange={(e) =>
-                    setDatosAsesor({ ...datosAsesor, password: e.target.value })
+                    setPassword(e.target.value )
                   }
                   endAdornment={
                     <InputAdornment position="end">

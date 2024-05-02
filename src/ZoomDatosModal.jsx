@@ -5,10 +5,16 @@ import { ModalSessionContext } from "./SessionContext";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import API_URL from "./utils/Constantes.js";
+import { es_valida_url } from './utils/Validadores.js';
 
 function ZoomDatosModal({ handleModalZoom }) {
 
-const [datosZoom, setDatosZoom] = useState('')
+const [datosZoom, setDatosZoom] = useState({
+  id_datosreunion: "",
+  url: "",
+  password: "",
+  id_reunion: "",
+})
 const token = localStorage.getItem("token");
 
 const [errores, setErrores] = useState({
@@ -36,21 +42,90 @@ const { setShowModalSession } =
     axios
       .post(API_URL + `api/asesores/obtenerDatosReunion/`, { token: token })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.mensaje);
         setDatosZoom(response.data.mensaje);
       })
       .catch((error) => {
         if (error.response.status === 401) {
           setShowModalSession(true);
         }
+        console.log(error.response)
       });
   }, []);
+
+  function enviarDatos() {
+    if (validarDatos()) {
+      axios
+        .put(API_URL + `api/asesores/actualizarDatosReunion/`, {
+          token: localStorage.getItem("token"),
+          id_datosreunion: datosZoom["id_datosreunion"],
+          url: datosZoom["url"],
+          password: datosZoom["password"],
+          id_reunion: datosZoom["id_reunion"],
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.error) {
+            handlePopup("Se actualizo correctamente", response.data.mensaje);
+            console.log("error");
+          } else {
+            handlePopup(
+              "Se actualizo correctamente",
+              "Tus datos se guardaron correctamente"
+            );
+            console.log("mostrar modal");
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            setShowModalSession(true);
+          }
+        });
+    }
+  }
+
+  function validarDatos() {
+    let valido = true;
+    let id_reunionError = "";
+    let passwordError = "";
+    let urlError = "";
+    console.log("datos: " + datosZoom.id_datosreunion)
+
+
+    if (datosZoom["id_reunion"].length === 0) {
+      id_reunionError = "El Id de la reunion es requerido";
+      valido = false;
+    }
+    if (datosZoom["url"].length === 0) {
+      urlError = "El URL es requerido";
+      valido = false;
+    }
+
+    if (datosZoom["password"].length === 0) {
+      passwordError = "La contraseña de la reunion es requerida";
+      valido = false;
+    }
+
+    if(!es_valida_url(datosZoom["url"])){
+      urlError = "El URL que ingreso no es valido";
+      valido = false;
+    }
+
+    setErrores({
+      url: urlError,
+      password: passwordError,
+      id_reunion: id_reunionError,
+    });
+
+    return valido;
+    
+  }
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-md p-8 max-w-md min-w-md">
         
-      <h2 className="text-xl font-bold">Mis Datos</h2>
+      <h2 className="text-xl font-bold">Datos para mi reunion virtual</h2>
           <div className="flex flex-col h-full">
             {datosZoom && (
               <>
@@ -64,7 +139,7 @@ const { setShowModalSession } =
                   margin="normal"
                   value={datosZoom.url}
                   onChange={(e) =>
-                    setDatosAsesor({ ...datosZoom, url: e.target.value })
+                    setDatosZoom({ ...datosZoom, url: e.target.value })
                   }
                 />
                 {errores.url && (
@@ -82,7 +157,7 @@ const { setShowModalSession } =
                   margin="normal"
                   value={datosZoom.password}
                   onChange={(e) =>
-                    setDatosAsesor({ ...datosZoom, password: e.target.value })
+                    setDatosZoom({ ...datosZoom, password: e.target.value })
                   }
                 />
                 {errores.password && (
@@ -100,7 +175,7 @@ const { setShowModalSession } =
                   placeholder="Ingresa el ID de la reunion"
                   value={datosZoom.id_reunion}
                   onChange={(e) =>
-                    setDatosAsesor({ ...datosZoom, id_reunion: e.target.value })
+                    setDatosZoom({ ...datosZoom, id_reunion: e.target.value })
                   }
                  
                 />
@@ -110,19 +185,13 @@ const { setShowModalSession } =
                   </span>
                 )}
 
-
-                <button 
-                className="w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg"
-                variant="contained" 
-                onClick={() => enviarDatos()}>
-                  Guardar mis datos
-                  </button>
               </>
             )}
           </div>
-          <div className="w-full flex justify-center items-center pt-4">
+          <div className="w-full flex justify-center items-center p-4">
 
-            <button className=" bg-sky-600 hover:bg-sky-700 text-slate-100 py-1 px-2 rounded-md text-lg">
+            <button className=" bg-sky-600 hover:bg-sky-700 text-slate-100 py-1 px-2 rounded-md text-lg mr-4"
+            onClick={() => enviarDatos()} >
                 Guardar Datos
             </button>
 

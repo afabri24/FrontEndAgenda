@@ -14,3 +14,8 @@ export function es_valido_matricula(matricula){
     const regexMatricula = /S\d{8,8}/
     return regexMatricula.test(matricula)
 }
+
+export function es_valida_url(url) {
+    const regexURL = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    return regexURL.test(url);
+}

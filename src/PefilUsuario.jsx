@@ -11,6 +11,10 @@ import {
   es_valido_password,
 } from "./utils/Validadores.js";
 import { ModalSessionContext } from "./SessionContext";
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function PefilUsuario() {
   const token = localStorage.getItem("token");
@@ -22,6 +26,8 @@ function PefilUsuario() {
     matricula: "",
     password: "",
   });
+
+  const [password, setPassword] = useState("");
 
   //Modal para errores, alertas
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +51,7 @@ function PefilUsuario() {
           nombre: datosUsuario.nombre,
           token: localStorage.getItem("token"),
           email: datosUsuario.email,
-          password: datosUsuario.password,
+          password: password,
           matricula: datosUsuario.matricula,
         })
         .then((response) => {
@@ -55,6 +61,7 @@ function PefilUsuario() {
             console.log("error");
           } else {
             handlePopup("Se actualizo correctamente", response.data.mensaje);
+            setPassword("")
             console.log("mostrar modal");
           }
         })
@@ -82,7 +89,7 @@ function PefilUsuario() {
       valido = false;
     }
 
-    if (!es_valido_password(datosUsuario["password"])) {
+    if (!es_valido_password(password)) {
       passwordError =
         "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
       valido = false;
@@ -100,7 +107,7 @@ function PefilUsuario() {
       matriculaError = "La matricula es requerida";
       valido = false;
     }
-    if (datosUsuario["password"].length === 0) {
+    if (password.length === 0) {
       passwordError = "La contraseña es requerida";
       valido = false;
     }
@@ -113,6 +120,16 @@ function PefilUsuario() {
     });
 
     return valido;
+  }
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  function quitarPassword() {
+    
   }
 
   useEffect(() => {
@@ -178,22 +195,32 @@ function PefilUsuario() {
                     {errores.email}
                   </span>
                 )}
+                <div className="m-2"></div>
                 <TextField
-                  id="password"
-                  className="w-full py-10 h-12 block"
-                  label="Nueva Contraseña"
-                  name="password"
-                  type="password"
-                  variant="outlined"
-                  placeholder="Ingresa tu nueva contraseña"
-                  margin="normal"
-                  onChange={(e) =>
-                    setDatosUsuario({
-                      ...datosUsuario,
-                      password: e.target.value,
-                    })
-                  }
-                />
+                id="password"
+                className="mt-10"
+                label="Nueva contraseña"
+                name="password"
+                variant="outlined"
+                placeholder="Ingresar nueva contraseña"
+                value={password}
+                onChange={(e) =>
+                  setPassword( e.target.value)
+                }
+                type={showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                    className="mt-10"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
+                }}
+              />
+                  
                 {errores.password && (
                   <span className="text-red-500 text-xs py-1">
                     {errores.password}
