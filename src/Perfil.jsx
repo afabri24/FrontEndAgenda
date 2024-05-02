@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import Button from "@mui/material/Button";
 import { ModalSessionContext } from "./SessionContext";
 import CursosModal from "./CursosModal.jsx";
 import InputAdornment from '@mui/material/InputAdornment';
@@ -16,7 +15,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ZoomDatosModal from "./ZoomDatosModal.jsx";
-
+import { FaCloudDownloadAlt } from "react-icons/fa";
 
 function Perfil() {
   const token = localStorage.getItem("token");
@@ -224,6 +223,41 @@ function Perfil() {
         >
           Regresar
         </a>
+        <div className="flex mt-3">
+          <div>
+            <InputLabel className="mx-4" id="demo-simple-select-label">
+                      Mis Cursos
+                    </InputLabel>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
+              {isOpen && (
+                <CursosModal
+                  handleModalCursos={handleModalCursos}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+            </div>
+            <div>
+              <InputLabel className="mx-4" id="demo-simple-select-label">
+                Datos de reunion zoom
+              </InputLabel>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpenZoom(true)}>Reunion Zoom</button>
+
+              {isOpenZoom && (
+                <ZoomDatosModal
+                  handleModalZoom={handleModalZoom}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+            </div>
+            <div>
+            <InputLabel className="mx-4" id="demo-simple-select-label">
+              Reporte mensual de asesorias
+            </InputLabel>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg flex" >
+              <FaCloudDownloadAlt className="mr-2"/>
+               Descargar reporte mensual</button>
+            </div>
+          </div>
         <div className="bg-white p-4">
           <h2 className="text-xl font-bold">Mis Datos</h2>
           <div className="flex flex-col h-full">
@@ -323,27 +357,7 @@ function Perfil() {
               </>
             )}
           </div>
-          <InputLabel className="mx-4" id="demo-simple-select-label">
-                  Mis Cursos
-                </InputLabel>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
-          {isOpen && (
-            <CursosModal
-              handleModalCursos={handleModalCursos}
-              onClick={(e) => e.stopPropagation()}
-            />
-          )}
-          <InputLabel className="mx-4" id="demo-simple-select-label">
-            Datos de reunion zoom
-          </InputLabel>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpenZoom(true)}>Reunion Zoom</button>
-
-          {isOpenZoom && (
-            <ZoomDatosModal
-              handleModalZoom={handleModalZoom}
-              onClick={(e) => e.stopPropagation()}
-            />
-          )}
+          
         </div>
       </div>
 

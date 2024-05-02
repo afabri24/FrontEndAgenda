@@ -87,9 +87,16 @@ function Login() {
     }
 
     if (password.length === 0) {
-      passwordError = "La contraseña es requerida";
+      passwordError = "*La contraseña es requerida";
+      valido = false;
+    } else if (password.length < 8 ) {
+      passwordError = "La contraseña debe tener mínimo 8 caracteres";
+      valido = false;
+    } else if (password.length > 16 ) {
+      passwordError = "La contraseña debe tener máximo 16 caracteres";
       valido = false;
     }
+
 
     if (credencial.length === 0) {
       credencialError = "La matricula es requerida.";
