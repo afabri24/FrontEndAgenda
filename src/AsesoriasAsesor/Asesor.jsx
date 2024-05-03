@@ -16,13 +16,14 @@ function Asesor() {
       token: localStorage.getItem('token'),
     })
     .then(response => {
-
+      setAsesoriasActuales([])
+      setAsesoriasPasadas([])
       const hoy = new Date();
       response.data.forEach(asesoria => {
-        if (new Date(asesoria.fecha) < hoy) {
-          setAsesoriasPasadas(asesoriasPasadas => [...asesoriasPasadas, asesoria]);
-        } else {
+        if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0) {
           setAsesoriasActuales(asesoriasActuales => [...asesoriasActuales, asesoria]);
+        } else {
+          setAsesoriasPasadas(asesoriasPasadas => [...asesoriasPasadas, asesoria]);
       }});
     })
     .catch(error => {
@@ -64,6 +65,7 @@ function Asesor() {
               modalidad={asesoria.modalidad} 
               curso={asesoria.curso}
               estado={'actual'}
+              esCancelada={asesoria.escancelada}
             />
           ))
         ) : (
@@ -104,6 +106,7 @@ function Asesor() {
               curso={asesoria.curso}
               handleReload={handleReload}
               estado={"pasada"}
+              esCancelada={asesoria.escancelada}
             />
           ))
         ) : (

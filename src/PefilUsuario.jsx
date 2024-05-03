@@ -8,13 +8,8 @@ import { Link } from "react-router-dom";
 import {
   es_valido_email,
   es_valido_matricula,
-  es_valido_password,
 } from "./utils/Validadores.js";
 import { ModalSessionContext } from "./SessionContext";
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function PefilUsuario() {
   const token = localStorage.getItem("token");
@@ -51,7 +46,6 @@ function PefilUsuario() {
           nombre: datosUsuario.nombre,
           token: localStorage.getItem("token"),
           email: datosUsuario.email,
-          password: password,
           matricula: datosUsuario.matricula,
         })
         .then((response) => {
@@ -76,7 +70,6 @@ function PefilUsuario() {
     let nombreError = "";
     let matriculaError = "";
     let emailError = "";
-    let passwordError = "";
 
     if (!es_valido_email(datosUsuario["email"])) {
       emailError = "El email que ingreso no es valido, favor de cambiarlo.";
@@ -86,12 +79,6 @@ function PefilUsuario() {
     if (!es_valido_matricula(datosUsuario["matricula"])) {
       matriculaError =
         "La matricula que ingreso no es valida, favor de cambiarla.";
-      valido = false;
-    }
-
-    if (!es_valido_password(password)) {
-      passwordError =
-        "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
       valido = false;
     }
 
@@ -107,16 +94,11 @@ function PefilUsuario() {
       matriculaError = "La matricula es requerida";
       valido = false;
     }
-    if (password.length === 0) {
-      passwordError = "La contraseña es requerida";
-      valido = false;
-    }
 
     setErrores({
       nombre: nombreError,
       matricula: matriculaError,
-      email: emailError,
-      password: passwordError,
+      email: emailError
     });
 
     return valido;
@@ -146,7 +128,7 @@ function PefilUsuario() {
   }, []);
 
   return (
-    <div className="container mx-auto grid grid-cols-2 gap-4">
+    <div className="container mx-auto grid gap-4">
       <div className="p-4 mt-4">
         <Link
           className="px-4 py-2 mt-4 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-blue-300 rounded-lg"
@@ -161,7 +143,7 @@ function PefilUsuario() {
               <>
                 <TextField
                   id="nombre"
-                  className="w-full py-10 h-12 block"
+                  className="sm:w-full md:w-2/6 py-10 h-12 block"
                   label="Nombre completo"
                   name="nombre"
                   variant="outlined"
@@ -179,7 +161,7 @@ function PefilUsuario() {
                 )}
                 <TextField
                   id="email"
-                  className="w-full py-10 h-12 block"
+                  className="sm:w-full md:w-2/6 py-10 h-12 block"
                   label="Correo electronico"
                   name="matricula"
                   variant="outlined"
@@ -195,42 +177,17 @@ function PefilUsuario() {
                     {errores.email}
                   </span>
                 )}
-                <div className="m-2"></div>
-                <TextField
-                id="password"
-                className="mt-10"
-                label="Nueva contraseña"
-                name="password"
-                variant="outlined"
-                placeholder="Ingresar nueva contraseña"
-                value={password}
-                onChange={(e) =>
-                  setPassword( e.target.value)
-                }
-                type={showPassword ? "text" : "password"}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton
-                    className="mt-10"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  ),
-                }}
-              />
-                  
-                {errores.password && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.password}
-                  </span>
-                )}
+                
               </>
             )}
 
             <div>
-              <Button onClick={() => enviarDatos()}>Guardar</Button>
+            <button 
+                className="w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg"
+                variant="contained" 
+                onClick={() => enviarDatos()}>
+                  Guardar mis datos
+                  </button>
             </div>
           </div>
         </div>

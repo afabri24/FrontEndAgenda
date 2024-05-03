@@ -28,15 +28,19 @@ function Usuario() {
       );
 
       const hoy = new Date();
+      setAsesoriasActuales([])
+      setAsesoriasPasadas([])
+      console.log(response.data)
       response.data.forEach((asesoria) => {
-        if (new Date(asesoria.fecha) < hoy) {
-          setAsesoriasPasadas((asesoriasPasadas) => [
-            ...asesoriasPasadas,
+        if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0 ) {
+          setAsesoriasActuales((asesoriasActuales) => [
+            ...asesoriasActuales,
             asesoria,
           ]);
         } else {
-          setAsesoriasActuales((asesoriasActuales) => [
-            ...asesoriasActuales,
+          
+          setAsesoriasPasadas((asesoriasPasadas) => [
+            ...asesoriasPasadas,
             asesoria,
           ]);
         }
@@ -107,6 +111,7 @@ function Usuario() {
               curso={asesoria.curso}
               handleReload={handleReload}
               estado={"actual"}
+              esCancelada={asesoria.escancelada}
             />
           ))
         ) : (
@@ -151,6 +156,7 @@ function Usuario() {
               curso={asesoria.curso}
               handleReload={handleReload}
               estado={"pasada"}
+              esCancelada={asesoria.escancelada}
             />
           ))
         ) : (

@@ -10,10 +10,6 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { ModalSessionContext } from "./SessionContext";
 import CursosModal from "./CursosModal.jsx";
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ZoomDatosModal from "./ZoomDatosModal.jsx";
 import { FaCloudDownloadAlt } from "react-icons/fa";
 
@@ -122,7 +118,6 @@ function Perfil() {
           nombre: datosAsesor.nombre,
           token: localStorage.getItem("token"),
           email: datosAsesor.email,
-          password: password,
           idioma: datosAsesor.idioma,
         })
         .then((response) => {
@@ -151,18 +146,12 @@ function Perfil() {
     let nombreError = "";
     let idiomaError = "";
     let emailError = "";
-    let passwordError = "";
 
     if (!es_valido_email(datosAsesor["email"])) {
       emailError = "El email que ingreso no es valido, favor de cambiarlo.";
       valido = false;
     }
 
-    if (!es_valido_password(password)) {
-      passwordError =
-        "La contraseña que ingreso no es valida, favor de cambiarla. (min 8, max 16 caracteres)";
-      valido = false;
-    }
 
     if (datosAsesor["nombre"].length === 0) {
       nombreError = "El nombre es requerido";
@@ -173,16 +162,11 @@ function Perfil() {
       valido = false;
     }
 
-    if (password.length === 0) {
-      passwordError = "La contraseña es requerida";
-      valido = false;
-    }
 
     setErrores({
       nombre: nombreError,
       idioma: idiomaError,
-      email: emailError,
-      password: passwordError,
+      email: emailError
     });
 
     return valido;
@@ -211,8 +195,7 @@ function Perfil() {
   const [errores, setErrores] = useState({
     nombre: "",
     email: "",
-    idioma: "",
-    password: "",
+    idioma: ""
   });
 
   return (
@@ -300,38 +283,7 @@ function Perfil() {
                     {errores.email}
                   </span>
                 )}
-                <TextField
-                  id="password"
-                  type="password"
-                  className="w-full py-10 h-12 block"
-                  label="Nueva contraseña"
-                  name="password"
-                  variant="outlined"
-                  margin="normal"
-                  placeholder="Ingresar nueva contraseña"
-                  value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value )
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {errores.password && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.password}
-                  </span>
-                )}
-                
+
                 <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"

@@ -46,10 +46,10 @@ function Paso1() {
             Selecciona el asesor para tu asesoria
           </h1>
         </div>
-
+        <div   className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3">
         {asesores && asesores.map(asesor => (
-          <div  key={asesor.id_asesor} className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3">
-            <div>
+         
+            <div key={asesor.id_asesor}>
               <div
                 onClick={() => handleClick(asesor.id_asesor)}
                 className="transition-transform duration-500 ease-in-out transform hover:rotate-3 cursor-pointer border-2 border-accent-500 rounded-xl p-4 lg:p-8 hover:shadow-lg hover:border-accent-400 hover:bg-accent-100"
@@ -65,9 +65,10 @@ function Paso1() {
                 </div>
               </div>
             </div>
-          </div>
+          
 
         )) }
+        </div>
         
 
         

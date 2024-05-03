@@ -22,7 +22,8 @@ function ModalDetallesUsuario({
   reunion_id,
   curso,
   handleReload,
-  estado
+  estado,
+  esCancelada
 }) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalAbierto, setModalAbierto] = React.useState(false);
@@ -58,7 +59,7 @@ function ModalDetallesUsuario({
     try {
       const response = await axios({
         method: "DELETE",
-        url: API_URL + "api/asesorias/eliminarAsUsuario/",
+        url: API_URL + "api/asesorias/cancelarAsUsuario/",
         data: {
           id_asesoria: idAsesoria,
           token: token,
@@ -67,6 +68,7 @@ function ModalDetallesUsuario({
       if (!response.data.error) {
         handleReload();
       } else {
+        handleReload();
         handlePopup("Error", response.data.mensaje);
       }
     } catch (error) {
@@ -121,13 +123,16 @@ function ModalDetallesUsuario({
           {link}
         </a>
         <div className="w-full flex justify-center items-center">
-          {estado === 'actual' &&
+          {estado === 'actual' && esCancelada === 0 &&
           <button
             className="w-24 mt-1 center rounded-md border border-transparent shadow-sm px-1 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 "
             onClick={abrirModal}
           >
             Cancelar
           </button>
+          }
+          {esCancelada === 1 &&
+            <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
           }
         </div>
       </div>

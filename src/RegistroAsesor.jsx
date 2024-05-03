@@ -10,11 +10,24 @@ import { es_valido_email } from "./utils/Validadores";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import ModalNuevo from "./ModalNuevo";
 
 function RegistroAsesor() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => event.preventDefault();
+
+   //Modal para errores, alertas
+   const [showModal, setShowModal] = useState(false);
+   const [modalMessage, setModalMessage] = useState("");
+   const [modalTittle, setModalTittle] = useState("");
+
+  const handlePopup = (tittle, message) => {
+    setModalMessage(message);
+    setModalTittle(tittle);
+    setShowModal(true);
+  };
+  const handleClose = () => setShowModal(false);
 
   const [form, setForm] = useState({
     nombre: "",
@@ -32,12 +45,9 @@ function RegistroAsesor() {
     fotoBase64: "",
   });
 
-
-  const [file, setFile] = useState();
   const [preview, setPreview] = useState("placeholder.png"); // placeholder image
 
   const handleChange = (e) => {
-    console.log(form)
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -86,16 +96,17 @@ function RegistroAsesor() {
     if(validarCampos()){
     
 
-      console.log(form);
       try {
         const response = await axios.post(API_URL+"api/asesores/registrar/", form);
-        console.log(response.data);
-        console.log("Asesor registrado");
+
+        if(response.data.error)
+          handlePopup("Error", response.data.mensaje, true);
+        else 
+        limpiarFormulario(); 
+          handlePopup("Exito", response.data.mensaje, true);
       } catch (error) {
-        console.error(error);
+        handlePopup("Error", error , true);
       }
-    }else{
-      console.log("error")
     }
   };
 
@@ -161,6 +172,16 @@ function RegistroAsesor() {
     errores.email = "";
     errores.password = "";
     errores.fotoBase64 = "";
+  }
+
+  function limpiarFormulario() {
+    setForm({
+      nombre: "",
+      email: "",
+      password: "",
+      fotoBase64: "",
+      idioma: "",
+    });
   }
 
   return (
@@ -266,6 +287,12 @@ function RegistroAsesor() {
           </Button>
         </form>
       </div>
+      <ModalNuevo
+          showModal={showModal}
+          handleClose={handleClose}
+          modalTittle={modalTittle}
+          modalMessage={modalMessage}
+        />
     </div>
   );
 }
