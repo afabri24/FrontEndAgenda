@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import API_URL from "./utils/Constantes";
+import { API_URL } from "./utils/Constantes";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";

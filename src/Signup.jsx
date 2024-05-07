@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal.jsx";
-import API_URL from "./utils/Constantes.js";
+import {API_URL} from "./utils/Constantes.js";
 import TextField from "@mui/material/TextField";
 import {
   es_valido_email,

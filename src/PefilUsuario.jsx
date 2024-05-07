@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import API_URL from "./utils/Constantes.js";
+import { API_URL } from "./utils/Constantes.js";
 import ModalNuevo from "./ModalNuevo";
 import { Link } from "react-router-dom";
 import {

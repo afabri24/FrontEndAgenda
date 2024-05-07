@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import Card from "./CardUsuario";
-import API_URL from "../utils/Constantes.js";
+import {API_URL} from "../utils/Constantes.js";
 import { Link } from "react-router-dom";
 import { ModalSessionContext } from "../SessionContext";
 import imageEmpty from "../assets/empty.png";

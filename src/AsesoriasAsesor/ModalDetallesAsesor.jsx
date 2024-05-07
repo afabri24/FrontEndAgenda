@@ -2,7 +2,7 @@ import React from "react";
 import ModalConBotones from "../ModalConBotones";
 import ModalNuevo from "../ModalNuevo";
 import axios from "axios";
-import API_URL from "../utils/Constantes";
+import {API_URL} from "../utils/Constantes";
 
 function ModalDetails({
   idAsesoria,

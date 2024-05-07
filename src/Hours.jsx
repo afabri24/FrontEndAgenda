@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios'
 import FormControl from '@mui/material/FormControl';
-import API_URL from "./utils/Constantes";
+import { API_URL } from "./utils/Constantes";
 import ModalNuevo from "./ModalNuevo";
 import { ModalSessionContext } from './SessionContext';
 

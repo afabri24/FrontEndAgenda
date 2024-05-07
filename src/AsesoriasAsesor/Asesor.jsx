@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Card from "./CardAsesor";
-import API_URL from "../utils/Constantes.js";
+import {API_URL} from "../utils/Constantes.js";
 import imageEmpty from '../assets/empty.png'
 import { ModalSessionContext } from '../SessionContext';
 

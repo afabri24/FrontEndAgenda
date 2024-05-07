@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { multiStepContext } from './Contexto.jsx'
 import { Button, TextField } from '@mui/material';
 import axios from 'axios'
-import API_URL from "../utils/Constantes.js";
+import {API_URL} from "../utils/Constantes.js";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';

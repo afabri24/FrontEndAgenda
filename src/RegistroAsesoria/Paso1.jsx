@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { multiStepContext } from "./Contexto";
 import axios from "axios";
-import API_URL from "../utils/Constantes.js";
+import {API_URL} from "../utils/Constantes.js";
 import { obtenerDiaHoy, obtenerDiaMañana, obtenerFechaDiaSemanaActual } from "../utils/Funciones";
 
 function Paso1() {

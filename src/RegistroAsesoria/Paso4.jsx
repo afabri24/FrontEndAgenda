@@ -7,7 +7,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import axios from 'axios';
-import API_URL from "../utils/Constantes";
+import {API_URL} from "../utils/Constantes";
 import { useNavigate } from 'react-router-dom';
 import { ModalSessionContext } from '../SessionContext';
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
