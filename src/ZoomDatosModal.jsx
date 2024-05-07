@@ -4,7 +4,7 @@ import ModalNuevo from "./ModalNuevo";
 import { ModalSessionContext } from "./SessionContext";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-import { API_URL } from "./utils/Constantes.js";
+import { API_URL } from "./utils/Constantes";
 import { es_valida_url } from './utils/Validadores.js';
 
 function ZoomDatosModal({ handleModalZoom }) {

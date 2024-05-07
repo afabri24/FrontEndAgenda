@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
-import { API_URL } from "./utils/Constantes.js";
+import { API_URL } from "./utils/Constantes";
 import Chip from "@mui/material/Chip";
 import { ModalSessionContext } from "./SessionContext";
 import ModalNuevo from "./ModalNuevo";

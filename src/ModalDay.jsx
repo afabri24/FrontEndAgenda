@@ -9,7 +9,7 @@ import { Select, MenuItem } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 import axios from "axios";
 import { useEffect } from "react";
-import { API_URL } from "./utils/Constantes.js";
+import { API_URL } from "./utils/Constantes";
 import ModalNuevo from "./ModalNuevo";
 import Cookies from "universal-cookie";
 

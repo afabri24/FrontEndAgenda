@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ModalDay from "./ModalDay";
-import { API_URL } from "./utils/Constantes.js";
+import { API_URL } from "./utils/Constantes";
 import ModalNuevo from "./ModalNuevo";
 import { es_valido_email, es_valido_password } from "./utils/Validadores.js";
 import TextField from "@mui/material/TextField";
