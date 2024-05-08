@@ -11,6 +11,7 @@ import {
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Link } from 'react-router-dom';
 
 function Signup() {
   //aqui estan para mostrar la contraseña
@@ -324,12 +325,12 @@ function Signup() {
               <div className="space-y-4">
                 <p className="font-medium text-sm leading-tight text-black">
                   Ya te registraste?{" "}
-                  <a
+                  <Link
                     className="text-accent-500 hover:text-accent-400 ml-3"
-                    href="/login"
+                    to="/login"
                   >
                     Inicia sesion
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
