@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import ModalNuevo from "./ModalNuevo";
 import {API_URL} from "./utils/Constantes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import TextField from "@mui/material/TextField";
 import {
@@ -245,12 +245,12 @@ function Login() {
             <div>
               <p className="font-medium text-sm leading-tight text-black">
                 No estas registrado?{" "}
-                <a
+                <Link
                   className="text-accent-500 hover:text-accent-400 ml-3"
-                  href="/signup"
+                  to="/signup"
                 >
                   Registrate Ahora
-                </a>
+                </Link>
               </p>
             </div>
           </div>
