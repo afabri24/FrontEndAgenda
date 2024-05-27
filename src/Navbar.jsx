@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import logo from "./assets/logoUV.png";
+import ModalDecision from "./components/ModalDecision";
 
 function Navbar() {
   const cookies = new Cookies();
@@ -78,7 +79,7 @@ function Navbar() {
                 Cerrar sesion
               </button>
             </div>
-            <ModalConBotones
+            <ModalDecision
               showModal={modalAbierto}
               onClose={handleCerrar}
               onAccept={handleLogout}
