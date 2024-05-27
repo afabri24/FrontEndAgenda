@@ -45,7 +45,8 @@ function ModalDetallesUsuario({
     setShowModal(false);
   };
 
-  const abrirModal = () => {
+  const abrirModal = (event) => {
+    event.stopPropagation();
     setModalAbierto(true);
   };
 
@@ -72,7 +73,7 @@ function ModalDetallesUsuario({
         handlePopup("Error", response.data.mensaje);
       }
     } catch (error) {
-      console.error("Error al eliminar el horario", error);
+      console.error("Error al eliminar la asesoria", error);
     }
   };
 
@@ -125,11 +126,11 @@ function ModalDetallesUsuario({
         <div className="w-full flex justify-center items-center">
           {estado === 'actual' && esCancelada === 0 &&
           <button
-            className="w-24 mt-1 center rounded-md border border-transparent shadow-sm px-1 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 "
-            onClick={abrirModal}
-          >
-            Cancelar
-          </button>
+          className="w-24 mt-1 center rounded-md border border-transparent shadow-sm px-1 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 "
+          onClick={(event) => abrirModal(event)}
+        >
+          Cancelar
+        </button>
           }
           {esCancelada === 1 &&
             <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
@@ -142,7 +143,7 @@ function ModalDetallesUsuario({
         onClose={handleCerrar}
         onAccept={aceptar}
         title={"Confirmación"}
-        message="¿Estás seguro de eliminar la asesoria?"
+        message="¿Estás seguro de cancelar la asesoria?"
       />
       <ModalNuevo
         showModal={showModal}

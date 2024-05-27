@@ -16,10 +16,13 @@ function Asesor() {
       token: localStorage.getItem('token'),
     })
     .then(response => {
+      console.log(response.data);
       setAsesoriasActuales([])
       setAsesoriasPasadas([])
       const hoy = new Date();
+      console.log(hoy);
       response.data.forEach(asesoria => {
+        console.log(asesoria.fecha);
         if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0) {
           setAsesoriasActuales(asesoriasActuales => [...asesoriasActuales, asesoria]);
         } else {

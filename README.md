@@ -18,3 +18,12 @@ TODO fabri:
 TODO diego:
 -traer los grupos, obtener fecha con el dia
 
+
+
+Agregar motivo cuando cuando se cancele una asesoria
+
+crear tabla de idiomas para usuario y filtro cuando se quiera seleccionar al asesor
+
+cambiar modal al eliminar un horario asesor
+
+olvide la contraseña
