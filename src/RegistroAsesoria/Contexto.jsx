@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import RegistroAsesoria from "./RegistroAsesoria"
-import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 export const multiStepContext = React.createContext();
 
 function Contexto() {

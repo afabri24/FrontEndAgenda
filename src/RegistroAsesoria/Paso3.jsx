@@ -26,7 +26,7 @@ function Paso3() {
   
   useEffect(() => {
     console.log(asesoriaDatos)
-    setDiasEntreSemana(dias_entre_semana());
+  
     if (asesoriaDatos["dia"]) {
       axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
         "token": token,
@@ -37,6 +37,20 @@ function Paso3() {
         .then(response => {
           console.log(response.data)
           setHoras(response.data.mensaje)
+        })
+        .catch(error => {
+          if(error.response.status === 401){
+            setShowModalSession(true)
+          }
+      });
+      axios.post(API_URL+`api/asesorias/obtenerDisponibilidadHorarios/`, {
+        "token": token,
+        "idAsesor": asesoriaDatos["idAsesor"],
+        "modalidad": asesoriaDatos["modalidad"]
+      })
+        .then(response => {
+          console.log(response.data)
+          setDiasEntreSemana(response.data.mensaje)
         })
         .catch(error => {
           if(error.response.status === 401){
@@ -109,7 +123,17 @@ function Paso3() {
                 value={asesoriaDatos["dia"]}
               >
                 {diasEntreSemana.map(dia =>
-                    <MenuItem value={dia.valor}>{dia.dia}</MenuItem>
+                    <MenuItem value={dia.valor}>{dia.dia}
+                    <span
+                    style={{
+                      display: 'inline-block',
+                      width: '10px',
+                      height: '10px',
+                      borderRadius: '50%',
+                      backgroundColor: dia.tieneHoras ? 'green' : 'red',
+                      marginLeft: '10px',
+                    }}
+                  /></MenuItem>
                 )}
             </Select>
           </FormControl>

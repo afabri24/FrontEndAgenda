@@ -3,6 +3,7 @@ export function dias_entre_semana() {
   const fechaDiaSemanaActual = new Date(hoy);
   const mes = (fechaDiaSemanaActual.getMonth() + 1).toString().padStart(2, '0');
   const dia = fechaDiaSemanaActual.getDate().toString().padStart(2, '0');
+  
   const diasSemana = [
   {"dia":'Lunes ', "valor":'lunes'},
   {"dia":'Martes ', "valor":'martes'},

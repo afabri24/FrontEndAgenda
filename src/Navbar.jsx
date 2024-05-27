@@ -39,9 +39,9 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full mx-auto md:px-12 px-8 max-w-7xl lg:px-16 sticky top-0 z-10">
-      <div className="relative flex flex-col w-full py-5 mx-auto bg-white md:items-center md:justify-between md:flex-row md:px-6">
-        <div className="flex flex-row items-center justify-between lg:justify-start">
+    <div className="w-full mx-auto lg:px-16 top-0 z-10">
+      <div className="relative flex w-full py-5 mx-auto bg-white items-end place-content-between md:flex-row md:px-6">
+        <div className="flex flex-row items-center justify-between lg:justify-start p-4">
           {token ? (
             <Link
               to="/asesorias"
@@ -59,12 +59,12 @@ function Navbar() {
         </div>
 
         {token ? (
-          <nav className="flex items-center justify-between flex-wrap  p-6">
-            <span className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto">
+          <nav className="flex place-items-end justify-between flex-row p-2 items-center h-full">
+            <span className="px-2 lg:px-6 py-2 md:text-xl  md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto">
               Bienvenido/a {cookies.get("nombre")}
             </span>
 
-            <div className="inline-flex items-center gap-2 list-none lg:ml-auto">
+            <div className="flex items-center gap-2 list-none lg:ml-auto">
               <Link
                 to="/perfil"
                 className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-blue-300 rounded-lg"
@@ -73,7 +73,7 @@ function Navbar() {
               </Link>
               <button
                 onClick={abrirModal}
-                className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-slate-300 rounded-lg"
+                className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-slate-300 rounded-lg w-auto"
               >
                 Cerrar sesion
               </button>
@@ -87,14 +87,55 @@ function Navbar() {
             />
           </nav>
         ) : (
-          <nav className="flex items-center justify-between flex-wrap p-6">
+          <nav className="flex place-items-end justify-between flex-row p-6">
+            <div className={`${isOpen ? "" : "hidden"} lg:block`}>
+              <a
+                qonClick={toggleMenu}
+                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto"
+                href="/#quees"
+              >
+                ¿Que es?
+              </a>
+              <a
+                onClick={toggleMenu}
+                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
+                href="/#conocenos"
+              >
+                Conocenos
+              </a>
+
+              <Link
+                onClick={toggleMenu}
+                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
+                to="/faq"
+              >
+                Preguntas frecuentes
+              </Link>
+
+              <div className="inline-flex items-center gap-2 list-none lg:ml-auto">
+                <Link
+                  onClick={toggleMenu}
+                  to="/signup"
+                  className="inline-flex items-center h-8 justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 active:bg-gray-200 active:text-accent-400 focus-visible:outline-black"
+                >
+                  Registro
+                </Link>
+                <Link
+                  onClick={toggleMenu}
+                  to="/login"
+                  className="inline-flex items-center h-8 justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 active:bg-gray-200 active:text-accent-400 focus-visible:outline-black"
+                >
+                  Iniciar sesión
+                </Link>
+              </div>
+            </div>
             <button onClick={toggleMenu} className="lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                className="h-6 w-6"
+                className="h-8 w-8"
               >
                 <path
                   strokeLinecap="round"
@@ -106,42 +147,8 @@ function Navbar() {
                 />
               </svg>
             </button>
-            <div className={`${isOpen ? "" : "hidden"} lg:block`}>
-              <a
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto"
-                href="/#quees"
-              >
-                ¿Que es?
-              </a>
-              <a
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
-                href="/#conocenos"
-              >
-                Conocenos
-              </a>
-
-              <Link
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
-                to="/faq"
-              >
-                Preguntas frecuentes
-              </Link>
-
-              <div className="inline-flex items-center gap-2 list-none lg:ml-auto">
-                <Link
-                  to="/signup"
-                  className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline"
-                >
-                  Registro
-                </Link>
-                <Link
-                  to="/login"
-                  className="inline-flex items-center h-8 justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 active:bg-gray-200 active:text-accent-400 focus-visible:outline-black"
-                >
-                  Iniciar sesión
-                </Link>
-              </div>
-            </div>
+            
+            
           </nav>
         )}
       </div>

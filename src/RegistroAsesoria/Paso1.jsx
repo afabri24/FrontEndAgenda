@@ -43,10 +43,10 @@ function Paso1() {
       <div className="mx-auto max-w-7xl pt-12">
         <div className="justify-center items-center flex p-4">
           <h1 className="text-blue-700 text-2xl">
-            Selecciona el asesor para tu asesoria
+            Selecciona tu asesor
           </h1>
         </div>
-        <div   className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3">
+        <div   className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3 p-4">
         {asesores && asesores.map(asesor => (
          
             <div key={asesor.id_asesor}>

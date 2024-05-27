@@ -20,7 +20,7 @@ function Faq() {
     ];
   
     return (
-      <div className="flex flex-col items-center justify-center space-y-4 h-screen">
+      <div className="flex flex-col items-center justify-center h-screen">
         {questions.map((question, index) => (
           <div key={index} className="w-full max-w-md p-4 bg-white rounded shadow">
             <div onClick={() => setOpenIndex(index === openIndex ? null : index)} className="cursor-pointer">

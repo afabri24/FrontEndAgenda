@@ -28,16 +28,16 @@ function RegistroAsesoria() {
       <div className="flex justify-center">
         <Stepper activeStep={pasoActual - 1} className="w-2/3">
           <Step>
-            <StepLabel>Asesores</StepLabel>
+            <StepLabel></StepLabel>
           </Step>
           <Step>
-            <StepLabel>Grupo y modalidad</StepLabel>
+            <StepLabel></StepLabel>
           </Step>
           <Step>
-            <StepLabel>Horario</StepLabel>
+            <StepLabel></StepLabel>
           </Step>
           <Step>
-            <StepLabel>Tema</StepLabel>
+            <StepLabel></StepLabel>
           </Step>
         </Stepper>
       </div>

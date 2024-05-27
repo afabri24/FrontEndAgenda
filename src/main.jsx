@@ -24,7 +24,7 @@ function Main() {
   return (
     <>
       <Router>
-          <Navbar />
+        <Navbar />
           <SessionProvider>
           <Routes>
           
