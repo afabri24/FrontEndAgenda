@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import ModalIdioma from "./components/ModalIdioma.jsx";
 import axios from "axios";
 import { API_URL } from "./utils/Constantes";
 import ModalNuevo from "./ModalNuevo";
@@ -9,11 +10,15 @@ import {
   es_valido_email,
   es_valido_matricula,
 } from "./utils/Validadores.js";
+
 import { ModalSessionContext } from "./SessionContext";
+
 
 function PefilUsuario() {
   const token = localStorage.getItem("token");
   const [datosUsuario, setDatosUsuario] = useState(null);
+
+  const [isOpen, setIsOpen] = useState(false);
   //variables para los errores del formulario
   const [errores, setErrores] = useState({
     nombre: "",
@@ -114,6 +119,10 @@ function PefilUsuario() {
     
   }
 
+  const handleModalIdiomas = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     axios
       .post(API_URL + `api/usuarios/obtenerDatosUsuario/`, { token: token })
@@ -138,6 +147,19 @@ function PefilUsuario() {
         </Link>
         <div className="bg-white p-4">
           <h2 className="text-xl font-bold">Usuario</h2>
+
+          <div>
+            <InputLabel className="mx-4" id="demo-simple-select-label">
+                      Mis Cursos
+                    </InputLabel>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
+              {isOpen && (
+                <ModalIdioma
+                  handleModalIdiomas={handleModalIdiomas}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              )}
+            </div>
           <div className="flex flex-col h-full">
             {datosUsuario && (
               <>
