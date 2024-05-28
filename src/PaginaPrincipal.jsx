@@ -139,7 +139,7 @@ function PaginaPrincipal() {
             <section id="conocenos" className="py-12 px-4">
               <h1 className="text-4xl mb-4 font-bold text-center">Conócenos</h1>
               <div className="flex flex-col space-y-4">
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex bg-white border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <img
                     src="/1.jpg"
                     alt="Imagen maestra Gabriela"
@@ -159,7 +159,7 @@ function PaginaPrincipal() {
                   </div>
                 </div>
 
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex border  bg-white rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <div className="mr-2">
                     <p className="font-bold mb-1">Dra. Roxana Rivera ochoa</p>
                     <p className="text-gray-500 mb-2">Ingles</p>
@@ -177,7 +177,7 @@ function PaginaPrincipal() {
                   />
                 </div>
 
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex border bg-white rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <img
                     src="/3.jpg"
                     alt="Imagen doctora Eugenia"
@@ -197,7 +197,7 @@ function PaginaPrincipal() {
                   </div>
                 </div>
 
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex border bg-white rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <div className="mr-2">
                     <p className="font-bold mb-1">
                       Mtra. Kirina Reyes Hernandez
@@ -217,7 +217,7 @@ function PaginaPrincipal() {
                   />
                 </div>
 
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex border bg-white rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <img
                     src="/5.jpeg"
                     alt="Imagen maestra Victoria"
@@ -235,7 +235,7 @@ function PaginaPrincipal() {
                   </div>
                 </div>
 
-                <div className="flex border rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
+                <div className="flex border bg-white rounded p-2 w-full hover:shadow-lg transition duration-200 ease-in-out">
                   <div className="mr-2">
                     <p className="font-bold mb-1">Mtra. Josefina Tapia</p>
                     <p className="text-gray-500 mb-2">Aleman</p>
@@ -257,6 +257,7 @@ function PaginaPrincipal() {
           </div>
         </div>
       </div>
+      <div class="fixed inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"><div class="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)]"></div></div>
     </div>
   );
 }

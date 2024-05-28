@@ -25,7 +25,6 @@ function Paso1() {
     axios
       .get(API_URL + `api/asesores/obtenerAsesores/`)
       .then((response) => {
-        console.log(response.data.mensaje)
         setAsesores(response.data.mensaje)
       })
       .catch((error) => {

@@ -32,7 +32,11 @@ function CursosModal({ handleModalCursos }) {
 
   function obtenerCursos() {
     axios
-      .post(API_URL + "api/asesores/obtenerCursos/", { token: token })
+      .post(API_URL + "api/asesores/obtenerCursos/",{},{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => {
         console.log(response.data.mensaje);
         setCursos(response.data.mensaje);
@@ -52,7 +56,11 @@ function CursosModal({ handleModalCursos }) {
 
   function agregarNuevoCurso(nombre) {
     axios
-      .post(API_URL + "api/asesores/registrarCurso/", { token: token, nombre: nombre })
+      .post(API_URL + "api/asesores/registrarCurso/", { nombre: nombre },{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => {
         console.log(response.data.mensaje);
         obtenerCursos()
@@ -78,7 +86,9 @@ function CursosModal({ handleModalCursos }) {
         url: API_URL + "api/asesores/eliminarCurso/",
         data: {
           idCurso: id,
-          token: token,
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`,
         },
       });
       console.log(response.data.mensaje)

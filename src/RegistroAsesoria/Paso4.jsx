@@ -37,6 +37,10 @@ function Paso4() {
           Fecha: obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]),
           token: token,
 
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
     
         if (!response.data.error) {

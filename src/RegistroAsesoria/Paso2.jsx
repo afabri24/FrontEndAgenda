@@ -30,6 +30,11 @@ function Paso2() {
       .post(API_URL + `api/usuarios/obtenerCursos/`, {
         token: token,
         idAsesor: asesoriaDatos["idAsesor"],
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       })
       .then((response) => {
         console.log(response.data.mensaje);
@@ -69,7 +74,7 @@ function Paso2() {
   }
 
   return (
-    <div className="p-4 flex flex-col lg:flex-row justify-center items-center px-60">
+    <div className="p-4 flex lg:flex-row justify-center items-center px-60">
       <div className="flex-1 mx-auto bg-white rounded-lg shadow-lg p-6 flex flex-col items-center">
         <h2 className="text-blue-700">Selecciona tu curso:</h2>
         <FormControl className="">

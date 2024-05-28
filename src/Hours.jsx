@@ -108,8 +108,10 @@ function Hours({
         url: API_URL + "api/asesores/eliminarDiaHora/",
         data: {
           id_diahora: idDiaHora,
-          token: token,
         },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
       });
       if (!response.data.error) {
         handleReload();
@@ -138,8 +140,10 @@ function Hours({
         hora_termino: data["horaFin"],
         modalidad: data["modalidad"],
         estado: data["estado"],
-        token: localStorage.getItem("token"),
-      })
+      },{
+        headers: {
+        'Authorization': `Bearer ${token}`,
+      }})
       .then((response) => {
         console.log(response.data);
         if (response.data.error) {

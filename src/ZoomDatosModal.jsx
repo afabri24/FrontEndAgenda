@@ -40,7 +40,11 @@ const { setShowModalSession } =
 
   useEffect(() => {
     axios
-      .post(API_URL + `api/asesores/obtenerDatosReunion/`, { token: token })
+      .post(API_URL + `api/asesores/obtenerDatosReunion/`, { },{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
       .then((response) => {
         console.log(response.data.mensaje);
         setDatosZoom(response.data.mensaje);
@@ -57,11 +61,14 @@ const { setShowModalSession } =
     if (validarDatos()) {
       axios
         .put(API_URL + `api/asesores/actualizarDatosReunion/`, {
-          token: localStorage.getItem("token"),
           id_datosreunion: datosZoom["id_datosreunion"],
           url: datosZoom["url"],
           password: datosZoom["password"],
           id_reunion: datosZoom["id_reunion"],
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
         })
         .then((response) => {
           console.log(response.data);

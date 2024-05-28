@@ -116,9 +116,12 @@ function Perfil() {
       axios
         .put(API_URL + `api/asesores/actualizar/`, {
           nombre: datosAsesor.nombre,
-          token: localStorage.getItem("token"),
           email: datosAsesor.email,
           idioma: datosAsesor.idioma,
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
         })
         .then((response) => {
           console.log(response.data);
@@ -180,7 +183,11 @@ function Perfil() {
 
   useEffect(() => {
     axios
-      .post(API_URL + `api/asesores/obtenerDatosAsesor/`, { token: token })
+      .post(API_URL + `api/asesores/obtenerDatosAsesor/`, { },{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
       .then((response) => {
         console.log(response.data);
         setDatosAsesor(response.data.mensaje);

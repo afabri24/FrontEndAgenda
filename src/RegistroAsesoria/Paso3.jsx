@@ -8,7 +8,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { dias_entre_semana } from "../utils/Funciones.js"
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 import { obtenerMensaje } from '../utils/Funciones';
 import Modal from '../Modal.jsx';
@@ -29,10 +28,14 @@ function Paso3() {
   
     if (asesoriaDatos["dia"]) {
       axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
-        "token": token,
         "idAsesor": asesoriaDatos["idAsesor"],
         "dia": asesoriaDatos["dia"],
         "modalidad": asesoriaDatos["modalidad"]
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       })
         .then(response => {
           console.log(response.data)
@@ -44,9 +47,12 @@ function Paso3() {
           }
       });
       axios.post(API_URL+`api/asesorias/obtenerDisponibilidadHorarios/`, {
-        "token": token,
         "idAsesor": asesoriaDatos["idAsesor"],
         "modalidad": asesoriaDatos["modalidad"]
+      },{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       })
         .then(response => {
           console.log(response.data)
@@ -65,10 +71,14 @@ function Paso3() {
 
   function obtenerHorasByDia(dia) {
     axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
-      "token": token,
       "idAsesor": asesoriaDatos["idAsesor"],
       "dia": dia,
       "modalidad": asesoriaDatos["modalidad"]
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     })
       .then(response => {
         console.log(response.data)
@@ -107,6 +117,7 @@ function Paso3() {
 
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } = useContext(multiStepContext);
+  
   return (
     <div className='p-4 items-center justify-center flex flex-col'>
         <div className='bg-white shadow-lg rounded-lg p-6 w-full sm:w-1/2'>

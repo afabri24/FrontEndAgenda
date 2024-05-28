@@ -23,6 +23,8 @@ function ModalDay({
   const [isChecked, setIsChecked] = useState(false);
   const [reload, setReload] = useState(true);
 
+  const token = localStorage.getItem("token");
+
    //Modal para errores, alertas
    const [showModal, setShowModal] = useState(false);
    const [modalMessage, setModalMessage] = useState("");
@@ -49,7 +51,11 @@ function ModalDay({
         API_URL + "api/asesorias/obtenerHorariosByAsesor/",
         {
           dia: dia.toString().toLowerCase(),
-          token: localStorage.getItem("token"),
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
         }
       );
       setHorarios(response.data.mensaje);
@@ -76,7 +82,6 @@ function ModalDay({
   const [selectedDateEnd, setSelectedDateEnd] = useState(null);
 
   const handleClickRegistrar = async () => {
-    const token = cookies.get("token");
 
     if (mode == null) {
       handlePopup("Error", "Por favor selecciona una modalidad: virtual o presencial");

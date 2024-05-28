@@ -174,18 +174,18 @@ function Signup() {
 
   return (
     <div className="flex relative justify-center lg:px-0 items-center lg:h-screen md:px-12 overflow-hidden">
-      <div className="bg-white px-4 relative flex flex-1 flex-col lg:py-24 md:flex-none md:px-28 py-10 sm:justify-center xl:py-36 z-10">
-        <div className="w-full lg:h-full max-w-md md:max-w-sm md:px-0 md:w-96 mx-auto sm:px-4">
+      <div className="w-full px-4 lg:py-10 md:flex-none md:px-28 py-10 sm:justify-center xl:py-36">
+        <div className="w-full lg:h-full max-w-md md:px-0 md:w-96 mx-auto sm:px-4">
           <div className="flex flex-col">
             <div>
-              <h2 className="py-3 leading-tight font-display text-center text-3xl font-extrabold text-black md:text-4xl lg:text-5xl xl:text-6xl">
+              <h2 className="font-display text-center text-3xl font-extrabold text-black md:text-4xl lg:text-5xl xl:text-6xl p-y-5">
                 Registro
               </h2>
             </div>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="space-y-8">
-              <div className="col-span-full">
+            <div>
+              <div className="col-span-full py-5">
                 <TextField
                   id="nombre"
                   className="w-full py-10 h-12 block"
@@ -216,6 +216,7 @@ function Signup() {
                   </span>
                 )}
               </div>
+              <div className="py-5">
               <TextField
                 id="email"
                 className="w-full py-10 h-12 block"
@@ -229,6 +230,7 @@ function Signup() {
                   {errores.email}
                 </span>
               )}
+              </div>
 
               <TextField
                 id="password"

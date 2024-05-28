@@ -49,9 +49,12 @@ function PefilUsuario() {
       axios
         .put(API_URL + `api/usuarios/actualizar/`, {
           nombre: datosUsuario.nombre,
-          token: localStorage.getItem("token"),
           email: datosUsuario.email,
           matricula: datosUsuario.matricula,
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
         })
         .then((response) => {
           console.log(response.data);
