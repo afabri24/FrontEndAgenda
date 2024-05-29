@@ -41,7 +41,7 @@ function Navbar() {
 
   return (
     <div className="w-full mx-auto lg:px-16 top-0 z-10">
-      <div className="relative flex w-full py-5 mx-auto bg-white items-end place-content-between md:flex-row md:px-6">
+      <div className="relative flex w-full py-5 mx-auto items-end place-content-between md:flex-row md:px-6">
         <div className="flex flex-row items-center justify-between lg:justify-start p-4">
           {token ? (
             <Link

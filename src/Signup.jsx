@@ -173,9 +173,9 @@ function Signup() {
   };
 
   return (
-    <div className="flex relative justify-center lg:px-0 items-center lg:h-screen md:px-12 overflow-hidden">
-      <div className="w-full px-4 lg:py-10 md:flex-none md:px-28 py-10 sm:justify-center xl:py-36">
-        <div className="w-full lg:h-full max-w-md md:px-0 md:w-96 mx-auto sm:px-4">
+    <div className="flex relative justify-center px-0 items-center md:px-12 overflow-hidden">
+      <div className="w-full h-full px-4 lg:py-10 md:flex-none md:px-28 py-10 sm:justify-center xl:py-10">
+        <div className="w-full max-w-md md:px-0 md:w-96 mx-auto sm:px-4">
           <div className="flex flex-col">
             <div>
               <h2 className="font-display text-center text-3xl font-extrabold text-black md:text-4xl lg:text-5xl xl:text-6xl p-y-5">
@@ -277,12 +277,7 @@ function Signup() {
                 }}
               />
               <div className="flex">
-                <div className="flex items-start">
-                  {errores.checkbox && (
-                    <span className="text-red-500 text-xs py-1">
-                      {errores.checkbox}
-                    </span>
-                  )}
+                <div className="flex items-start py-2">
                   <input
                     className="text-accent-500 focus:ring-accent-500 border-accent-500 h-4 rounded w-4"
                     id="remember-me"
@@ -316,12 +311,17 @@ function Signup() {
                   </label>
                 </div>
               </div>
+              {errores.checkbox && (
+                    <span className="text-red-500 text-xs pb-3">
+                      {errores.checkbox}
+                    </span>
+                  )}
               <div className="col-span-full">
                 <button
                   className="items-center justify-center h-12 rounded-xl focus-visible:outline-black focus:outline-none inline-flex bg-black border-2 border-black duration-200 focus-visible:ring-black hover:bg-transparent hover:border-black hover:text-black px-6 py-3 text-center text-white w-full"
                   type="submit"
                 >
-                  Crear una cuenta
+                  Crear una cuenta 
                 </button>
               </div>
               <div className="space-y-4">

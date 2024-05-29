@@ -91,6 +91,39 @@ const { setShowModalSession } =
     }
   }
 
+  function guardarNuevosDatos() {
+    if (validarDatos()) {
+      axios
+        .post(API_URL + `api/asesores/registrarDatosReunion/`, {
+          url: datosZoom["url"],
+          password: datosZoom["password"],
+          id_reunion: datosZoom["id_reunion"],
+        },{
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.error) {
+            handlePopup("Hubo un error al agregarlo", response.data.mensaje);
+            console.log("error");
+          } else {
+            handlePopup(
+              "Se registro correctamente",
+              "Tus datos se guardaron correctamente"
+            );
+            console.log("mostrar modal");
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            setShowModalSession(true);
+          }
+        });
+    }
+  }
+
   function validarDatos() {
     let valido = true;
     let id_reunionError = "";
@@ -196,11 +229,16 @@ const { setShowModalSession } =
             )}
           </div>
           <div className="w-full flex justify-center items-center p-4">
-
+            { datosZoom.id_datosreunion ? 
+              <button className=" bg-sky-600 hover:bg-sky-700 text-slate-100 py-1 px-2 rounded-md text-lg mr-4"
+              onClick={() => enviarDatos()} >
+                  Guardar Datos
+              </button> :
             <button className=" bg-sky-600 hover:bg-sky-700 text-slate-100 py-1 px-2 rounded-md text-lg mr-4"
-            onClick={() => enviarDatos()} >
-                Guardar Datos
+            onClick={() => guardarNuevosDatos()} >
+                Registrar Datos
             </button>
+            }
 
             <button
                 className=" bg-sky-600 hover:bg-sky-700 text-slate-100 py-1 px-2 rounded-md text-lg"

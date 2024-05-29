@@ -10,11 +10,14 @@ function Asesor() {
   const [asesoriasPasadas, setAsesoriasPasadas] = useState([]);
   const { setShowModalSession } = useContext(ModalSessionContext);
   const [reload, setReload] = useState(true)
+  const token = localStorage.getItem("token") 
 
   const fetchAsesorias = async () => {
-    axios.post(`${API_URL}api/asesorias/obtenerAsesor/`, {
-      token: localStorage.getItem('token'),
-    })
+    axios.post(`${API_URL}api/asesorias/obtenerAsesor/`, {},
+      {headers: {
+        'Authorization': `Bearer ${token}`,
+      }}
+    )
     .then(response => {
       console.log(response.data);
       setAsesoriasActuales([])

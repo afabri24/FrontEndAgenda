@@ -58,8 +58,10 @@ function ModalDetails({
         url: API_URL + "api/asesorias/cancelarAsAsesor/",
         data: {
           id_asesoria: idAsesoria,
-          token: token,
         },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
       });
       if (!response.data.error) {
         handleReload();

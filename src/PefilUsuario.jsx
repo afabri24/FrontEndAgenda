@@ -128,7 +128,13 @@ function PefilUsuario() {
 
   useEffect(() => {
     axios
-      .post(API_URL + `api/usuarios/obtenerDatosUsuario/`, { token: token })
+      .post(API_URL + `api/usuarios/obtenerDatosUsuario/`, { },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
+        }
+      )
       .then((response) => {
         setDatosUsuario(response.data.mensaje);
       })

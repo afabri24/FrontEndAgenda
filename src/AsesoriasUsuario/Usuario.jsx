@@ -6,6 +6,7 @@ import {API_URL} from "../utils/Constantes.js";
 import { Link } from "react-router-dom";
 import { ModalSessionContext } from "../SessionContext";
 import imageEmpty from "../assets/empty.png";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function Usuario() {
   const [asesoriasActuales, setAsesoriasActuales] = useState([]);
@@ -13,6 +14,7 @@ function Usuario() {
   const { showModalSession, setShowModalSession } =
     useContext(ModalSessionContext);
   const [reload, setReload] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   const [filtro, setFiltro] = useState('Descendiente');
 
@@ -22,29 +24,30 @@ function Usuario() {
       const token = cookies.get("token");
       const response = await axios.post(
         API_URL + `api/asesorias/obtenerUsuario/`,
-        {
-          token: token,
-        }
+        { }, {
+          headers: {
+          'Authorization': `Bearer ${token}`,
+        }}
       );
-
-      const hoy = new Date();
-      setAsesoriasActuales([])
-      setAsesoriasPasadas([])
-      console.log(response.data)
-      response.data.forEach((asesoria) => {
-        if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0 ) {
-          setAsesoriasActuales((asesoriasActuales) => [
-            ...asesoriasActuales,
-            asesoria,
-          ]);
-        } else {
+       const hoy = new Date();
+       setAsesoriasActuales([])
+       setAsesoriasPasadas([])
+       console.log(response.data)
+       response.data.forEach((asesoria) => {
+         if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0 ) {
+           setAsesoriasActuales((asesoriasActuales) => [
+             ...asesoriasActuales,
+             asesoria,
+           ]);
+         } else {
           
-          setAsesoriasPasadas((asesoriasPasadas) => [
-            ...asesoriasPasadas,
-            asesoria,
-          ]);
+           setAsesoriasPasadas((asesoriasPasadas) => [
+             ...asesoriasPasadas,
+             asesoria,
+           ]);
         }
       });
+      setLoading(false)
       setReload(!reload);
     } catch (error) {
       console.log(error);
@@ -89,7 +92,19 @@ function Usuario() {
 
   return (
     <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      {loading ? 
+        <div className="flex w-full align-middle h-xxxl justify-center">
+          <MoonLoader
+            color={"#2E86C1"}
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          /> 
+          </div>
+        : 
+        <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
         {asesoriasActuales.length > 0 ? (
           asesoriasActuales.map((asesoria) => (
             <Card
@@ -125,7 +140,8 @@ function Usuario() {
             </div>
           </>
         )}
-      </div>
+        </div>
+      </>}
       <h1 className="text-2xl font-bold mt-4 mx-8">Hitorial de asesorias</h1>
       <select
         className="text-gray-500 block  w-1/4 p-2 border mx-8 border-gray-300 rounded mt-2 size-1/6"
@@ -177,6 +193,7 @@ function Usuario() {
       >
         Agregar Asesoría +
       </Link>
+      
     </div>
   );
 }

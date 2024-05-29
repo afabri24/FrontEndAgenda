@@ -16,6 +16,7 @@ import Navbar from "./Navbar.jsx";
 import Faq from "./Faq.jsx";
 import { SessionProvider } from "./SessionContext.jsx";
 import RegistroAsesor from "./RegistroAsesor.jsx";
+import Asesores from "./Admin/Asesores.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -49,6 +50,7 @@ function Main() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/faq" element={<Faq />} />
             <Route path="/registroAsesor" element={<RegistroAsesor />} />
+            <Route path="/admin" element={<Asesores />} />
           </Routes>
           </SessionProvider>
           <Footer />

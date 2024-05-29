@@ -3,10 +3,12 @@ import { multiStepContext } from "./Contexto";
 import axios from "axios";
 import {API_URL} from "../utils/Constantes.js";
 import { obtenerDiaHoy, obtenerDiaMañana, obtenerFechaDiaSemanaActual } from "../utils/Funciones";
+import MoonLoader from "react-spinners/MoonLoader";
 
 function Paso1() {
 
   const [asesores, setAsesores] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   function handleClick(id) {
     console.log('id: '+ id)
@@ -26,6 +28,7 @@ function Paso1() {
       .get(API_URL + `api/asesores/obtenerAsesores/`)
       .then((response) => {
         setAsesores(response.data.mensaje)
+        setLoading(false)
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -45,6 +48,18 @@ function Paso1() {
             Selecciona tu asesor
           </h1>
         </div>
+        {loading ? 
+
+        <div className="flex w-full align-middle h-xxxl justify-center">
+          <MoonLoader
+            color={"#2E86C1"}
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          /> 
+          </div>
+        : <>
         <div   className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3 p-4">
         {asesores && asesores.map(asesor => (
          
@@ -64,10 +79,10 @@ function Paso1() {
                 </div>
               </div>
             </div>
-          
-
         )) }
         </div>
+        </>
+      }
         
 
         
