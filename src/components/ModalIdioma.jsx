@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 import { API_URL } from "../utils/Constantes";
 import Chip from "@mui/material/Chip";
@@ -20,6 +21,8 @@ function ModalIdioma({ handleModalIdiomas }) {
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
 
+  const todosLosIdiomas = ["Ingles", "Frances", "Aleman", "Italiano"];
+
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
     setModalTittle(tittle);
@@ -28,46 +31,61 @@ function ModalIdioma({ handleModalIdiomas }) {
   const handleClose = () => setShowModal(false);
 
   useEffect(() => {
-    // obteneridiomas()
+    obtenerIdiomas();
   }, []);
 
-  function obteneridiomas() {
-    // axios
-    //   .post(API_URL + "api/usuario/obteneridiomas/", { token: token })
-    //   .then((response) => {
-    //     console.log(response.data.mensaje);
-    //     setIdiomas(response.data.mensaje);
-    //   })
-    //   .catch((error) => {
-    //     if (error.response.status === 401) {
-    //       setShowModalSession(true);
-    //     }
-    //   });
+  function obtenerIdiomas() {
+    axios
+      .post(
+        API_URL + "api/usuarios/obtenerIdiomas/",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        setIdiomas(response.data.mensaje);
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          setShowModalSession(true);
+        }
+      });
   }
 
   function handleidiomaNuevo(nombre) {
     agregarNuevoIdioma(nombre);
-    handlePopup(
-      "Agregado correctamente",
-      "Se agrego correctamente el nuevo idioma"
-    );
   }
 
   function agregarNuevoIdioma(nombre) {
     console.log("Agregando nuevo idioma");
     console.log(nombre);
-    // axios
-    //   .post(API_URL + "api/asesores/registraridioma/", { token: token, nombre: nombre })
-    //   .then((response) => {
-    //     console.log(response.data.mensaje);
-    //     obteneridiomas()
-    //   })
-    //   .catch((error) => {
-    //     handlePopup('Error', 'Hubo un problema al agregar su nuevo idioma')
-    //     if (error.response.status === 401) {
-    //       setShowModalSession(true);
-    //     }
-    //   });
+    axios
+      .post(
+        API_URL + "api/usuarios/agregarIdioma/",
+        {
+          idioma: nombre,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        obtenerIdiomas();
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          setShowModalSession(true);
+        }
+      });
   }
 
   function handleDeleteIdioma(id) {
@@ -77,38 +95,36 @@ function ModalIdioma({ handleModalIdiomas }) {
   const eliminarIdioma = async (id) => {
     console.log("Eliminando idioma");
     console.log(id);
-    // const token = localStorage.getItem("token");
-    // try {
-    //   const response = await axios({
-    //     method: "DELETE",
-    //     url: API_URL + "api/asesores/eliminaridioma/",
-    //     data: {
-    //       ididioma: id,
-    //       token: token,
-    //     },
-    //   });
-    //   console.log(response.data.mensaje)
-
-    //   if(!response.data.error){
-    //     obteneridiomas()
-    //     handlePopup('Eliminado correctamente', 'Se elimino correctamente el idioma')
-    //   }else{
-    //     handlePopup('Error al eliminar', response.data.mensaje)
-    //   }
-    // } catch (error) {
-
-    //   console.error("Error al eliminar el horario", error);
-    // }
+    axios
+      .delete(API_URL + "api/usuarios/eliminarIdioma/", {
+        data: {
+          id_idioma: id,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        obtenerIdiomas();
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          setShowModalSession(true);
+        }
+      });
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-md p-8 max-w-md min-w-md">
-        {idiomas &&
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-md p-8 w-2/6 ">
+        <h2 className="text-xl font-bold">Idiomas agregados</h2>
+        {idiomas && idiomas.length > 0 ? (
           idiomas.map((idioma) => (
             <Chip
               key={idioma.id_idioma}
-              label={idioma.nombreIdioma}
+              label={idioma.idioma}
               onDelete={() => handleDeleteIdioma(idioma.id_idioma)}
               style={{
                 margin: "5px",
@@ -116,23 +132,32 @@ function ModalIdioma({ handleModalIdiomas }) {
                 color: "#333",
               }}
             />
-          ))}
+          ))
+        ) : (
+          <p>No hay idiomas agregados.</p>
+        )}
 
-        <div className="pt-2 flex justify-center items-center">
+        <div className="pt-2 flex-col justify-center items-center ">
+        <InputLabel id="nuevo-idioma-label">Nuevo idioma</InputLabel>
           <Select
-            label="Nuevo idioma"
+            labelId="nuevo-idioma-label"
             value={nuevoIdioma}
             onClick={(e) => e.stopPropagation()}
             onChange={(e) => {
-              setNuevoIdioma(e.target.value);
-              setShowButton(e.target.value !== "");
+              handleidiomaNuevo(e.target.value);
+              setNuevoIdioma("");
             }}
+            style={{ width: "50%" }}
           >
-            <MenuItem value={"Ingles"}>Ingles</MenuItem>
-            <MenuItem value={"Frances"}>Frances</MenuItem>
-            <MenuItem value={"Aleman"}>Aleman</MenuItem>
-            <MenuItem value={"Italiano"}>Italiano</MenuItem>
-            
+            {todosLosIdiomas
+              .filter(
+                (idioma) => !idiomas.map((i) => i.idioma).includes(idioma)
+              )
+              .map((idioma) => (
+                <MenuItem key={idioma} value={idioma}>
+                  {idioma}
+                </MenuItem>
+              ))}
           </Select>
         </div>
         <div className="w-full flex justify-center items-center pt-4">

@@ -19,7 +19,9 @@ function ModalDetails({
   curso,
   handleReload,
   estado,
-  esCancelada
+  esCancelada,
+  comentario,
+  asistio,
 }) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalAbierto, setModalAbierto] = React.useState(false);
@@ -113,7 +115,10 @@ function ModalDetails({
           </button>
           }
           {esCancelada === 1 &&
+          <div>
             <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
+            <p className="text-red-500 text-xl" >{comentario}</p>
+          </div>
           }
           </div>
       </div>

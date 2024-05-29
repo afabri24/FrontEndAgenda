@@ -127,6 +127,8 @@ function Usuario() {
               handleReload={handleReload}
               estado={"actual"}
               esCancelada={asesoria.escancelada}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (
@@ -173,6 +175,8 @@ function Usuario() {
               handleReload={handleReload}
               estado={"pasada"}
               esCancelada={asesoria.escancelada}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (

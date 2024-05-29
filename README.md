@@ -26,4 +26,7 @@ crear tabla de idiomas para usuario y filtro cuando se quiera seleccionar al a
 
 cambiar modal al eliminar un horario asesor
 
+
+Agregar informacion para activar o desactivar hora
+
 olvide la contraseña

@@ -1,16 +1,50 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { API_URL } from "./utils/Constantes";
 
-function Modal({ showModal, onClose, onAccept, title, message }) {
+function Modal({ showModal, onClose, onAccept, title, message, handleReload,idAsesoria, handlePopup}) {
   const [cancelReason, setCancelReason] = useState("");
 
   const handleCancel = () => {
-    console.log(cancelReason); // Aquí puedes manejar la razón de la cancelación
+    eliminarAsesoria(); // Aquí puedes manejar la razón de la cancelación
     onAccept();
   };
 
   const handleButtonClick = (event, callback) => {
     event.stopPropagation();
     callback();
+  };
+
+  const eliminarAsesoria = async () => {
+    const token = localStorage.getItem("token");
+    const comentario = cancelReason;
+
+
+    if (comentario == "" ){
+      handlePopup("Error", "Por favor ingrese una razón de cancelación");
+      return;
+    }
+    try {
+      const response = await axios({
+        method: "DELETE",
+        url: API_URL + "api/asesorias/cancelarAsUsuario/",
+        data: {
+          id_asesoria: idAsesoria,
+          comentario: comentario,
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
+      if (!response.data.error) {
+        handleReload();
+      } else {
+        handleReload();
+        handlePopup("Error", response.data.mensaje);
+      }
+    } catch (error) {
+      console.error("Error al cancelar la asesoria", error);
+    }
   };
 
   return (
