@@ -16,7 +16,9 @@ function Card({
   link,
   curso,
   estado,
-  esCancelada
+  esCancelada,
+  comentario,
+  asistio,
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isClicked, setIsClicked] = useState(false); // Agregar un estado para saber si se hizo clic en la tarjeta
@@ -64,6 +66,8 @@ function Card({
                 curso={curso}
                 estado={estado}
                 esCancelada={esCancelada}
+                comentario={comentario}
+                asistio={asistio}
               />
             </>
           ) : null}

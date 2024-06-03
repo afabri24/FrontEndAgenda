@@ -21,7 +21,9 @@ function CardActual({
   handleReload,
   estado,
   esCancelada,
-  color
+  color,
+  comentario,
+  asistio,
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -87,6 +89,8 @@ function CardActual({
                 handleReload={handleReload}
                 estado={estado}
                 esCancelada={esCancelada}
+                comentario={comentario}
+                asistio={asistio}
               />
             </>
           ) : null}

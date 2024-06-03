@@ -159,9 +159,9 @@ function PefilUsuario() {
 
           <div>
             <InputLabel className="mx-4" id="demo-simple-select-label">
-                      Mis Cursos
+                      Mis Idiomas
                     </InputLabel>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
+              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis idiomas</button>
               {isOpen && (
                 <ModalIdioma
                   handleModalIdiomas={handleModalIdiomas}

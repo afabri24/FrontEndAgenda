@@ -128,6 +128,8 @@ function Usuario() {
               estado={"actual"}
               esCancelada={asesoria.escancelada}
               color={asesoria.color}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (
@@ -175,6 +177,8 @@ function Usuario() {
               estado={"pasada"}
               esCancelada={asesoria.escancelada}
               color={asesoria.color}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (

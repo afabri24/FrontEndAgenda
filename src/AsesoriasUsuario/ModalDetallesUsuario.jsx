@@ -23,7 +23,9 @@ function ModalDetallesUsuario({
   curso,
   handleReload,
   estado,
-  esCancelada
+  esCancelada,
+  comentario,
+  asistio,
 }) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalAbierto, setModalAbierto] = React.useState(false);
@@ -31,7 +33,6 @@ function ModalDetallesUsuario({
   const [modalMessage, setModalMessage] = React.useState("");
 
   const aceptar = () => {
-    eliminarAsesoria();
     setModalAbierto(false);
   };
 
@@ -54,30 +55,7 @@ function ModalDetallesUsuario({
     setModalAbierto(false);
   };
 
-  const eliminarAsesoria = async () => {
-    console.log(idAsesoria);
-    const token = localStorage.getItem("token");
-    try {
-      const response = await axios({
-        method: "DELETE",
-        url: API_URL + "api/asesorias/cancelarAsUsuario/",
-        data: {
-          id_asesoria: idAsesoria,
-        },
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        }
-      });
-      if (!response.data.error) {
-        handleReload();
-      } else {
-        handleReload();
-        handlePopup("Error", response.data.mensaje);
-      }
-    } catch (error) {
-      console.error("Error al eliminar la asesoria", error);
-    }
-  };
+ 
 
   return (
     <div
@@ -135,7 +113,10 @@ function ModalDetallesUsuario({
         </button>
           }
           {esCancelada === true &&
+          <div>
             <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
+            <p className="text-black text-l" >Razon: {comentario}</p>
+            </div>
           }
         </div>
       </div>
@@ -146,6 +127,9 @@ function ModalDetallesUsuario({
         onAccept={aceptar}
         title={"Confirmación"}
         message="¿Estás seguro de cancelar la asesoria?"
+        handleReload={handleReload}
+        idAsesoria={idAsesoria}
+        handlePopup={handlePopup}
       />
       <ModalNuevo
         showModal={showModal}

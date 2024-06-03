@@ -72,6 +72,8 @@ function Asesor() {
               curso={asesoria.curso}
               estado={'actual'}
               esCancelada={asesoria.escancelada}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (
@@ -113,6 +115,8 @@ function Asesor() {
               handleReload={handleReload}
               estado={"pasada"}
               esCancelada={asesoria.escancelada}
+              comentario={asesoria.comentario}
+              asistio={asesoria.asistio}
             />
           ))
         ) : (
