@@ -112,7 +112,11 @@ function ModalDay({
           hora_termino: formattedDateEnd,
           modalidad: mode,
           dia: dia.toString().toLowerCase(),
-          token: token,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          }
         }
       );
 

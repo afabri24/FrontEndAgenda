@@ -9,20 +9,24 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { API_URL } from '../utils/Constantes';
 import { ModalSessionContext } from "../SessionContext.jsx";
+import { IoEye } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
 
 function Asesores() {
-    const token = localStorage.getItem("token")
+    
     const [asesores, setAsesores] = useState([])
     const { showModalSession, setShowModalSession } =
     useContext(ModalSessionContext);
 
     useEffect(() =>{
-        axios.get(API_URL+'api/asesores/obtenerAsesores/',{},{
+      const token = localStorage.getItem("token")
+        axios.get(API_URL+'api/admin/obtenerAsesores/',{
             headers: {
                 'Authorization': `Bearer ${token}`,
               }
         })
         .then((response) => {
+          console.log(response.data)
             setAsesores(response.data.mensaje)
         })
         .catch((error) => {
@@ -41,6 +45,8 @@ function Asesores() {
             <TableCell align="right">Correo electronico</TableCell>
             <TableCell align="right">Idioma</TableCell>
             <TableCell align="right">No. Asesorias</TableCell>
+            <TableCell align="right">Acciones</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -55,6 +61,14 @@ function Asesores() {
               <TableCell align="right">{asesor.email}</TableCell>
               <TableCell align="right">{asesor.idioma}</TableCell>
               <TableCell align="right">{asesor.noAsesorias}</TableCell>
+              <TableCell align="right">
+                <button>
+                  <IoEye />  
+                </button>  
+                <button>
+                  <MdDelete />  
+                </button>  
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -76,7 +76,7 @@ export function obtenerDiaHoy() {
 }
 
 export function obtenerMensaje(dia) {
-  const diasSemana = ['lunes','martes', 'miércoles', 'jueves'];
+  const diasSemana = ['lunes','martes', 'miercoles', 'jueves'];
 
   if (diasSemana.includes(dia.toLowerCase())) {
     return '*Los días mostrados son para agendar asesorias en esta semana';

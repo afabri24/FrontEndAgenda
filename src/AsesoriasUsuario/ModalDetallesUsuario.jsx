@@ -126,7 +126,7 @@ function ModalDetallesUsuario({
           {link}
         </a>
         <div className="w-full flex justify-center items-center">
-          {estado === 'actual' && esCancelada === 0 &&
+          {estado === 'actual' && esCancelada === false &&
           <button
           className="w-24 mt-1 center rounded-md border border-transparent shadow-sm px-1 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 "
           onClick={(event) => abrirModal(event)}
@@ -134,7 +134,7 @@ function ModalDetallesUsuario({
           Cancelar
         </button>
           }
-          {esCancelada === 1 &&
+          {esCancelada === true &&
             <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
           }
         </div>

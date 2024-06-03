@@ -20,7 +20,8 @@ function CardActual({
   funcion,
   handleReload,
   estado,
-  esCancelada
+  esCancelada,
+  color
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -39,7 +40,7 @@ function CardActual({
 
   return (
     <div
-      className={`mx-4 bg-white rounded-xl shadow-md overflow-hidden lg:w-72 max-w-72 m-3 border-blue-500 ${
+      className={`mx-4 bg-white rounded-xl shadow-md overflow-hidden lg:w-72 max-w-72 m-3 border-slate-100 border-2 ${
         !isClicked &&
         "hover:transform hover:scale-105 transition-transform duration-200 ease-in-out"
       }`}
@@ -47,8 +48,18 @@ function CardActual({
     >
       <div className="md:flex">
         <div className="p-8">
-          <div className="tracking-wide text-lg text-cyan-600 font-semibold">
-            Tipo Asesoria: {tipo}
+          <div className="flex flex-row tracking-wide text-lg text-cyan-600 font-semibold">
+            {tipo}
+            <span
+                    style={{
+                      display: 'inline-block',
+                      width: '15px',
+                      height: '15px',
+                      borderRadius: '50%',
+                      backgroundColor: color,
+                      marginLeft: '20px',
+                    }}
+                  />
           </div>
           <p className="mt-2 text-gray-900 font-semibold">Tema: </p><p>{tema}</p>
           <p className="mt-2 text-gray-500">Asesor: {asesor}</p>

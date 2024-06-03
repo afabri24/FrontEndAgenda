@@ -34,7 +34,7 @@ function Usuario() {
        setAsesoriasPasadas([])
        console.log(response.data)
        response.data.forEach((asesoria) => {
-         if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0 ) {
+         if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === false ) {
            setAsesoriasActuales((asesoriasActuales) => [
              ...asesoriasActuales,
              asesoria,
@@ -127,6 +127,7 @@ function Usuario() {
               handleReload={handleReload}
               estado={"actual"}
               esCancelada={asesoria.escancelada}
+              color={asesoria.color}
             />
           ))
         ) : (
@@ -173,6 +174,7 @@ function Usuario() {
               handleReload={handleReload}
               estado={"pasada"}
               esCancelada={asesoria.escancelada}
+              color={asesoria.color}
             />
           ))
         ) : (
