@@ -12,6 +12,7 @@ import { ModalSessionContext } from "./SessionContext";
 import CursosModal from "./CursosModal.jsx";
 import ZoomDatosModal from "./ZoomDatosModal.jsx";
 import { FaCloudDownloadAlt } from "react-icons/fa";
+import ModalReporte from "./components/ModalReporte.jsx";
 
 function Perfil() {
   const token = localStorage.getItem("token");
@@ -23,6 +24,19 @@ function Perfil() {
   const [modalTittle, setModalTittle] = useState("");
   const { showModalSession, setShowModalSession } =
     useContext(ModalSessionContext);
+
+  const [modalReporte,setModalReporte] = useState(false);
+
+  const handleModalReporteOpen = () => {
+    console.log("abrir modal reporte");
+    setModalReporte(true);
+  };
+
+  const handleModalReporteClose = () => {
+    console.log("cerrar modal reporte");
+    setModalReporte(false);
+  };
+
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -205,6 +219,29 @@ function Perfil() {
     idioma: ""
   });
 
+
+
+  const descargarReporte= () => {
+    axios.post( API_URL + "reporte", {
+        mes: 6,
+        tipo: "pdf",
+        }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+        })
+        .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `reporte.${format}`);
+        document.body.appendChild(link);
+        link.click();
+        }
+    );
+  }
+
   return (
     <div className="container mx-auto grid grid-cols-2 gap-4">
       <div className="p-4 mt-4">
@@ -244,7 +281,10 @@ function Perfil() {
             <InputLabel className="mx-4" id="demo-simple-select-label">
               Reporte mensual de asesorias
             </InputLabel>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg flex" >
+            <button
+            className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg flex" 
+            onClick={handleModalReporteOpen}
+            >
               <FaCloudDownloadAlt className="mr-2"/>
                Descargar reporte mensual</button>
             </div>
@@ -335,6 +375,7 @@ function Perfil() {
           ))}
         </div>
       </div>
+      
       <ModalNuevo
         showModal={showModal}
         handleClose={handleClose}
@@ -348,6 +389,10 @@ function Perfil() {
           dia={selectedDay}
         />
       )}
+      <ModalReporte
+        open={modalReporte}
+        handleClose={handleModalReporteClose}
+      />
     </div>
   );
 }
