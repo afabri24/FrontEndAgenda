@@ -1,17 +1,13 @@
 import React from 'react'
-import Asesores from './Asesores'
+import Asesores from './Asesores/Asesores'
 import { Link } from "react-router-dom";
+import Tabs from './Tabs';
 
 function Dashboard() {
   return (
     <div>
-      <Asesores />
-      <Link
-        to="/registroAsesor"
-        className="fixed bottom-10 right-4 bg-blue-500 text-white text-lg rounded-full py-4 px-4 shadow-lg"
-      >
-        Agregar Asesor +
-      </Link>
+      <Tabs />
+
     </div>
   )
 }

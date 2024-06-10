@@ -1,0 +1,22 @@
+.icon {
+    font-size: 24px; /* Ajusta el tamaño según sea necesario */
+    color: #17364B ; /* Color normal */
+    transition: color 0.3s ease; /* Animación suave para el cambio de color */
+  }
+  
+  .icon:hover {
+    color: #4e85a9; /* Color en estado hover */
+  }
+  .icon.clicked {
+    color: #040709; /* Color en estado clic */
+  }
+
+  .iconDelete {
+    font-size: 24px; /* Ajusta el tamaño según sea necesario */
+    color: #E74C3C ; /* Color normal */
+    transition: color 0.3s ease; /* Animación suave para el cambio de color */
+  }
+
+  .iconDelete:hover {
+    color: #9d3838; /* Color en estado hover */
+  }

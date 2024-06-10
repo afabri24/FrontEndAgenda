@@ -15,10 +15,11 @@ import PaginaPrincipal from "./PaginaPrincipal.jsx";
 import Navbar from "./Navbar.jsx";
 import Faq from "./Faq.jsx";
 import { SessionProvider } from "./SessionContext.jsx";
-import RegistroAsesor from "./Admin/RegistroAsesor.jsx";
+import RegistroAsesor from "./Admin/Asesores/RegistroAsesor.jsx";
 import LoginAdmin from "./Admin/LoginAdmin.jsx";
 import Dashboard from "./Admin/Dashboard.jsx";
 import NotFound from "./NotFound.jsx";
+import ContextoAdmin from "./Admin/ContextoAdmin.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -55,7 +56,11 @@ function Main() {
               <Route path="/admin" element={<LoginAdmin />} />
               <Route 
               path="/dashboard" 
-              element={tipo == "admin" ? <Dashboard /> : <NotFound/>} />
+              element={tipo == "admin" ? 
+                <ContextoAdmin>
+                  <Dashboard />
+                </ContextoAdmin>
+               : <NotFound/>} />
               <Route path="*" element={<NotFound />} />
               <Route path="/registroAsesor" 
             element={tipo == "admin" ? <RegistroAsesor /> : <NotFound/>} />

@@ -1,21 +1,24 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { TextField, Button } from "@mui/material";
 import axios from "axios";
-import { API_URL } from "../utils/Constantes";
+import { API_URL } from "./../../utils/Constantes";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import imgDefault from "../assets/addImage.png";
-import { es_valido_email } from "../utils/Validadores";
+import imgDefault from "../../assets/addImage.png";
+import { es_valido_email } from "../../utils/Validadores";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import ModalNuevo from "../ModalNuevo";
+import ModalNuevo from "../../ModalNuevo";
+import { dataContext } from "../ContextoAdmin";
 
-function RegistroAsesor() {
+function RegistroAsesor({irTabla}) {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => event.preventDefault();
+
+  const { asesor, setAsesor } =useContext(dataContext);
 
    //Modal para errores, alertas
    const [showModal, setShowModal] = useState(false);
@@ -185,7 +188,11 @@ function RegistroAsesor() {
   }
 
   return (
+    <div>
+           <Button variant="contained" onClick={() => {setAsesor(""), irTabla() }}> Regresar</Button>
+
     <div className="flex justify-center items-center min-h-screen">
+
       <div
         className="w-1/2 p-4 border-2 border-gray-300 rounded-md"
         onDrop={handleDrop}
@@ -193,6 +200,7 @@ function RegistroAsesor() {
       >
         <h1 className="text-center mb-4">Registro Asesor</h1>
         <form onSubmit={handleSubmit}>
+        {asesor.nombre}
           <TextField
             name="nombre"
             label="Nombre"
@@ -293,6 +301,7 @@ function RegistroAsesor() {
           modalTittle={modalTittle}
           modalMessage={modalMessage}
         />
+    </div>
     </div>
   );
 }
