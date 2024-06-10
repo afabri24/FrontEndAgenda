@@ -14,7 +14,7 @@ function Usuario() {
   const { showModalSession, setShowModalSession } =
     useContext(ModalSessionContext);
   const [reload, setReload] = useState(true);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   const [filtro, setFiltro] = useState('Descendiente');
 
@@ -153,7 +153,7 @@ function Usuario() {
         <option value="Descendiente">Descendiente</option>
         <option value="Ascendente">Ascendente</option>
       </select>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {asesoriasPasadas.length > 0 ? (
           asesoriasPasadas.map((asesoria) => (
             <Card

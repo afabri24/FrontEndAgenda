@@ -91,7 +91,7 @@ function Navbar() {
           <nav className="flex place-items-end justify-between flex-row p-6">
             <div className={`${isOpen ? "" : "hidden"} lg:block`}>
               <a
-                qonClick={toggleMenu}
+                onClick={toggleMenu}
                 className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto"
                 href="/#quees"
               >
