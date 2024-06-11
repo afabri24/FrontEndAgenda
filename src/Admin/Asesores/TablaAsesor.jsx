@@ -22,9 +22,8 @@ function TablaAsesor({irFormulario}) {
     const [asesores, setAsesores] = useState([])
     const [open, setOpen] = useState(false)
     
-    function handleClose() {
-      setOpen(false)
-    }
+    const handleClose = () => setOpen(false);
+    
     function handleOpen(asesor) {
       setAsesor(asesor)
       setOpen(true)
@@ -42,7 +41,7 @@ function TablaAsesor({irFormulario}) {
               }
         })
         .then((response) => {
-          console.log(response.data)
+            console.log("asesores: " + response.data.mensaje)
             setAsesores(response.data.mensaje)
         })
         .catch((error) => {
@@ -102,7 +101,7 @@ function TablaAsesor({irFormulario}) {
         </TableBody>
       </Table>
     </TableContainer>
-    <ModalDetalles open={open} handleClose={handleClose}/>
+    {/* <ModalDetalles open={open} handleClose={handleClose}/> */}
       
     </div>
   )

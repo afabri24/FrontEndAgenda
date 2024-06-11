@@ -22,10 +22,10 @@ function Paso3() {
   const [showModal, setShowModal] = React.useState(false);
   const { setShowModalSession } = useContext(ModalSessionContext);
   const [mensajeDia, setMensajeDia] = useState();
+  const [mensajeModal, setMensajeModal] = useState("");
   
   useEffect(() => {
     console.log(asesoriaDatos)
-  
     if (asesoriaDatos["dia"]) {
       axios.post(API_URL+`api/asesorias/obtenerHorasByDia/`, {
         "idAsesor": asesoriaDatos["idAsesor"],
@@ -91,8 +91,30 @@ function Paso3() {
     });
   }
 
+  function verificarDisponibilidadDia(dia) {
+    axios.post(API_URL+`api/asesorias/verificarDisponibilidadDia/`, {
+      "dia": dia,
+    },
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        console.log(response.data)
+        setHoras(response.data.mensaje)
+        setMensajeModal("Por favor, selecciona la hora y dia.")
+        setShowModal(true);
+      })
+      .catch(error => {
+        if(error.response.status === 401){
+          setShowModalSession(true)
+        }
+    });
+  }
   function validarDatos() {
     if (!asesoriaDatos.dia || !asesoriaDatos.idDiaHora) {
+      setMensajeModal("Por favor, selecciona la hora y dia.")
       setShowModal(true);
     } else {
       // Continuar al siguiente paso
@@ -113,6 +135,7 @@ function Paso3() {
       "idDiaHora": 0, 
       "fecha": obtenerFechaDiaSemanaActual(e.target.value)})
     obtenerHorasByDia(e.target.value)
+    verificarDisponibilidadDia(e.target.value)
   }
 
 
@@ -181,7 +204,7 @@ function Paso3() {
             showModal={showModal}
             handleClose={handleClose}
             modalVariant="danger"
-            modalMessage="Por favor, selecciona la hora y dia."
+            modalMessage={mensajeModal}
           />
       </div>
     </div>

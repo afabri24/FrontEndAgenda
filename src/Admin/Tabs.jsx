@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Dashboard from './Dashboard';
 import Asesores from './Asesores/Asesores';
 import Usuarios from './Usuarios'
 

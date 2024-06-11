@@ -28,6 +28,7 @@ function Paso1() {
       .get(API_URL + `api/asesores/obtenerAsesores/`)
       .then((response) => {
         setAsesores(response.data.mensaje)
+        console.log(response.data.mensaje)
         setLoading(false)
       })
       .catch((error) => {
@@ -35,7 +36,6 @@ function Paso1() {
           setShowModalSession(true);
         }
       });
-      console.log(asesores)
   }, []);
 
   const { setPaso, asesoriaDatos, setAsesoriaDatos } =
