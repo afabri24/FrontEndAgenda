@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import ModalDay from "./ModalDay";
 import { API_URL } from "./utils/Constantes";
@@ -25,7 +25,7 @@ function Perfil() {
   const { showModalSession, setShowModalSession } =
     useContext(ModalSessionContext);
 
-  const [modalReporte,setModalReporte] = useState(false);
+  const [modalReporte, setModalReporte] = useState(false);
 
   const handleModalReporteOpen = () => {
     console.log("abrir modal reporte");
@@ -36,7 +36,6 @@ function Perfil() {
     console.log("cerrar modal reporte");
     setModalReporte(false);
   };
-
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -101,7 +100,6 @@ function Perfil() {
 
   const [isOpenZoom, setIsOpenZoom] = useState(false);
 
-
   const handleModalCursos = () => {
     setIsOpen(false);
   };
@@ -128,15 +126,20 @@ function Perfil() {
   function enviarDatos() {
     if (validarDatos()) {
       axios
-        .put(API_URL + `api/asesores/actualizar/`, {
-          nombre: datosAsesor.nombre,
-          email: datosAsesor.email,
-          idioma: datosAsesor.idioma,
-        },{
-          headers: {
-            'Authorization': `Bearer ${token}`,
+        .put(
+          API_URL + `api/asesores/actualizar/`,
+          {
+            nombre: datosAsesor.nombre,
+            email: datosAsesor.email,
+            idioma: datosAsesor.idioma,
+            fotoBase64: datosAsesor.fotoBase64,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        })
+        )
         .then((response) => {
           console.log(response.data);
           if (response.data.error) {
@@ -158,6 +161,44 @@ function Perfil() {
     }
   }
 
+  const handleDrop = useCallback((e) => {
+    e.preventDefault();
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.type.substr(0, 5) === "image") {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+        setDatosAsesor((prevForm) => ({
+          ...prevForm,
+          fotoBase64: reader.result,
+        }));
+      };
+      reader.readAsDataURL(droppedFile);
+    }
+  }, []);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setDatosAsesor((prevForm) => ({
+          ...prevForm,
+          fotoBase64: reader.result,
+        }));
+      };
+      if (
+        file.type === "image/png" ||
+        file.type === "image/jpeg" ||
+        file.type === "image/jpg"
+      ) {
+        reader.readAsDataURL(file);
+      } else {
+        alert("Solo se permiten archivos PNG, JPG y JPEG");
+      }
+    }
+  };
+
   function validarDatos() {
     let valido = true;
     let nombreError = "";
@@ -169,7 +210,6 @@ function Perfil() {
       valido = false;
     }
 
-
     if (datosAsesor["nombre"].length === 0) {
       nombreError = "El nombre es requerido";
       valido = false;
@@ -179,11 +219,10 @@ function Perfil() {
       valido = false;
     }
 
-
     setErrores({
       nombre: nombreError,
       idioma: idiomaError,
-      email: emailError
+      email: emailError,
     });
 
     return valido;
@@ -197,11 +236,15 @@ function Perfil() {
 
   useEffect(() => {
     axios
-      .post(API_URL + `api/asesores/obtenerDatosAsesor/`, { },{
-        headers: {
-          'Authorization': `Bearer ${token}`,
+      .post(
+        API_URL + `api/asesores/obtenerDatosAsesor/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      })
+      )
       .then((response) => {
         console.log(response.data);
         setDatosAsesor(response.data.mensaje);
@@ -216,31 +259,8 @@ function Perfil() {
   const [errores, setErrores] = useState({
     nombre: "",
     email: "",
-    idioma: ""
+    idioma: "",
   });
-
-
-
-  const descargarReporte= () => {
-    axios.post( API_URL + "reporte", {
-        mes: 6,
-        tipo: "pdf",
-        }, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob",
-        })
-        .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `reporte.${format}`);
-        document.body.appendChild(link);
-        link.click();
-        }
-    );
-  }
 
   return (
     <div className="container mx-auto grid grid-cols-2 gap-4">
@@ -254,110 +274,161 @@ function Perfil() {
         <div className="flex mt-3">
           <div>
             <InputLabel className="mx-4" id="demo-simple-select-label">
-                      Mis Cursos
-                    </InputLabel>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpen(true)}>Mis cursos</button>
-              {isOpen && (
-                <CursosModal
-                  handleModalCursos={handleModalCursos}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              )}
-            </div>
-            <div>
-              <InputLabel className="mx-4" id="demo-simple-select-label">
-                Datos de reunion zoom
-              </InputLabel>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg" onClick={() => setIsOpenZoom(true)}>Reunion Zoom</button>
+              Mis Cursos
+            </InputLabel>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg"
+              onClick={() => setIsOpen(true)}
+            >
+              Mis cursos
+            </button>
+            {isOpen && (
+              <CursosModal
+                handleModalCursos={handleModalCursos}
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
+          </div>
+          <div>
+            <InputLabel className="mx-4" id="demo-simple-select-label">
+              Datos de reunion zoom
+            </InputLabel>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg"
+              onClick={() => setIsOpenZoom(true)}
+            >
+              Reunion Zoom
+            </button>
 
-              {isOpenZoom && (
-                <ZoomDatosModal
-                  handleModalZoom={handleModalZoom}
-                  onClick={(e) => e.stopPropagation()}
-                />
-              )}
-            </div>
-            <div>
+            {isOpenZoom && (
+              <ZoomDatosModal
+                handleModalZoom={handleModalZoom}
+                onClick={(e) => e.stopPropagation()}
+              />
+            )}
+          </div>
+          <div>
             <InputLabel className="mx-4" id="demo-simple-select-label">
               Reporte mensual de asesorias
             </InputLabel>
             <button
-            className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg flex" 
-            onClick={handleModalReporteOpen}
+              className="bg-blue-500 hover:bg-blue-700 text-white p-3 m-2 rounded-lg flex"
+              onClick={handleModalReporteOpen}
             >
-              <FaCloudDownloadAlt className="mr-2"/>
-               Descargar reporte mensual</button>
-            </div>
+              <FaCloudDownloadAlt className="mr-2" />
+              Descargar reporte mensual
+            </button>
           </div>
+        </div>
         <div className="bg-white p-4">
           <h2 className="text-xl font-bold">Mis Datos</h2>
-          <div className="flex flex-col h-full">
+          <div className="flex flex-row justify-between">
             {datosAsesor && (
-              <>
-                <TextField
-                  id="nombre"
-                  className="w-full py-10 h-12 block"
-                  label="Nombre completo"
-                  name="nombre"
-                  variant="outlined"
-                  placeholder="Ingresa tu nombre completo"
-                  margin="normal"
-                  value={datosAsesor.nombre}
-                  onChange={(e) =>
-                    setDatosAsesor({ ...datosAsesor, nombre: e.target.value })
-                  }
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "1px dashed gray",
+                borderRadius: "5px",
+                height: "300px",
+                width: "300px",
+                overflow: "hidden",
+              }}
+            >
+              <input
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                onChange={handleFileChange}
+                style={{ display: "none" }} // Ocultar el input de archivo
+                id="fileInput" // Agregar un id para poder hacer referencia a él
+              />
+              <label htmlFor="fileInput" style={{ cursor: "pointer" }}>
+                {" "}
+                <img
+                  src={
+                    datosAsesor.fotoBase64 || "https://via.placeholder.com/400"
+                  } // Usar una imagen de marcador de posición si no hay ninguna imagen cargada
+                  alt="Haz clic o arrastra una imagen aquí para agregarla"
+                  className="object-contain h-full w-full" // Hacer que la imagen llene el div
                 />
-                {errores.nombre && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.nombre}
-                  </span>
-                )}
-                <TextField
-                  id="email"
-                  className="w-full py-10 h-12 block"
-                  label="Correo electronico"
-                  name="matricula"
-                  variant="outlined"
-                  placeholder="Ingresa tu correo electronico"
-                  margin="normal"
-                  value={datosAsesor.email}
-                  onChange={(e) =>
-                    setDatosAsesor({ ...datosAsesor, email: e.target.value })
-                  }
-                />
-                {errores.email && (
-                  <span className="text-red-500 text-xs py-1">
-                    {errores.email}
-                  </span>
-                )}
-
-                <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  onChange={(e) => {
-                    setDatosAsesor({ ...datosAsesor, idioma: e.target.value });
-                  }}
-                  value={datosAsesor["idioma"]}
-                  margin="normal"
-                >
-                  <MenuItem value={"ingles"}>Ingles</MenuItem>
-                  <MenuItem value={"frances"}>Frances</MenuItem>
-                  <MenuItem value={"aleman"}>Aleman</MenuItem>
-                  <MenuItem value={"japones"}>Japones</MenuItem>
-                </Select>
-
-                
-
-                <button 
-                className="w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg"
-                variant="contained" 
-                onClick={() => enviarDatos()}>
-                  Guardar mis datos
-                  </button>
-              </>
+              </label>
+              {errores.fotoBase64 && (
+                <span className="text-red-500 text-xs py-1">
+                  {errores.fotoBase64}
+                </span>
+              )}
+            </div>
             )}
+            <div className="flex flex-col">
+              {datosAsesor && (
+                <>
+                  <TextField
+                    id="nombre"
+                    className="w-full py-10 h-12 block"
+                    label="Nombre completo"
+                    name="nombre"
+                    variant="outlined"
+                    placeholder="Ingresa tu nombre completo"
+                    margin="normal"
+                    value={datosAsesor.nombre}
+                    onChange={(e) =>
+                      setDatosAsesor({ ...datosAsesor, nombre: e.target.value })
+                    }
+                  />
+                  {errores.nombre && (
+                    <span className="text-red-500 text-xs py-1">
+                      {errores.nombre}
+                    </span>
+                  )}
+                  <TextField
+                    id="email"
+                    className="w-full py-10 h-12 block"
+                    label="Correo electronico"
+                    name="matricula"
+                    variant="outlined"
+                    placeholder="Ingresa tu correo electronico"
+                    margin="normal"
+                    value={datosAsesor.email}
+                    onChange={(e) =>
+                      setDatosAsesor({ ...datosAsesor, email: e.target.value })
+                    }
+                  />
+                  {errores.email && (
+                    <span className="text-red-500 text-xs py-1">
+                      {errores.email}
+                    </span>
+                  )}
+
+                  <InputLabel id="demo-simple-select-label">Idiomas</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    onChange={(e) => {
+                      setDatosAsesor({
+                        ...datosAsesor,
+                        idioma: e.target.value,
+                      });
+                    }}
+                    value={datosAsesor["idioma"]}
+                    margin="normal"
+                  >
+                    <MenuItem value={"ingles"}>Ingles</MenuItem>
+                    <MenuItem value={"frances"}>Frances</MenuItem>
+                    <MenuItem value={"aleman"}>Aleman</MenuItem>
+                    <MenuItem value={"japones"}>Japones</MenuItem>
+                  </Select>
+
+                  <button
+                    className="w-64 my-4 mx-10 p-2 bg-blue-500 text-lg hover:bg-blue-700 text-white rounded-lg"
+                    variant="contained"
+                    onClick={() => enviarDatos()}
+                  >
+                    Guardar mis datos
+                  </button>
+                </>
+              )}
+            </div>
           </div>
-          
         </div>
       </div>
 
@@ -375,7 +446,7 @@ function Perfil() {
           ))}
         </div>
       </div>
-      
+
       <ModalNuevo
         showModal={showModal}
         handleClose={handleClose}
@@ -389,10 +460,7 @@ function Perfil() {
           dia={selectedDay}
         />
       )}
-      <ModalReporte
-        open={modalReporte}
-        handleClose={handleModalReporteClose}
-      />
+      <ModalReporte open={modalReporte} handleClose={handleModalReporteClose} />
     </div>
   );
 }
