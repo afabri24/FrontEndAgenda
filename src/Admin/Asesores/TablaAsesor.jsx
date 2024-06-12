@@ -22,8 +22,6 @@ function TablaAsesor({irFormulario}) {
     const [asesores, setAsesores] = useState([])
     const [open, setOpen] = useState(false)
     
-    const handleClose = () => setOpen(false);
-    
     function handleOpen(asesor) {
       setAsesor(asesor)
       setOpen(true)
@@ -101,7 +99,7 @@ function TablaAsesor({irFormulario}) {
         </TableBody>
       </Table>
     </TableContainer>
-    {/* <ModalDetalles open={open} handleClose={handleClose}/> */}
+    <ModalDetalles open={open} setOpen={setOpen}/>
       
     </div>
   )

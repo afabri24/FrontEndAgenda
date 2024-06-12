@@ -14,6 +14,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import ModalNuevo from "../../ModalNuevo";
 
 function EditarAsesor({irTabla}) {
+    const token = localStorage.getItem('token');
     const { setAsesor, asesor } = useContext(dataContext)
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -94,7 +95,12 @@ function EditarAsesor({irTabla}) {
     
 
       try {
-        const response = await axios.post(API_URL+"api/asesores/editar/", asesor);
+        const response = await axios.patch(API_URL+"api/admin/actualizarAsesor/", asesor,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
 
         if(response.data.error)
           handlePopup("Error", "response.data.mensaje", true);
@@ -131,21 +137,10 @@ function EditarAsesor({irTabla}) {
       valido = false
     }
 
-    if(asesor.fotoBase64.length === 0){
+    if(asesor.fotoBase64 === null || asesor.fotoBase64.length === 0){
       fotoBase64Error = '*Es necesario elegir una foto de perfil'
       valido = false
     }
-
-    // if (asesor.password.length === 0) {
-    //   passwordError = "*La contraseña es requerida";
-    //   valido = false;
-    // } else if (asesor.password.length < 8 ) {
-    //   passwordError = "*La contraseña debe tener mínimo 8 caracteres";
-    //   valido = false;
-    // } else if (asesor.password.length > 16 ) {
-    //   passwordError = "*La contraseña debe tener máximo 16 caracteres";
-    //   valido = false;
-    // }
 
     if (!es_valido_email(asesor.email)) {
       emailError = '*El correo electronico no es valido'
