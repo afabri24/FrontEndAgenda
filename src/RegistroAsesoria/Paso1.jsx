@@ -4,14 +4,20 @@ import axios from "axios";
 import {API_URL} from "../utils/Constantes.js";
 import { obtenerDiaHoy, obtenerDiaMañana, obtenerFechaDiaSemanaActual } from "../utils/Funciones";
 import MoonLoader from "react-spinners/MoonLoader";
+import ModalNuevo from "../ModalNuevo.jsx";
+import { ModalSessionContext } from '../SessionContext';
+import { useNavigate } from 'react-router-dom';
 
 function Paso1() {
 
-  const [asesores, setAsesores] = useState([]);
+  const [asesores, setAsesores] = useState(null);
   const [loading, setLoading] = useState(true)
+  const token = localStorage.getItem('token');
+  const [showModal, setShowModal] = useState(false);
+  const { setShowModalSession } = useContext(ModalSessionContext);
+  const navigate = useNavigate();
 
   function handleClick(id) {
-    console.log('id: '+ id)
     setAsesoriaDatos({
       ...asesoriaDatos,
       modalidad: "presencial",
@@ -23,18 +29,32 @@ function Paso1() {
     setPaso(2);
   }
 
+  function handleClose() {
+    setShowModal(false)
+    navigate('/perfil');
+  }
+
   useEffect(() => {
     axios
-      .get(API_URL + `api/asesores/obtenerAsesores/`)
+      .get((API_URL + `api/asesores/obtenerAsesores/`),
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => {
-        setAsesores(response.data.mensaje)
-        console.log(response.data.mensaje)
+        if(response.status === 204){
+          setShowModal(true)
+        }else{
+          setAsesores(response.data.mensaje)
+        }
         setLoading(false)
       })
       .catch((error) => {
         if (error.response.status === 401) {
           setShowModalSession(true);
         }
+       
       });
   }, []);
 
@@ -84,7 +104,11 @@ function Paso1() {
         </>
       }
         
-
+      <ModalNuevo  
+      showModal={showModal} 
+      handleClose={handleClose} 
+      modalTittle={"Agrega idiomas para poder continuar"} 
+      modalMessage={"Para poder agendar una asesoria primero debes agregar el idioma o idiomas que tomas en el apartado Mis idiomas"} />
         
       </div>
     </div>

@@ -101,7 +101,7 @@ function Paso3() {
       }
     })
       .then(response => {
-        console.log(response.data)
+        console.log('horas: ' + response.data)
         setHoras(response.data.mensaje)
         setMensajeModal("Por favor, selecciona la hora y dia.")
         setShowModal(true);
@@ -113,6 +113,7 @@ function Paso3() {
     });
   }
   function validarDatos() {
+
     if (!asesoriaDatos.dia || !asesoriaDatos.idDiaHora) {
       setMensajeModal("Por favor, selecciona la hora y dia.")
       setShowModal(true);
@@ -164,7 +165,7 @@ function Paso3() {
                       width: '10px',
                       height: '10px',
                       borderRadius: '50%',
-                      backgroundColor: dia.tieneHoras ? 'green' : 'red',
+                      backgroundColor: dia.tieneHoras ? (dia.ocupado ? 'orange' : 'green') : 'red',
                       marginLeft: '10px',
                     }}
                   /></MenuItem>
@@ -195,6 +196,40 @@ function Paso3() {
         
       </Box>
       <a>{mensajeDia}</a>   
+      <div className='flex flex-row'>
+        <span
+          style={{
+          display: 'inline-block',
+          width: '10px',
+          height: '10px',
+          borderRadius: '50%',
+          backgroundColor: 'green',
+          marginTop: '8px',
+          marginRight: '3px',
+          }} />Dias con horas disponibles
+          <span
+          style={{
+          display: 'inline-block',
+          width: '10px',
+          height: '10px',
+          borderRadius: '50%',
+          backgroundColor: 'orange',
+          marginTop: '8px',
+          marginRight: '3px',
+          marginLeft: '3px',
+          }} />Dia ocupado
+          <span
+          style={{
+          display: 'inline-block',
+          width: '10px',
+          height: '10px',
+          borderRadius: '50%',
+          backgroundColor: 'red',
+          marginTop: '8px',
+          marginRight: '3px',
+          marginLeft: '3px',
+          }} />Dia sin horas
+      </div>
     </div>
   </div>
      

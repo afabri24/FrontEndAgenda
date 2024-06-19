@@ -16,16 +16,20 @@ import { MdEdit } from "react-icons/md";
 import '../../assets/styles.css'
 import { dataContext } from '../ContextoAdmin.jsx';
 import ModalDetalles from './ModalDetalles.jsx';
+import SwitchAsesor from './SwitchAsesor.jsx';
 
 function TablaAsesor({irFormulario}) {
 
     const [asesores, setAsesores] = useState([])
     const [open, setOpen] = useState(false)
+    const [activo, setActivo]= useState(true)
     
     function handleOpen(asesor) {
       setAsesor(asesor)
       setOpen(true)
     }
+    
+
     const { setShowModalSession } =
     useContext(ModalSessionContext);
 
@@ -82,17 +86,17 @@ function TablaAsesor({irFormulario}) {
               </TableCell>
               <TableCell align="right">{asesor.email}</TableCell>
               <TableCell align="right">{asesor.idioma}</TableCell>
-              <TableCell align="right">{asesor.noAsesorias}</TableCell>
+              <TableCell align="right">{asesor.num_asesorias}</TableCell>
               <TableCell align="right">
-              <button onClick={() => handleEdit(asesor)}>
-                  <MdEdit className='icon'/>  
-                </button> 
-                <button onClick={() => handleOpen(asesor)}>
-                  <IoEye className='icon'/>  
-                </button>  
-                <button>
-                  <MdDelete className='iconDelete'/>  
-                </button>  
+                <div className='flex flex-row space-x-1'>
+                  <button onClick={() => handleEdit(asesor)}>
+                      <MdEdit className='icon'/>  
+                    </button> 
+                    <button onClick={() => handleOpen(asesor)}>
+                      <IoEye className='icon'/>  
+                    </button>  
+                    <SwitchAsesor />
+                  </div>
               </TableCell>
             </TableRow>
           ))}

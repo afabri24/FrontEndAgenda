@@ -200,7 +200,6 @@ function RegistroAsesor({irTabla}) {
       >
         <h1 className="text-center mb-4">Registro Asesor</h1>
         <form onSubmit={handleSubmit}>
-        {asesor.nombre}
           <TextField
             name="nombre"
             label="Nombre"

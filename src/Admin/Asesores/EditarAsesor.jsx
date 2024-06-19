@@ -105,7 +105,7 @@ function EditarAsesor({irTabla}) {
         if(response.data.error)
           handlePopup("Error", "response.data.mensaje", true);
         else 
-        limpiarFormulario(); 
+          limpiarFormulario(); 
           handlePopup("Exito", response.data.mensaje, true);
       } catch (error) {
         handlePopup("Error", "error" , true);
@@ -274,7 +274,7 @@ function EditarAsesor({irTabla}) {
             )}
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Registrar
+            Guardar Datos
           </Button>
         </form>
       </div>

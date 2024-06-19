@@ -65,7 +65,7 @@ function CardActual({
           </div>
           <p className="mt-2 text-gray-900 font-semibold">Tema: </p><p>{tema}</p>
           <p className="mt-2 text-gray-500">Asesor: {asesor}</p>
-          <p className="mt-2 text-gray-500">Fecha: {fecha}</p>
+          <p className="mt-2 text-gray-500">Dia: {dia}</p>
           <p className="mt-2 text-gray-500">Modalidad: {modalidad}</p>
           {isFlipped ? (
             <>
