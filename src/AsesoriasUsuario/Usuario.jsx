@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { ModalSessionContext } from "../SessionContext";
 import imageEmpty from "../assets/empty.png";
 import MoonLoader from "react-spinners/MoonLoader";
+import { obtenerFechaHoy } from "../utils/Funciones.js";
 
 function Usuario() {
   const [asesoriasActuales, setAsesoriasActuales] = useState([]);
@@ -29,12 +30,16 @@ function Usuario() {
           'Authorization': `Bearer ${token}`,
         }}
       );
-       const hoy = new Date();
-       setAsesoriasActuales([])
-       setAsesoriasPasadas([])
-       console.log(response.data)
+       const hoy = obtenerFechaHoy()
+       console.log("hoy: " + hoy)
        response.data.forEach((asesoria) => {
-         if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === false ) {
+        const fechaAsesoria = asesoria.fecha;
+        console.log("Fecha asesoria" + asesoria.fecha)
+
+        console.log("Fecha del api: " + fechaAsesoria);
+
+  
+         if ((fechaAsesoria > hoy || fechaAsesoria === hoy) && asesoria.escancelada === false ) {
            setAsesoriasActuales((asesoriasActuales) => [
              ...asesoriasActuales,
              asesoria,
@@ -49,6 +54,8 @@ function Usuario() {
       });
       setLoading(false)
       setReload(!reload);
+      console.log(asesoriasActuales)
+      console.log(asesoriasPasadas)
     } catch (error) {
       console.log(error);
       if (error.response.status === 401) {

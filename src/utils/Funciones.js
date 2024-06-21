@@ -84,3 +84,11 @@ export function obtenerMensaje(dia) {
     return '*Los días mostrados son para agendar asesorias la semana próxima';
   }
 }
+
+export const obtenerFechaHoy = () => {
+  const hoy = new Date();
+  const year = hoy.getFullYear();
+  const month = String(hoy.getMonth() + 1).padStart(2, '0'); // getMonth() es 0-indexado
+  const day = String(hoy.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
