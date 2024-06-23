@@ -154,7 +154,7 @@ function Login() {
       if (error.response && error.response.status === 400) {
         console.log(error.response);
         // El servidor regresó un error de Bad Request
-      handlePopup("Error", "Matricula o Contraseña incorrecta", true);
+        handlePopup("Error", "Matricula o Contraseña incorrecta", true);
       } else {
         // Otro tipo de error ocurrió
         console.error(error);

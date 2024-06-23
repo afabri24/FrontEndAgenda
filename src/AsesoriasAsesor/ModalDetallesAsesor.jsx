@@ -54,18 +54,18 @@ function ModalDetails({
   };
 
   const onChangeRadioButtons = (event) => {
-    console.log(asistencia)
-    console.log(asistio)
-    console.log(event.target.value);
-    if (event.target.value === "asistio") {
+    if (event.target.value == 1) {
       marcarAsistencia(1);
+      console.log("asistio");
     } else {
       marcarAsistencia(2);
+      console.log("no asistio");
     }
   }
 
   const marcarAsistencia = async (asistio) => {
     const token = localStorage.getItem("token");
+    console.log(asistio);
     try {
       const response = await axios({
         method: "PUT",
@@ -80,6 +80,7 @@ function ModalDetails({
       });
       if (!response.data.error) {
         console.log(response.data);
+        handleReload();
       } else {
         handlePopup("Error", response.data.mensaje);
       }
