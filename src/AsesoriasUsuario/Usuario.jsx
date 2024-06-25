@@ -32,6 +32,8 @@ function Usuario() {
       );
        const hoy = obtenerFechaHoy()
        console.log("hoy: " + hoy)
+       setAsesoriasActuales([])
+       setAsesoriasPasadas([])
        response.data.forEach((asesoria) => {
         const fechaAsesoria = asesoria.fecha;
         console.log("Fecha asesoria" + asesoria.fecha)
