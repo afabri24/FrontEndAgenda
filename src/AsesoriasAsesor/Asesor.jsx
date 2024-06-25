@@ -75,6 +75,7 @@ function Asesor() {
               esCancelada={asesoria.escancelada}
               comentario={asesoria.comentario}
               asistio={asesoria.asistio}
+              color={asesoria.color}
             />
           ))
         ) : (
@@ -118,6 +119,7 @@ function Asesor() {
               esCancelada={asesoria.escancelada}
               comentario={asesoria.comentario}
               asistio={asesoria.asistio}
+              color={asesoria.color}
             />
           ))
         ) : (

@@ -94,6 +94,7 @@ function Usuario() {
   }, [reload]);
 
   const handleReload = () => {
+    setLoading(true)
     setReload(true);
   };
 

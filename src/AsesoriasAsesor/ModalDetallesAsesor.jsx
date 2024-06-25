@@ -4,6 +4,8 @@ import ModalNuevo from "../ModalNuevo";
 import axios from "axios";
 import { API_URL } from "../utils/Constantes";
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
+import { obtenerFechaHoy } from "../utils/Funciones";
+
 
 function ModalDetails({
   idAsesoria,
@@ -29,7 +31,7 @@ function ModalDetails({
   const [modalTittle, setModalTittle] = React.useState("");
   const [modalMessage, setModalMessage] = React.useState("");
   const [asistencia, setAsistencia] = React.useState(asistio);
-
+  const hoy = obtenerFechaHoy()
   const aceptar = () => {
     eliminarAsesoria();
     setModalAbierto(false);
@@ -153,26 +155,41 @@ function ModalDetails({
         <a href={link} className="text-blue-500">
           {link}
         </a>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Asistencia</FormLabel>
-          <RadioGroup
-            aria-label="asistencia"
-            defaultValue={asistencia}
-            name="radio-buttons-group"
-            onChange={onChangeRadioButtons}
-          >
-            <FormControlLabel
-              value={1}
-              control={<Radio />}
-              label="Asistió"
-            />
-            <FormControlLabel
-              value={2}
-              control={<Radio />}
-              label="No Asistió"
-            />
-          </RadioGroup>
-        </FormControl>
+        {fecha > hoy && esCancelada === false ? 
+          <button
+          className="w-24 mt-1 center rounded-md border border-transparent shadow-sm px-1 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 "
+          onClick={(event) => abrirModal(event)}
+        >
+          Cancelar
+        </button> :
+          <>{esCancelada ?
+            <div>
+              <p className="text-red-500 text-xl" >Asesoria Cancelada</p>
+              <p className="text-black text-l" >Razon: {comentario}</p>
+            </div>:
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Asistencia</FormLabel>
+            <RadioGroup
+              aria-label="asistencia"
+              defaultValue={asistencia}
+              name="radio-buttons-group"
+              onChange={onChangeRadioButtons}
+            >
+              <FormControlLabel
+                value={1}
+                control={<Radio />}
+                label="Asistió"
+              />
+              <FormControlLabel
+                value={2}
+                control={<Radio />}
+                label="No Asistió"
+              />
+            </RadioGroup>
+          </FormControl>
+          }
+          </>
+        }
 
         <div className="w-full flex justify-center items-center">
           {estado === "actual" && esCancelada === 0 && (

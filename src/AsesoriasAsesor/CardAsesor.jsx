@@ -20,6 +20,7 @@ function Card({
   comentario,
   asistio,
   handleReload,
+  color,
 }) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isClicked, setIsClicked] = useState(false); // Agregar un estado para saber si se hizo clic en la tarjeta
@@ -43,8 +44,18 @@ function Card({
     >
       <div className="md:flex">
         <div className="p-8">
-        <div className="tracking-wide text-lg text-cyan-600 font-semibold">
-            Tipo Asesoria: {tipo}
+        <div className="flex flex-row tracking-wide text-lg text-cyan-600 font-semibold">
+            {tipo}
+            <span
+                    style={{
+                      display: 'inline-block',
+                      width: '15px',
+                      height: '15px',
+                      borderRadius: '50%',
+                      backgroundColor: color,
+                      marginLeft: '20px',
+                    }}
+                  />
           </div>
           <p className="mt-2 text-gray-900 font-semibold">Tema: </p><p>{tema}</p>
           <p className="mt-2 text-gray-500">Alumno: {alumno}</p>
