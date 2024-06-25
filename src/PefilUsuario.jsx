@@ -10,6 +10,7 @@ import {
   es_valido_email,
   es_valido_matricula,
 } from "./utils/Validadores.js";
+import MoonLoader from "react-spinners/MoonLoader";
 
 import { ModalSessionContext } from "./SessionContext";
 
@@ -17,6 +18,7 @@ import { ModalSessionContext } from "./SessionContext";
 function PefilUsuario() {
   const token = localStorage.getItem("token");
   const [datosUsuario, setDatosUsuario] = useState(null);
+  const [loading, setLoading] = useState(true)
 
   const [isOpen, setIsOpen] = useState(false);
   //variables para los errores del formulario
@@ -137,6 +139,7 @@ function PefilUsuario() {
       )
       .then((response) => {
         setDatosUsuario(response.data.mensaje);
+        setLoading(false)
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -154,7 +157,19 @@ function PefilUsuario() {
         >
           Regresar
         </Link>
-        <div className="bg-white p-4 flex flex-col justify-center items-center">
+        
+          
+          {loading ? 
+            <div className="flex w-full align-middle h-xxxl justify-center">
+          <MoonLoader
+            color={"#2E86C1"}
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          /> 
+          </div> :<>
+          <div className="bg-white p-4 flex flex-col justify-center items-center">
           <div>
             <InputLabel className="mx-4" id="demo-simple-select-label">
                       Mis Idiomas
@@ -218,8 +233,10 @@ function PefilUsuario() {
                   Guardar mis datos
                   </button>
             </div>
+            
           </div>
         </div>
+        </>}
       </div>
       <ModalNuevo
         showModal={showModal}
