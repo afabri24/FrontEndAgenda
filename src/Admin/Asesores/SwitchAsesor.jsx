@@ -4,6 +4,7 @@ import { Switch } from "@mui/material";
 
 function SwitchAsesor({id_asesor, estado}) {
   const [label, setLabel] = useState('')
+  const [status, setStatus] = useState('')
 
   useState(() =>{
     

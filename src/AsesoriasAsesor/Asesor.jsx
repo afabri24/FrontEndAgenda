@@ -4,6 +4,7 @@ import Card from "./CardAsesor";
 import {API_URL} from "../utils/Constantes";
 import imageEmpty from '../assets/empty.png'
 import { ModalSessionContext } from '../SessionContext';
+import { obtenerFechaHoy } from "../utils/Funciones.js";
 
 function Asesor() {
   const [asesoriasActuales, setAsesoriasActuales] = useState([]);
@@ -22,11 +23,11 @@ function Asesor() {
       console.log(response.data);
       setAsesoriasActuales([])
       setAsesoriasPasadas([])
-      const hoy = new Date();
+      const hoy = obtenerFechaHoy()
       console.log(hoy);
       response.data.forEach(asesoria => {
-        console.log(asesoria.fecha);
-        if (new Date(asesoria.fecha) >= hoy && asesoria.escancelada === 0) {
+        const fechaAsesoria = asesoria.fecha;
+        if ((fechaAsesoria > hoy || fechaAsesoria === hoy) && asesoria.escancelada === false ) {
           setAsesoriasActuales(asesoriasActuales => [...asesoriasActuales, asesoria]);
         } else {
           setAsesoriasPasadas(asesoriasPasadas => [...asesoriasPasadas, asesoria]);

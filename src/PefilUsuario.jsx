@@ -154,9 +154,7 @@ function PefilUsuario() {
         >
           Regresar
         </Link>
-        <div className="bg-white p-4">
-          <h2 className="text-xl font-bold">Usuario</h2>
-
+        <div className="bg-white p-4 flex flex-col justify-center items-center">
           <div>
             <InputLabel className="mx-4" id="demo-simple-select-label">
                       Mis Idiomas
@@ -174,7 +172,7 @@ function PefilUsuario() {
               <>
                 <TextField
                   id="nombre"
-                  className="sm:w-full md:w-2/6 py-10 h-12 block"
+                  className="sm:w-full h-12"
                   label="Nombre completo"
                   name="nombre"
                   variant="outlined"
@@ -192,7 +190,7 @@ function PefilUsuario() {
                 )}
                 <TextField
                   id="email"
-                  className="sm:w-full md:w-2/6 py-10 h-12 block"
+                  className="sm:w-full py-10 h-12 block"
                   label="Correo electronico"
                   name="matricula"
                   variant="outlined"

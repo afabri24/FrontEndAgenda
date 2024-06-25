@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { ModalSessionContext } from '../SessionContext';
 import { obtenerFechaDiaSemanaActual } from '../utils/Funciones';
 import Modal from '../Modal.jsx';
+import BeatLoader from "react-spinners/BeatLoader";
 
 function Paso4() {
   const { setPaso, asesoriaDatos, setAsesoriaDatos, enviarDatos } =
@@ -21,6 +22,9 @@ function Paso4() {
     const [modalMessage, setModalMessage] = useState("")
 
     const [showModal, setShowModal] = React.useState(false);
+
+    const [loading, setLoading] = useState(false);
+    
 
     async function enviarDatosConToken() {
       const token = localStorage.getItem('token');
@@ -53,6 +57,7 @@ function Paso4() {
           }
         }
       } catch (error) {
+        setLoading(false)
         if(error.response.status === 401){
           setShowModalSession(true)
         }
@@ -114,8 +119,19 @@ function Paso4() {
         </div>
         <div className="flex justify-between px-10">
           <Button onClick={() => setPaso(3)}>Regresar</Button>
-          <Button onClick={() => enviarDatosConToken()}>Registrar asesoria</Button>
-
+          {loading ? 
+            <div className="flex">
+              <BeatLoader
+                color={"#2E86C1"}
+                loading={loading}
+                size={20}
+                margin={4}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              /> 
+              </div> :
+          <Button onClick={() => {setLoading(true), enviarDatosConToken()}}>Registrar asesoria</Button>
+          }
           <Modal
             showModal={showModal}
             handleClose={handleClose}
