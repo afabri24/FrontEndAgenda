@@ -6,20 +6,12 @@ import { API_URL } from "./../../utils/Constantes";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import imgDefault from "../../assets/addImage.png";
 import { es_valido_email } from "../../utils/Validadores";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import ModalNuevo from "../../ModalNuevo";
 
 function EditarAsesor({irTabla}) {
     const token = localStorage.getItem('token');
     const { setAsesor, asesor } = useContext(dataContext)
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = (event) => event.preventDefault();
-
 
    //Modal para errores, alertas
    const [showModal, setShowModal] = useState(false);

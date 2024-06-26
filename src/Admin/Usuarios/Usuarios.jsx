@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import TablaUsuario from './TablaUsuario'
-import FormularioUsuario from './FormularioUsuario'
+import EditarUsuario from './EditarUsuario'
 
 function Usuarios() {
     const [handleClic, setHandleClic] = useState(true)
@@ -16,7 +16,7 @@ function Usuarios() {
     <div>
       { handleClic ? 
         <TablaUsuario irFormulario={irFormulario} /> : 
-        <FormularioUsuario irTabla={irTabla} /> 
+        <EditarUsuario irTabla={irTabla} /> 
       }
     </div>
   )

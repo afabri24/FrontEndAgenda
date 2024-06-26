@@ -1,11 +1,11 @@
 import React from 'react'
 
-function TablaUsuario() {
+function SwitchUsuario() {
   return (
     <div>
-      tabla
+      
     </div>
   )
 }
 
-export default TablaUsuario
+export default SwitchUsuario

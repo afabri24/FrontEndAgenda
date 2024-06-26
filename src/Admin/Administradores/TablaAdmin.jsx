@@ -16,15 +16,13 @@ import { MdEdit } from "react-icons/md";
 import '../../assets/styles.css'
 import { dataContext } from '../ContextoAdmin.jsx';
 import ModalDetalles from './ModalDetalles.jsx';
-import SwitchAsesor from './SwitchAsesor.jsx';
 
-function TablaAsesor({irFormulario}) {
-
-    const [asesores, setAsesores] = useState([])
+function TablaAdmin({irFormulario}) {
+    const [admins, setAdmins] = useState([])
     const [open, setOpen] = useState(false)
     
     function handleOpen(asesor) {
-      setAsesor(asesor)
+      setAdmin(asesor)
       setOpen(true)
     }
     
@@ -32,18 +30,17 @@ function TablaAsesor({irFormulario}) {
     const { setShowModalSession } =
     useContext(ModalSessionContext);
 
-    const { setAsesor } = useContext(dataContext);
+    const { setAdmin } = useContext(dataContext);
 
     useEffect(() =>{
       const token = localStorage.getItem("token")
-        axios.get(API_URL+'api/admin/obtenerAsesores/',{
+        axios.get(API_URL+'api/admin/obtenerAdmins/',{
             headers: {
                 'Authorization': `Bearer ${token}`,
               }
         })
         .then((response) => {
-            console.log("asesores: " + response.data.mensaje)
-            setAsesores(response.data.mensaje)
+            setAdmins(response.data.mensaje)
         })
         .catch((error) => {
             if (error.response.status === 401) {
@@ -52,15 +49,14 @@ function TablaAsesor({irFormulario}) {
           });
     }, [])
 
-    function handleEdit(asesor) {
-        setAsesor(asesor)
+    function handleEdit(admin) {
+        setAdmin(admin)
         irFormulario()
     }
-
   return (
     <div>
         <div>
-        <Button variant="contained" onClick={irFormulario}> Agregar Asesor +</Button>
+        <Button variant="contained" onClick={() =>{irFormulario(), setAdmin("")}}> Agregar Admin +</Button>
       </div>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -68,33 +64,29 @@ function TablaAsesor({irFormulario}) {
           <TableRow>
             <TableCell>Nombre</TableCell>
             <TableCell align="right">Correo electronico</TableCell>
-            <TableCell align="right">Idioma</TableCell>
-            <TableCell align="right">No. Asesorias</TableCell>
             <TableCell align="right">Acciones</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          { asesores.map((asesor) => (
+          { admins.map((admin) => (
             <TableRow
-              key={asesor.id_asesor}
+              key={admin.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {asesor.nombre}
+                {admin.nombre}
               </TableCell>
-              <TableCell align="right">{asesor.email}</TableCell>
-              <TableCell align="right">{asesor.idioma}</TableCell>
-              <TableCell align="right">{asesor.num_asesorias}</TableCell>
+              <TableCell align="right">{admin.email}</TableCell>
               <TableCell align="right">
                 <div className='flex flex-row space-x-1'>
-                  <button onClick={() => handleEdit(asesor)}>
+                  <button onClick={() => handleEdit(admin)}>
                       <MdEdit className='icon'/>  
                     </button> 
-                    <button onClick={() => handleOpen(asesor)}>
+                    <button onClick={() => handleOpen(admin)}>
                       <IoEye className='icon'/>  
                     </button>  
-                    <SwitchAsesor />
+                    <MdDelete className='icon'/>
                   </div>
               </TableCell>
             </TableRow>
@@ -108,4 +100,4 @@ function TablaAsesor({irFormulario}) {
   )
 }
 
-export default TablaAsesor
+export default TablaAdmin

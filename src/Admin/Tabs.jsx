@@ -5,7 +5,8 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Asesores from './Asesores/Asesores';
-import Usuarios from './Usuarios'
+import Usuarios from './Usuarios/Usuarios'
+import Administradores from './Administradores/Administradores'
 
 function Tabs() {
     const [value, setValue] = React.useState('1');
@@ -20,6 +21,7 @@ function Tabs() {
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Asesores" value="1" />
             <Tab label="Usuario" value="2" />
+            <Tab label="Admin" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -27,6 +29,9 @@ function Tabs() {
         </TabPanel>
         <TabPanel value="2">
             <Usuarios />
+        </TabPanel>
+        <TabPanel value="3">
+            <Administradores />
         </TabPanel>
       </TabContext>
     </Box>
