@@ -11,6 +11,7 @@ function Navbar() {
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const [modalAbierto, setModalAbierto] = React.useState(false);
+  const tipo = cookies.get('tipo')
 
   const handleCerrar = () => {
     setModalAbierto(false);
@@ -66,12 +67,14 @@ function Navbar() {
             </span>
 
             <div className="flex items-center gap-2 list-none lg:ml-auto">
+            {tipo === 'admin' ? <></>:
               <Link
                 to="/perfil"
                 className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-blue-300 rounded-lg"
               >
                 Perfil
               </Link>
+            }
               <button
                 onClick={abrirModal}
                 className="block px-4 py-2 mt-2 text-sm font-medium text-black md:mt-0 hover:text-accent-400 focus:outline-none focus:shadow-outline bg-slate-300 rounded-lg w-auto"
