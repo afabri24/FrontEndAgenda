@@ -42,7 +42,7 @@ function ModalReporte({ open, handleClose }) {
       alert("Seleccione un mes");
       return;
     }
-    axios.put( API_URL + "reporte", {
+    axios.put( API_URL + "reporte/", {
         mes: month,
         tipo: format,
         }, {

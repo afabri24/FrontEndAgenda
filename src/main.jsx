@@ -13,13 +13,14 @@ import RegistroAsesoria from "./RegistroAsesoria/RegistroAsesoria.jsx";
 import Contexto from "./RegistroAsesoria/Contexto.jsx";
 import PaginaPrincipal from "./PaginaPrincipal.jsx";
 import Navbar from "./Navbar.jsx";
-import Faq from "./Faq.jsx";
+import Faq from "./components/Faq.jsx";
 import { SessionProvider } from "./SessionContext.jsx";
 import RegistroAsesor from "./Admin/Asesores/RegistroAsesor.jsx";
 import LoginAdmin from "./Admin/LoginAdmin.jsx";
 import Dashboard from "./Admin/Dashboard.jsx";
-import NotFound from "./NotFound.jsx";
+import NotFound from "./extra/NotFound.jsx";
 import ContextoAdmin from "./Admin/ContextoAdmin.jsx";
+import OlvideContra from "./extra/OlvideContra.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -62,6 +63,7 @@ function Main() {
                 </ContextoAdmin>
                : <NotFound/>} />
               <Route path="*" element={<NotFound />} />
+              <Route path="/olvideContrasena" element={<OlvideContra/>} />
               <Route path="/registroAsesor" 
             element={tipo == "admin" ? <RegistroAsesor /> : <NotFound/>} />
             </Routes>

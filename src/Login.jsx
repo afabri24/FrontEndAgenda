@@ -228,7 +228,7 @@ function Login() {
                 )}
                 <a
                   className="font-medium hover:text-accent-500 text-accent-500"
-                  href="/forgotPass"
+                  href="/olvideContrasena"
                 >
                   Olvidaste tu contraseña?
                 </a>
