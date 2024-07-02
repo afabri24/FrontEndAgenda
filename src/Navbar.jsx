@@ -1,12 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import ModalConBotones from "./ModalConBotones";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import logo from "./assets/logoUV.png";
 import ModalDecision from "./components/ModalDecision";
+import NavDesktop from "./NavBar/NavDesktop";
+import { NavMobile } from "./NavBar/NavMobile";
+
 
 function Navbar() {
+  
   const cookies = new Cookies();
   const navigate = useNavigate();
   const [token, setToken] = useState("");
@@ -25,6 +28,7 @@ function Navbar() {
   const abrirModal = () => {
     setModalAbierto(true);
   };
+
 
   const handleLogout = () => {
     cookies.remove("nombre");
@@ -92,67 +96,9 @@ function Navbar() {
           </nav>
         ) : (
           <nav className="flex place-items-end justify-between flex-row p-6">
-            <div className={`${isOpen ? "" : "hidden"} lg:block`}>
-              <a
-                onClick={toggleMenu}
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400 lg:ml-auto"
-                href="/#quees"
-              >
-                ¿Que es?
-              </a>
-              <a
-                onClick={toggleMenu}
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
-                href="/#conocenos"
-              >
-                Conocenos
-              </a>
-
-              <Link
-                onClick={toggleMenu}
-                className="px-2 lg:px-6 py-2 md:px-3 text-sm font-medium text-black hover:text-accent-400"
-                to="/faq"
-              >
-                Preguntas frecuentes
-              </Link>
-
-              <div className="inline-flex items-center gap-2 list-none lg:ml-auto">
-                <Link
-                  onClick={toggleMenu}
-                  to="/signup"
-                  className="inline-flex items-center h-8 justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 active:bg-gray-200 active:text-accent-400 focus-visible:outline-black"
-                >
-                  Registro
-                </Link>
-                <Link
-                  onClick={toggleMenu}
-                  to="/login"
-                  className="inline-flex items-center h-8 justify-center px-4 py-2 text-sm font-medium text-black bg-gray-100 rounded-lg group focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-gray-50 active:bg-gray-200 active:text-accent-400 focus-visible:outline-black"
-                >
-                  Iniciar sesión
-                </Link>
-              </div>
-            </div>
-            <button onClick={toggleMenu} className="lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="h-8 w-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d={
-                    isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
-                  }
-                />
-              </svg>
-            </button>
-            
-            
+            <NavDesktop />
+            <NavMobile />
+                
           </nav>
         )}
       </div>
