@@ -93,14 +93,13 @@ function EditarAsesor({irTabla}) {
               'Authorization': `Bearer ${token}`
             }
           });
-
+        console.log(response)
         if(response.data.error)
           handlePopup("Error", "response.data.mensaje", true);
         else 
-          limpiarFormulario(); 
           handlePopup("Exito", response.data.mensaje, true);
       } catch (error) {
-        handlePopup("Error", "error" , true);
+        handlePopup("Error", error , true);
       }
     }
   };

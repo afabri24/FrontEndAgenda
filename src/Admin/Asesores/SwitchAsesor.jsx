@@ -1,28 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Switch } from "@mui/material";
+import axios from 'axios';
+import { API_URL } from '../../utils/Constantes';
+import ModalNuevo from '../../ModalNuevo';
 
-function SwitchAsesor({id_asesor, estado}) {
+
+function SwitchAsesor({id_asesor, activo}) {
   const [label, setLabel] = useState('')
-  const [status, setStatus] = useState('')
   const token = localStorage.getItem("token");
+  const [estado, setEstado] = useState(activo)
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTittle, setModalTittle] = useState("");
+
+  const handlePopup = (tittle, message) => {
+    setModalMessage(message);
+    setModalTittle(tittle);
+    setShowModal(true);
+  };
+  const handleClose = () => setShowModal(false);
+
 
   function handleChangeSwitch() {
     handleCambios();
-    console.log(estado);
-    setStatus(!status);
-    if (status) {
-      setLabelSwitch("inactivo");
-      setData({ ...data, estado: "inactivo" });
+    
+  }
+  function cambiarLabel() {
+    if (estado) {
+      setLabel("inactivo");
     } else {
-      setLabelSwitch("activo");
-      setData({ ...data, estado: "activo" });
+      setLabel("activo");
     }
   }
 
+  useEffect(() =>{
+    if (estado) {
+      setLabel("activo");
+    } else {
+      setLabel("inactivo");
+    }
+    console.log(estado)
+  }, [])
+
   function handleCambios() {
-    axios.put(API_URL + `api/asesores/actualizar_estado/`, {
-          estado: estado,
+    axios.patch(API_URL + `api/admin/estadoAsesor/`, {
+          id_asesor: id_asesor
         },{
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -31,12 +54,14 @@ function SwitchAsesor({id_asesor, estado}) {
         .then((response) => {
           console.log(response.data);
           if (response.data.error) {
-            handlePopup("Se actualizo correctamente", response.data.error);
+            handlePopup('No se puede realizar la accion', response.data.mensaje);
             console.log("error");
           } else {
-            handlePopup("Se actualizo correctamente", response.data.mensaje);
-            setPassword("")
+            handlePopup('Se cambio el estado correctamente', response.data.mensaje);
+            setEstado(!estado)
+            cambiarLabel()
             console.log("mostrar modal");
+            
           }
         })
         .catch((error) => {
@@ -49,8 +74,14 @@ function SwitchAsesor({id_asesor, estado}) {
     <div>
       <FormControlLabel
         control={<Switch onChange={handleChangeSwitch} checked={estado} />}
-        label={"activo"}
+        label={label}
     />
+    <ModalNuevo
+          showModal={showModal}
+          handleClose={handleClose}
+          modalTittle={modalTittle}
+          modalMessage={modalMessage}
+        />
     </div>
   )
 }

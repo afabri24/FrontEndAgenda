@@ -36,6 +36,7 @@ function Paso4() {
       
       console.log(asesoriaDatos);
       try {
+        setLoading(true)
         const response = await axios.post(API_URL+"api/asesorias/registrar/", { 
           ...asesoriaDatos,
           Fecha: obtenerFechaDiaSemanaActual(asesoriaDatos["dia"]),
@@ -130,7 +131,7 @@ function Paso4() {
                 data-testid="loader"
               /> 
               </div> :
-          <Button onClick={() => {setLoading(true), enviarDatosConToken()}}>Registrar asesoria</Button>
+          <Button onClick={() => { enviarDatosConToken() }}>Registrar asesoria</Button>
           }
           <Modal
             showModal={showModal}

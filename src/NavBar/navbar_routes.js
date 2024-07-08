@@ -13,7 +13,7 @@ export const routes = [
   },
   {
     title: "Conocenos",
-    href: "#conocenos",
+    href: "/#conocenos",
     Icon: MdGroups,
     isLink: false,
   },

@@ -94,7 +94,7 @@ function TablaAsesor({irFormulario}) {
                     <button onClick={() => handleOpen(asesor)}>
                       <IoEye className='icon'/>  
                     </button>  
-                    <SwitchAsesor />
+                    <SwitchAsesor id_asesor={asesor.id_asesor} activo={asesor.activo}/>
                   </div>
               </TableCell>
             </TableRow>
