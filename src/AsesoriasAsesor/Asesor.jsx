@@ -76,6 +76,7 @@ function Asesor() {
               comentario={asesoria.comentario}
               asistio={asesoria.asistio}
               color={asesoria.color}
+              handleReload={handleReload}
             />
           ))
         ) : (

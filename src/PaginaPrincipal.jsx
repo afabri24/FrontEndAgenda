@@ -92,7 +92,7 @@ function PaginaPrincipal() {
               </div>
             </div>
             <section id="quees" className="flex py-12 px-4 text-center">
-              <div className="w-1/2 pr-4">
+              <div className="md:w-1/2 pr-4">
                 <h1 className="text-4xl mb-4 font-bold">
                   ¿Que es este sistema?
                 </h1>
@@ -112,26 +112,26 @@ function PaginaPrincipal() {
                   virtual.
                 </p>
               </div>
-              <div className="w-1/2 border-l pl-4 grid grid-cols-2">
+              <div className="w-1/2 border-l pl-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdPfh5HGMpB624KhKBj9PIO32cTcoBMXc3T3BMypRV4w&s"
                   alt="Bandera Ingles"
-                  className="mb-4 p-4 h-40"
+                  className="hidden md:block mb-4 p-4 h-40"
                 />
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgLHyAHGXdTofBtGZfKH2HHrzvWuWC991MIEpKb91eSQ&s"
                   alt="Bandera de Francia"
-                  className="mb-4 p-4 h-40"
+                  className="hidden md:block mb-4 p-4 h-40"
                 />
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/200px-Flag_of_Germany.svg.png"
                   alt="Bandera de Alemania"
-                  className="mb-4 p-4 h-40"
+                  className="hidden md:block mb-4 p-4 h-40"
                 />
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/310px-Flag_of_Italy.svg.png"
                   alt="Bandera de italia"
-                  className="mb-4 p-4 h-40"
+                  className="hidden md:block mb-4 p-4 h-40"
                 />
               </div>
             </section>

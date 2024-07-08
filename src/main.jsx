@@ -21,6 +21,7 @@ import Dashboard from "./Admin/Dashboard.jsx";
 import NotFound from "./extra/NotFound.jsx";
 import ContextoAdmin from "./Admin/ContextoAdmin.jsx";
 import OlvideContra from "./extra/OlvideContra.jsx";
+import RecuperarContrasena from "./extra/RecuperarContrasena.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -66,6 +67,7 @@ function Main() {
               <Route path="/olvideContrasena" element={<OlvideContra/>} />
               <Route path="/registroAsesor" 
             element={tipo == "admin" ? <RegistroAsesor /> : <NotFound/>} />
+              <Route path="recuperar-contrasena" element={<RecuperarContrasena />} />
             </Routes>
             </SessionProvider>
           <Footer />
