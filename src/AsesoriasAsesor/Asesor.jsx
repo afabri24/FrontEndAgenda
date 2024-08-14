@@ -5,13 +5,25 @@ import {API_URL} from "../utils/Constantes";
 import imageEmpty from '../assets/empty.png'
 import { ModalSessionContext } from '../SessionContext';
 import { obtenerFechaHoy } from "../utils/Funciones.js";
+import { Tooltip, Fab, Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
 function Asesor() {
   const [asesoriasActuales, setAsesoriasActuales] = useState([]);
   const [asesoriasPasadas, setAsesoriasPasadas] = useState([]);
   const { setShowModalSession } = useContext(ModalSessionContext);
   const [reload, setReload] = useState(true)
-  const token = localStorage.getItem("token") 
+  const token = localStorage.getItem("token")
+
+  const [openInfo, setOpenInfo] = useState(false);
+
+  const handleClickOpenInfo = () => {
+    setOpenInfo(true);
+  };
+
+  const handleCloseInfo = () => {
+    setOpenInfo(false);
+  };
 
   const fetchAsesorias = async () => {
     axios.post(`${API_URL}api/asesorias/obtenerAsesor/`, {},
@@ -132,6 +144,82 @@ function Asesor() {
           </>
         )}
         </div>
+        <Tooltip title="Información adicional sobre las asesorías" placement="left">
+        <Fab
+          color="primary"
+          aria-label="info"
+          style={{ position: 'fixed', bottom: 16, right: 16 }}
+          onClick={handleClickOpenInfo}
+        >
+        <InfoIcon />
+        </Fab>
+      </Tooltip>
+        <Dialog open={openInfo} onClose={handleCloseInfo}>
+          <DialogTitle>Información Adicional</DialogTitle>
+          <DialogContent>
+          <Typography component="div">
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
+              <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '15px',
+                    height: '15px',
+                    borderRadius: '50%',
+                    backgroundColor: 'blue',
+                    marginRight: '10px',
+                  }}
+                />
+                Las asesorías actuales son aquellas que aún no han ocurrido y no han sido canceladas.
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '15px',
+                    height: '15px',
+                    borderRadius: '50%',
+                    backgroundColor: 'red',
+                    marginRight: '10px',
+                  }}
+                />
+                Las asesorías que fueron canceladas.
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '15px',
+                    height: '15px',
+                    borderRadius: '50%',
+                    backgroundColor: 'orange',
+                    marginRight: '10px',
+                  }}
+                />
+                Son asesorías que ya pasaron pero falta marcar si el estudiante asistió o no asistió.
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '15px',
+                    height: '15px',
+                    borderRadius: '50%',
+                    backgroundColor: 'green',
+                    marginRight: '10px',
+                  }}
+                />
+                Son asesorías que ya pasaron y fueron marcadas en asistencia.
+              </li>
+            </ul>
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+          <Button onClick={handleCloseInfo} color="primary">
+            Cerrar
+          </Button>
+        </DialogActions>
+      </Dialog>
         
       </div>
   );

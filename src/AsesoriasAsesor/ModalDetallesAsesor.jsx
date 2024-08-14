@@ -101,6 +101,7 @@ function ModalDetails({
         url: API_URL + "api/asesorias/cancelarAsAsesor/",
         data: {
           id_asesoria: idAsesoria,
+          comentario: comentario,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -215,6 +216,7 @@ function ModalDetails({
         onAccept={aceptar}
         title={"Confirmación"}
         message="¿Estás seguro de eliminar la asesoria?"
+        
       />
       <ModalNuevo
         showModal={showModal}

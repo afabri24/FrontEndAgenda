@@ -5,7 +5,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Time from "./TimerPickerComponent.jsx";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import FormControl from '@mui/material/FormControl';
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem,Tooltip,IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 import InputLabel from '@mui/material/InputLabel';
 import axios from "axios";
 import { useEffect } from "react";
@@ -216,6 +217,11 @@ function ModalDay({
             >
               Cerrar
             </button>
+            <Tooltip title="Cuando se desactiva un horario los alumnos no podrán agendar en ese horario, hasta que la active de nuevo manualmente">
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
           </div>
         </div>
       </div>
@@ -225,6 +231,7 @@ function ModalDay({
           modalTittle={modalTittle}
           modalMessage={modalMessage}
         />
+
     </div>
   );
 }
