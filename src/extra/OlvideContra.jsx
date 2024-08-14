@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import ModalNuevo from '../ModalNuevo';
 import axios from 'axios';
 import { API_URL } from '../utils/Constantes';
+import BeatLoader from "react-spinners/BeatLoader";
 
 const OlvideContra = () => {
   const [email, setEmail] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);
@@ -17,15 +19,21 @@ const OlvideContra = () => {
   const handleClose = () => setShowModal(false);
 
   const handleSubmit = (e) => {
+    setLoading(true)
     e.preventDefault();
-    axios.post(API_URL+'api/autenticacion/recuperar-contrasena/', { email })
+    console.log(email)
+    axios.post(API_URL+'api/autenticacion/recuperar_contrasena/', { email: email })
       .then((response) => {
         console.log('Respuesta del servidor:', response.data);
-        handlePopup("Éxito", "Se ha enviado un correo electrónico con las instrucciones para recuperar tu contraseña");
+        handlePopup("Mensaje", response.data.mensaje);
+        setLoading(false)
       })
-    if (!emailEncontrado) {
-      handlePopup("Error", "El correo electrónico no se encuentra registrado");
-    }
+      .catch((error) => {
+        console.error('Error al enviar la solicitud:', error);
+        handlePopup("Error", "Hubo un problema al enviar el correo electrónico. Por favor, inténtalo de nuevo.");
+        setLoading(false)
+    });
+    
   };
 
   return (
@@ -42,7 +50,17 @@ const OlvideContra = () => {
             className="input input-bordered w-full max-w-xs"
             required
           />
-          <button type="submit" className="btn btn-primary px-4 mt-4">Enviar</button>
+          {loading ? 
+              <BeatLoader
+                color={"#2E86C1"}
+                loading={loading}
+                size={20}
+                margin={4}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              /> :
+              <button type="submit" className="btn btn-primary px-4 mt-4">Enviar</button>
+          }
         </form>
       </div>
       <ModalNuevo
