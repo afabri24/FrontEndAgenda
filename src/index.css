@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.degradedBlue {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  padding: 5px 0;
+}
 
-html {
-    scroll-behavior: smooth;
-  }
