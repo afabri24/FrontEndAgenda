@@ -49,6 +49,13 @@ const RecuperarContrasena = () => {
             // Manejar la respuesta del servidor aquí (por ejemplo, mostrar un mensaje de éxito)
             window.location.href = "/Login";
             })
+            .catch((error) => {
+            console.error('Error al enviar la solicitud:', error.response);
+            if(error.response.status === 401){
+                setError('El token ha expirado');
+            }
+            }
+            );
         } catch (error) {
             console.error('Error al recuperar la contraseña:', error);
             // Manejar el error aquí (por ejemplo, mostrar un mensaje de error)
