@@ -6,16 +6,13 @@ function Faq() {
   
     const questions = [
       { title: '¿Que necesito para mi registro?', answer: 'Necesitas tu nombre, matricula, correo electronico y una contraseña' },
-      { title: '¿Que como agrego la ', answer: 'Respuesta a la pregunta 2.' },
-        { title: 'Pregunta 3', answer: 'Respuesta a la pregunta 3.' },
-        { title: 'Pregunta 4', answer: 'Respuesta a la pregunta 4.' },
-        { title: 'Pregunta 5', answer: 'Respuesta a la pregunta 5.' },
-        { title: 'Pregunta 6', answer: 'Respuesta a la pregunta 6.' },
-        { title: 'Pregunta 7', answer: 'Respuesta a la pregunta 7.' },
-        { title: 'Pregunta 8', answer: 'Respuesta a la pregunta 8.' },
-        { title: 'Pregunta 9', answer: 'Respuesta a la pregunta 9.' },
-        { title: 'Pregunta 10', answer: 'Respuesta a la pregunta 10.' },
-        
+      { title: '¿Que puedo hacer si olvide mi contraseña?', answer: 'Selecciona la opción en inicio de sesión "Olvide mi contraseña" e ingresa el correo electrónico con el que te registraste' },
+        { title: '¿Como hago una asesoría?', answer: 'Primero debes ingresar al sistema y veras la opción de agregar una asesoría y seguirás unos pasos para registrar una asesoría a tu nombre' },
+        { title: '¿Por que no puedo registrar mi asesoría para hoy?', answer: 'Por cuestiones de tiempos, no se puede registrar una asesoría 24 horas antes de hora de la asesoría' },
+        { title: '¿Por que no me aparece el asesor de un idioma?', answer: 'Revisa si en tu perfil tienes registrado el idioma del asesor al que quieres acceder' },
+        { title: 'Al momento de registrar una asesoria no puedo escoger un horario', answer: 'Solo puedes tener una asesoria al dia, si quieres registrar otro horario debes cancelar anteriormente la ya registrada' },
+        { title: 'Tengo un error que no puedo se resuelve', answer: 'Por favor contacta con el soporte mandando un mensaje el error que tengas, tu nombre y matricula. ejemplodecorre@gmail.com' },
+
       // Agrega más preguntas aquí
     ];
   

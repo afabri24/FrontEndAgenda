@@ -22,6 +22,7 @@ import NotFound from "./extra/NotFound.jsx";
 import ContextoAdmin from "./Admin/ContextoAdmin.jsx";
 import OlvideContra from "./extra/OlvideContra.jsx";
 import RecuperarContrasena from "./extra/RecuperarContrasena.jsx";
+import Creditos from "./extra/Creditos.jsx";
 
 function Main() {
   const cookies = new Cookies();
@@ -54,8 +55,9 @@ function Main() {
               <Route path="/" element={<PaginaPrincipal />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/faq" element={<Faq />} />
+              <Route path="/ayuda" element={<Faq />} />
               <Route path="/admin" element={<LoginAdmin />} />
+              <Route path="/creditos" element={<Creditos />} />
               <Route 
               path="/dashboard" 
               element={tipo == "admin" ? 

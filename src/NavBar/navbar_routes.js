@@ -18,8 +18,8 @@ export const routes = [
     isLink: false,
   },
   {
-    title: "Preguntas frecuentes",
-    href: "/faq",
+    title: "Ayuda",
+    href: "/ayuda",
     Icon: FaClipboardQuestion,
     isLink: true,
   },

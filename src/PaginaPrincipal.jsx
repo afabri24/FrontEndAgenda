@@ -22,81 +22,6 @@ function PaginaPrincipal() {
             </TransitionComponent>
           </div>
         </div>
-        {/* <div>
-          <div className="mx-auto max-w-7xl pt-12">
-            <div className="justify-center items-center flex p-4">
-              <h1 className="text-4xl">Acesores del centro de idiomas</h1>
-            </div>
-            <div>
-              <div className="grid gap-12 grid-cols-1 lg:space-y-0 lg:text-center md:grid-cols-3">
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/1.jpg" alt="Imagen maestra Gabriela" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Mtra. Gabriela Jimenez Aguilar
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Ingles</div>
-                </div>
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/2.jpeg" alt="Imagen doctora Roxana" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Dra. Ma. Roxana Rivera Ochoa
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Ingles</div>
-                </div>
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/3.jpg" alt="Imagen doctora Eugenia" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Dra. Ma. Eugenia Castilla Villalobos
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Ingles</div>
-                </div>
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/4.jpg" alt="Imagen maestra Kirina" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Mtra. Kirina Reyes Hernandez
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Frances</div>
-                </div>
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/5.jpeg" alt="Imagen maestra Victoria" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Mtra. Victoria Sanchez
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Italiano</div>
-                </div>
-                <div>
-                  <div>
-                    <div className="items-center justify-center text-accent-500 bg-gray-100 rounded-xl flex h-20 w-20 lg:mx-auto">
-                      <img src="/6.jpeg" alt="Imagen maestra Josefina" />
-                    </div>
-                    <p className="mt-4 text-lg font-semibold leading-6 text-black font-display tracking-tight">
-                      Mtra. Josefina Tapia
-                    </p>
-                  </div>
-                  <div className="mt-4 text-gray-500 text-sm">Aleman</div>
-                </div>
-              </div>
-            </div> */}
 
             <section id="quees" className="flex py-12 px-4 text-center">
             <div className='grid max-w-5xl mx-auto md:grid-cols-2 px-3'>
@@ -169,27 +94,26 @@ function PaginaPrincipal() {
                   />
                   <div>
                     <p className="font-bold mb-1">
-                      Mtra. Gabriela Jimenez Aguilar
+                      Mtra. Gabriela Jiménez Aguilar
                     </p>
                     <p className="text-gray-500 mb-2">Ingles</p>
                     <p className="text-gray-600">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Quidem fugiat temporibus similique rerum vitae dolorem
-                      magni reiciendis illum iusto. Eum similique omnis, officia
-                      aut nisi nobis voluptates atque delectus quasi.
+                    Licenciatura en Idioma inglés. Maestría en Enseñanza del Inglés como Lengua Extranjera. 
+                    Doctorado en Educación. Asesora de inglés en CAA del Centro de Idiomas Xalapa UV. 
+                    Docente de Inglés. Investigador-Ponente. Coordinadora de la Academia de Comprensión de Textos. Responsable del CAA por 19 años.
+
                     </p>
                   </div>
                 </TransitionComponent>
 
                 <TransitionComponent className="flex border  bg-white rounded p-2 w-full shadow-lg transition duration-200 ease-in-out">
                   <TransitionText className="mr-2">
-                    <p className="font-bold mb-1">Dra. Roxana Rivera ochoa</p>
+                    <p className="font-bold mb-1">Dra.María Roxana Rivera Ochoa</p>
                     <p className="text-gray-500 mb-2">Ingles</p>
                     <p className="text-gray-600">
-                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                      Laborum soluta, enim nobis similique quis iste omnis velit
-                      quisquam architecto fuga deleniti nesciunt. Mollitia
-                      tempora nostrum quas cupiditate asperiores modi corrupti.
+                    Licenciatura en Idioma inglés. Licenciatura en Idioma francés. Maestría en Ciencias de la Educación.
+                    Doctorado en Educación. Asesora de inglés en CAA del Centro de Idiomas Xalapa UV. Docente de Francés.
+                    Investigador-Ponente. Coordinadora de la Academia Estatal de Francés. Responsable del CAA del CIX.
                     </p>
                   </TransitionText>
                   <img
