@@ -120,9 +120,6 @@ function PefilUsuario() {
     event.preventDefault();
   };
 
-  function quitarPassword() {
-    
-  }
 
   const handleModalIdiomas = () => {
     setIsOpen(false);

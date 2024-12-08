@@ -21,7 +21,7 @@ function ModalIdioma({ handleModalIdiomas }) {
   const [modalMessage, setModalMessage] = useState("");
   const [modalTittle, setModalTittle] = useState("");
 
-  const todosLosIdiomas = ["Ingles", "Frances", "Aleman", "Italiano"];
+  const todosLosIdiomas = ["Ingles", "Frances", "Aleman", "Italiano","Japones"];
 
   const handlePopup = (tittle, message) => {
     setModalMessage(message);

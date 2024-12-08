@@ -155,6 +155,11 @@ function Login() {
         console.log(error.response);
         // El servidor regresó un error de Bad Request
         handlePopup("Error", "Matricula o Contraseña incorrecta", true);
+      }
+      else if(error.response.status === 500 && tipo==="asesor"){
+        // Otro tipo de error ocurrió
+        handlePopup("Error", "Correo o Contraseña Incorrecta ", true);
+        console.error(error);
       } else if(error.response.status === 500){
         // Otro tipo de error ocurrió
         handlePopup("Error", "Hubo un error en el servidor, intentelo nuevamente en unos momentos", true);

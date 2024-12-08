@@ -35,6 +35,10 @@ const RecuperarContrasena = () => {
             setError('Las contraseñas no coinciden');
             return;
         }
+        if (nuevaContrasena.length < 8) {
+            setError('La contraseña debe tener al menos 8 caracteres');
+            return;
+        }
         try {
             // Reemplaza la URL con la ruta de tu API para la recuperación de contraseña
             axios.post(API_URL + 'api/usuarios/recuperarContrasena/', { contrasena_nueva:nuevaContrasena },
