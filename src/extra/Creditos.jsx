@@ -28,6 +28,7 @@ const Creditos = () => {
                 Estudiante de la Universidad Veracruzana en Tecnologías
                 Computacionales
               </p>
+              <p className="text-gray-600"> franyuttiafabri24@gmail.com</p>
             </div>
           </div>
         </div>
@@ -44,7 +45,7 @@ const Creditos = () => {
                 Estudiante de la Universidad Veracruzana en Tecnologías
                 Computacionales
               </p>
-              
+              <p className="text-gray-600"> diegoarellano821@gmail.com</p>
             </div>
           </div>
         </div>
